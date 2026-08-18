@@ -22,7 +22,6 @@ The dependency-free lexical MinHash baseline (`plm1`) is deliberately **not** a 
 
 The tradeoff accepted: choosing a portable digest over shipping embeddings buys cross-party correlation and data minimisation, and costs measurable accuracy. The tool ships the two ends (dependency-free lexical, 32-byte semantic) and treats the mid-size quantised option as measured-but-not-yet-built.
 
-<!-- DRAFT paragraph below — placeholder in Ashwin's argument, needs rewrite in his voice. -->
 So when is the 32-byte digest the right choice? The measurement narrows it to two cases, and it is worth being precise about both. Where the byte budget genuinely binds — a fingerprint attached to every observable across a high-volume feed, where 32 bytes against 384 is a twelvefold difference in storage and index size. And where you would rather not hand a counterparty something close to invertible: a SimHash of an embedding is lossy in a way a quantised embedding is not. That is a difference in degree of exposure, not a privacy guarantee, and the limitations below say so plainly. If neither case applies, ship the int8 embedding — that is what the numbers say, and this page is not going to pretend otherwise.
 
 ## What it doesn't do
