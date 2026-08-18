@@ -1,0 +1,31 @@
+{{/*
+  Standing closing block. PaperMod renders partials/extend_footer.html on every
+  page automatically, so this appears site-wide without being pasted per-post.
+  This is the conversion path (post -> GitHub / LinkedIn). Keep it minimal:
+  a top border and muted text, no heavy design.
+*/}}
+<div class="closing-block">
+  <p>
+    I'm Ashwin. I build threat intelligence platforms and write about the
+    engineering decisions behind them.
+  </p>
+  <p>
+    <a href="https://github.com/ashwinvis98" rel="me">GitHub</a>
+    &middot;
+    <a href="https://www.linkedin.com/in/ashwinviswamithiran/" rel="me">LinkedIn</a>
+  </p>
+</div>
+
+<style>
+  .closing-block {
+    max-width: var(--main-width, 720px);
+    margin: 2.5rem auto 0;
+    padding: 1.25rem var(--gap, 24px) 0;
+    border-top: 1px solid var(--border, #eaeaea);
+    color: var(--secondary);
+    font-size: 0.95rem;
+  }
+  .closing-block p {
+    margin: 0.35rem 0;
+  }
+</style>

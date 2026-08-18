@@ -1,0 +1,13 @@
+# Hugo build output and caches
+public/
+resources/
+.hugo_build.lock
+
+# OS / editor
+.DS_Store
+
+# Node (only if tooling is added later)
+node_modules/
+
+# Secrets / local env
+.env

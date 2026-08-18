@@ -1,0 +1,38 @@
+baseURL = "https://ashwinviswamithiran.com/"
+languageCode = "en-us"
+title = "Ashwin Viswamithiran"
+theme = "PaperMod"
+enableRobotsTXT = true
+
+[params]
+  description = "I build the platform layer that makes threat intelligence operational."
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+  # Home list shows writing only; Projects is reached via the nav.
+  mainSections = ["writing"]
+
+# Home-info mode: positioning line + short intro, then recent writing below.
+# This is PaperMod's built-in intro block, not a custom hero section.
+[params.homeInfoParams]
+  Title = "I build the platform layer that makes threat intelligence operational."
+  Content = "Security engineer working on threat intelligence platforms. I write about the engineering decisions behind operational CTI: the pipelines, data models, and unglamorous discipline that make a system trustworthy at two in the morning. Recent writing is below; the [projects](/projects/) are decision records, not demos."
+
+[[menu.main]]
+  name = "Writing"
+  url = "/writing/"
+  weight = 1
+[[menu.main]]
+  name = "Projects"
+  url = "/projects/"
+  weight = 2
+[[menu.main]]
+  name = "About"
+  url = "/about/"
+  weight = 3
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
