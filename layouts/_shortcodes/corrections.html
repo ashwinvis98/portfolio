@@ -1,0 +1,12 @@
+{{- /* Full corrections log, rendered inside content/corrections.md. */ -}}
+{{- with hugo.Data.corrections }}
+<ul class="corrections-full">
+  {{- range sort . "date" "desc" }}
+  <li class="correction">
+    <div class="mono-meta">{{ .date }} &middot; {{ .where }}</div>
+    <div class="corr-what">{{ .what }}</div>
+    <div class="corr-fix">{{ .fix }}</div>
+  </li>
+  {{- end }}
+</ul>
+{{- end -}}

@@ -5,34 +5,38 @@ theme = "PaperMod"
 enableRobotsTXT = true
 
 [params]
-  description = "I build the platform layer that makes threat intelligence operational."
+  description = "Security engineer working on threat intelligence platforms, detection pipelines, and security data infrastructure. Decision records and measurements."
   ShowReadingTime = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowToc = true
   TocOpen = false
-  # Home list shows writing only; Projects is reached via the nav.
+  # Home writing list is rendered by layouts/index.html from this section.
   mainSections = ["writing"]
 
-# Home-info mode: positioning line + short intro, then recent writing below.
-# This is PaperMod's built-in intro block, not a custom hero section.
+# Home masthead: positioning statement (Title) + caption (Content).
+# Rendered by the home_info.html override, called from layouts/index.html.
 [params.homeInfoParams]
-  Title = "I build the platform layer that makes threat intelligence operational."
-  Content = "Security engineer working on threat intelligence platforms. I write about the engineering decisions behind operational CTI: the pipelines, data models, and unglamorous discipline that make a system trustworthy at two in the morning. Recent writing is below; the [projects](/projects/) are decision records, not demos."
+  Title = "I build systems that make security teams effective."
+  Content = "Threat intelligence platforms, detection pipelines, and security automation. Currently building a CTI platform and threat research program from scratch. Previously: a 120TB SIEM migration, detection content, and SOC transition work."
 
 [[menu.main]]
-  name = "Writing"
+  name = "writing"
   url = "/writing/"
   weight = 1
 [[menu.main]]
-  name = "Projects"
+  name = "projects"
   url = "/projects/"
   weight = 2
 [[menu.main]]
-  name = "About"
-  url = "/about/"
+  name = "corrections"
+  url = "/corrections/"
   weight = 3
+[[menu.main]]
+  name = "about"
+  url = "/about/"
+  weight = 4
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]

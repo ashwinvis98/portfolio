@@ -1,0 +1,7 @@
+{{/* Traceability strip. Context is a page; reads its `receipts` front matter.
+     Only figures from audits actually performed — never invent a count. */}}
+{{- with .Params.receipts }}
+<div class="receipts mono-meta">
+  {{- range . }}<span class="receipt">{{ . }}</span>{{ end }}
+</div>
+{{- end -}}

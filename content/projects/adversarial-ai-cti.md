@@ -1,8 +1,16 @@
 ---
 title: "adversarial-ai-cti"
 date: 2026-08-17
+summary: "A vendor-neutral STIX 2.1 representation for prompt injection and jailbreaks, so any STIX platform can ingest them."
 description: "A vendor-neutral STIX 2.1 representation for prompt injection and jailbreaks, so any STIX platform can ingest prompt attacks as structured intelligence. A decision record."
+receipts:
+  - "Apache-2.0"
+  - "STIX 2.1"
+  - "OpenCTI connector"
+  - "pre-1.0"
 ---
+
+{{< receipts >}}
 
 ## What it is
 

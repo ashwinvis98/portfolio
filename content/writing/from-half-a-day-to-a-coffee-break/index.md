@@ -3,6 +3,7 @@ title: "From Half a Day to a Coffee Break"
 date: 2026-08-14
 categories: ["Notes"]
 tags: ["threat-intelligence", "opencti", "rag", "data-engineering", "aws-bedrock"]
+summary: "Keeping a knowledge base current in minutes instead of half a day, by never rebuilding what has not changed."
 description: "How I keep a threat-intelligence knowledge base current in minutes instead of half a day, by never rebuilding what hasn't changed."
 ---
 

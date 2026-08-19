@@ -2,7 +2,7 @@
 
 Hugo + PaperMod. Two jobs: canonical home for technical writing, and a place that presents projects. Deployed on Vercel.
 
-Positioning everything supports: **"I build the platform layer that makes threat intelligence operational."**
+Positioning everything supports: **"I build systems that make security teams effective."**
 
 ## Structure
 
@@ -26,13 +26,22 @@ with the section).
 
 ## Conventions
 
-- Every post needs a `description` — it is the meta description and the
-  LinkedIn card text. No post ships without one.
-- Project pages follow a decision-record structure (what it is → the problem →
-  the design decision with the tradeoff named → what it doesn't do →
-  limitations → links → status). The limitations section is mandatory.
-- No employer name, internal hostname, infrastructure detail, or internal
-  metric anywhere on this site.
+- **`summary` is mandatory** on every content file (posts and project pages). It is
+  hand-written and drives the list-page excerpts; without it Hugo dumps the article body
+  onto `/` and `/projects/`. `description` (meta/SEO) is also required.
+- **Project pages** follow a decision-record structure (what it is → the problem → the
+  design decision with the tradeoff named → what it doesn't do → limitations → links →
+  status). The limitations section is mandatory.
+- **`receipts`** front matter on project pages drives the traceability strip. Only list
+  figures from audits actually performed — never invent a count. A receipts strip that
+  overstates is worse than none.
+- **Employer names** are allowed **only in `content/about.md`** — nowhere else: not in any
+  post, project page, partial, config value, meta tag, or commit message. (The specific
+  names live in `about.md`; they are deliberately not repeated here so this file stays
+  clean under the employer-name sweep.)
+- **Internal detail is forbidden everywhere, `about.md` included:** internal hostnames,
+  instance IDs, file paths, private IPs, internal metrics, team names, ticket references,
+  and any architecture detail specific to a production deployment.
 
 ## Local development
 

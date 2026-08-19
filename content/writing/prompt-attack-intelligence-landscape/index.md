@@ -4,6 +4,7 @@ date: 2026-08-17
 draft: true
 categories: ["Notes"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "stix"]
+summary: "A survey of who is doing what in prompt-attack intelligence, and the gap: the pieces exist, but nobody has composed them into one portable thing."
 description: "The pieces of prompt-attack threat intelligence exist separately — representation, correlation, vendor-neutral formats — but nobody has composed them into one thing that survives rewording and moves between platforms without bespoke glue. A survey of who does what, and the gap."
 ---
 

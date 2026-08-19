@@ -1,0 +1,17 @@
+{{/* `corrections` on the home page — three most recent, then a link to the
+     full log. Reads data/corrections.yaml. */}}
+{{- with hugo.Data.corrections }}
+<section class="home-section">
+  <h2 class="section-label">corrections</h2>
+  <ul class="corrections-list">
+    {{- range first 3 (sort . "date" "desc") }}
+    <li class="correction">
+      <div class="mono-meta">{{ .date }} · {{ .where }}</div>
+      <div class="corr-what">{{ .what }}</div>
+      <div class="corr-fix">{{ .fix }}</div>
+    </li>
+    {{- end }}
+  </ul>
+  <p class="section-more"><a href="/corrections/">all corrections &rarr;</a></p>
+</section>
+{{- end -}}

@@ -1,0 +1,53 @@
+{{- define "main" }}
+<div class="home">
+
+  {{- /* 2. positioning statement + 3. caption (from homeInfoParams) */ -}}
+  {{- partial "home_info.html" . }}
+
+  {{- /* 4. currently (renders nothing until data/currently.yaml is filled) */ -}}
+  {{- partial "currently.html" . }}
+
+  {{- /* 5. writing */ -}}
+  {{- $writing := where site.RegularPages "Type" "in" site.Params.mainSections }}
+  {{- with $writing }}
+  <section class="home-section">
+    <h2 class="section-label">writing</h2>
+    <ul class="record-list">
+      {{- range sort . "Date" "desc" }}
+      <li class="record-item">
+        <div class="record-head">
+          <a class="record-title" href="{{ .Permalink }}">{{ .Title }}</a>
+          <span class="record-meta mono-meta">
+            {{- with .Params.categories }}{{ delimit . ", " }} &middot; {{ end }}{{ .ReadingTime }} min
+          </span>
+        </div>
+        <p class="record-summary">{{ .Summary }}</p>
+      </li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+
+  {{- /* 6. projects (name in mono; summary; receipts strip) */ -}}
+  {{- $projects := where site.RegularPages "Section" "projects" }}
+  {{- with $projects }}
+  <section class="home-section">
+    <h2 class="section-label">projects</h2>
+    <ul class="record-list">
+      {{- range sort . "Title" }}
+      <li class="record-item">
+        <a class="record-title record-title-mono" href="{{ .Permalink }}">{{ .Title }}</a>
+        <p class="record-summary">{{ .Summary }}</p>
+        {{- partial "receipts.html" . }}
+      </li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+
+  {{- /* 7. corrections (three most recent + link to full log) */ -}}
+  {{- partial "corrections.html" . }}
+
+  {{- /* 8. closing block is rendered site-wide by extend_footer.html */ -}}
+</div>
+{{- end }}

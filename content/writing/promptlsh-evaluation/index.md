@@ -4,11 +4,9 @@ date: 2026-08-17
 draft: true
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
+summary: "I measured my own tool against the embedding it derives from. It loses by 11–21 points. Here is when the 32-byte digest is still the right call."
 description: "Measuring a similarity digest for prompt attacks against the embedding it is derived from, and finding it loses. What it buys anyway, and when that is worth it."
 ---
-
-<!-- KIRO DRAFT for Claude's voice pass. Every figure traces to promptlsh/RESULTS.md.
-     Do not add a number that isn't in RESULTS.md. -->
 
 I built a fuzzy hash for prompt attacks — `promptlsh`, a similarity digest where a reworded jailbreak produces a digest close to the original's, so near-duplicates line up instead of reading as unrelated. Then I measured whether it earns its place, against the thing it is derived from. The honest answer is that for most uses you should ship a quantised embedding instead. This is the measurement that says so, and the two cases where the 32-byte digest still wins.
 

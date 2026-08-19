@@ -1,0 +1,9 @@
+- date: "2026-08-17"
+  where: "adversarial-ai-cti — docs/correlation-digest.md"
+  what: "Stated the cross-organisation correlation gain as 4.4x."
+  fix: "The correct figure is 2.9x (35.1% against 12.2%). The 4.4x came from an earlier evaluation run and survived into the docs after the numbers settled. Fixed in the repository."
+
+- date: "2026-08-17"
+  where: "promptlsh — RESULTS.md"
+  what: "Stated the digest size advantage over a quantised embedding as roughly 10x."
+  fix: "The correct ratio is roughly 12x — 384 bytes against 32. Fixed in the repository."

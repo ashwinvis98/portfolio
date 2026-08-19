@@ -1,0 +1,12 @@
+{{/* `currently` — work genuinely in progress, from data/currently.yaml.
+     Renders nothing when the data file is empty (Ashwin supplies the lines). */}}
+{{- with hugo.Data.currently }}
+<section class="home-section">
+  <h2 class="section-label">currently</h2>
+  <ul class="currently-list">
+    {{- range sort . "date" "desc" }}
+    <li><span class="mono-meta">{{ .date }}</span> {{ .text }}</li>
+    {{- end }}
+  </ul>
+</section>
+{{- end -}}

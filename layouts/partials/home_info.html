@@ -1,0 +1,8 @@
+{{/* Home masthead statement + caption (overrides PaperMod's home-info block).
+     Not a banner — a typographic statement. Rendered from homeInfoParams. */}}
+{{- with site.Params.homeInfoParams }}
+<section class="masthead-statement">
+  <h1 class="statement">{{ .Title | markdownify }}</h1>
+  <div class="statement-caption">{{ .Content | markdownify }}</div>
+</section>
+{{- end -}}
