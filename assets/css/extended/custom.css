@@ -47,7 +47,14 @@ body {
   font-weight: 400;
 }
 
-.main { max-width: var(--main-width); }
+/* Align the header to the content column. The theme's --nav-width (1024px) is
+   far wider than the content, which pushed the name left of the body text and
+   the menu to the far right (where it wrapped). Match the header to .main. */
+.header-nav {
+  max-width: calc(var(--main-width) + var(--gap) * 2);
+  flex-wrap: nowrap;
+  align-items: center;
+}
 
 /* Links: the one accent. Chrome (logo, nav, project names) opts out below. */
 a { color: var(--accent); text-decoration: none; }
@@ -101,6 +108,15 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
   font-weight: 400;
   font-size: 15px;
   color: var(--primary);
+}
+
+/* Menu on one line, tight, baseline with the name; separators supply spacing. */
+#menu.menu {
+  flex-wrap: nowrap;
+  overflow: visible;
+  column-gap: 0;
+  align-items: center;
+  margin: 0;
 }
 
 #menu li a {
