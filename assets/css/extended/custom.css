@@ -10,6 +10,7 @@
   --font-mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --main-width: 46rem;
+  --nav-width: 46rem;   /* match content column so the header aligns with the body */
   --radius: 0;
 
   /* Light mode */
@@ -51,8 +52,8 @@ body {
    far wider than the content, which pushed the name left of the body text and
    the menu to the far right (where it wrapped). Match the header to .main. */
 .header-nav {
-  max-width: calc(var(--main-width) + var(--gap) * 2);
-  flex-wrap: nowrap;
+  max-width: calc(var(--main-width) + var(--gap) * 2) !important;
+  flex-wrap: nowrap !important;
   align-items: center;
 }
 
@@ -110,16 +111,22 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
   color: var(--primary);
 }
 
-/* Menu on one line, tight, baseline with the name; separators supply spacing. */
+/* Menu forced to one row, tight; separators supply spacing. */
 #menu.menu {
-  flex-wrap: nowrap;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
   overflow: visible;
   column-gap: 0;
-  align-items: center;
+  align-items: baseline;
   margin: 0;
+  min-width: 0;
 }
 
+#menu li { white-space: nowrap; }
+
 #menu li a {
+  display: inline;
   font-family: var(--font-mono);
   font-size: 13px;
   text-transform: lowercase;
@@ -128,7 +135,7 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
 #menu li a:hover { color: var(--primary); text-decoration: none; }
 #menu li a .active { color: var(--primary); }
 #menu li + li::before {
-  content: "·";
+  content: "\00b7";
   color: var(--tertiary);
   margin: 0 0.55rem;
 }
@@ -192,7 +199,7 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
 
 /* receipts strip */
 .receipts { margin: 0.5rem 0 0; font-size: 11px; color: var(--tertiary); }
-.receipts .receipt:not(:last-child)::after { content: "·"; margin: 0 0.5rem; color: var(--border); }
+.receipts .receipt:not(:last-child)::after { content: "\00b7"; margin: 0 0.5rem; color: var(--border); }
 
 /* corrections (home excerpt + full page) */
 .corrections-list, .corrections-full { list-style: none; margin: 0; padding: 0; }
