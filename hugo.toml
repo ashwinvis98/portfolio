@@ -6,6 +6,7 @@ enableRobotsTXT = true
 
 [params]
   description = "Security engineer working on threat intelligence platforms, detection pipelines, and security data infrastructure. Decision records and measurements."
+  images = ["og-default.png"]
   ShowReadingTime = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
@@ -30,9 +31,13 @@ enableRobotsTXT = true
   url = "/projects/"
   weight = 2
 [[menu.main]]
+  name = "corrections"
+  url = "/corrections/"
+  weight = 3
+[[menu.main]]
   name = "about"
   url = "/about/"
-  weight = 3
+  weight = 4
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
