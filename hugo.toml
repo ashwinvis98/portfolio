@@ -10,7 +10,7 @@ enableRobotsTXT = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
-  ShowToc = true
+  ShowToc = false
   TocOpen = false
   # Home writing list is rendered by layouts/index.html from this section.
   mainSections = ["writing"]

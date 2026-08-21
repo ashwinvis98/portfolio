@@ -2,16 +2,14 @@
 title: "From Half a Day to a Coffee Break"
 date: 2026-08-14
 categories: ["Notes"]
-tags: ["threat-intelligence", "opencti", "rag", "data-engineering", "aws-bedrock"]
+tags: ["threat-intelligence", "cti", "opencti", "aws-bedrock", "rag", "knowledge-base", "data-engineering", "data-pipelines", "incremental-processing", "near-real-time"]
 summary: "Keeping a knowledge base current in minutes instead of half a day, by never rebuilding what has not changed."
 description: "How I keep a threat-intelligence knowledge base current in minutes instead of half a day, by never rebuilding what hasn't changed."
 ---
 
-_How I keep an AI threat-intelligence knowledge base, built to scale to millions of documents, fresh in near real time without ever rebuilding it from scratch._
+![](image1.png)
 
 ## The dumbest version of this system (and why I almost built it)
-
-![](image1.png)
 
 Let me describe the simplest possible way to keep an AI knowledge base up to date, because it's the way almost everyone starts, and it's a trap. It nearly caught me, for the reason these things usually catch people: it works. It works on the first day, it works on the test data, and it keeps working right up until the volume makes it unaffordable, by which point it's load-bearing.
 
