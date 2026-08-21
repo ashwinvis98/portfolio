@@ -11,7 +11,7 @@ _How I keep an AI threat-intelligence knowledge base, built to scale to millions
 
 ## The dumbest version of this system (and why I almost built it)
 
-<!-- image: to re-add from original -->
+![](image1.png)
 
 Let me describe the simplest possible way to keep an AI knowledge base up to date, because it's the way almost everyone starts, and it's a trap. It nearly caught me, for the reason these things usually catch people: it works. It works on the first day, it works on the test data, and it keeps working right up until the volume makes it unaffordable, by which point it's load-bearing.
 
@@ -21,7 +21,7 @@ Intelligence arrives around the clock and almost none of it is a clean insert. A
 
 The naive approach: rebuild everything, over and over. Re-fetch all the data, re-generate every document, and re-index the whole library into Amazon Bedrock Knowledge Bases. It's simple. It's obviously correct. And it is absurdly wasteful: the equivalent of reprinting an entire encyclopedia, cover to cover, because a handful of facts changed.
 
-<!-- image: "Two ways to fix a couple of typos in an encyclopedia. Only one of them is sane." -->
+![Two ways to fix a couple of typos in an encyclopedia. Only one of them is sane.](image2.png)
 
 I know exactly how wasteful, because I measured it. Rebuilding the knowledge base from scratch, the step where the AI re-reads and re-indexes every document, takes the better part of a day. At the scale I'm building toward, a from-scratch rebuild would grind on for days. Doing that on any regular basis would mean the system spends most of its life re-reading documents byte-for-byte identical to the last pass, burning compute to accomplish nothing.
 
@@ -39,7 +39,7 @@ First, the shape of the work. The pipeline runs as a repeating cycle of three ac
 
 The naive design would run all three acts over the entire dataset. My job was to make each act touch only what actually changed, because that's what makes the cycle cheap enough to run again and again, keeping the knowledge base close to live. Act by act, then.
 
-<!-- image: "A cheap enough cycle is a fresh enough knowledge base." -->
+![A cheap enough cycle is a fresh enough knowledge base.](image3.png)
 
 ## Idea #1: leave a bookmark (the watermark)
 
@@ -51,7 +51,7 @@ It's the same thing you do with a book you're reading over many nights. You don'
 
 There's one subtlety worth mentioning because it bites people: clocks. The machine doing the fetching and the machine holding the data don't have perfectly synchronized clocks, and records can be saved in the split-second the bookmark is written. So I deliberately rewind the bookmark by a small safety margin and accept a tiny bit of overlap. Re-processing a handful of records twice is harmless. Missing one because of a clock hiccup is not. When in doubt, overlap.
 
-<!-- image: "A watermark is just a bookmark that says 'I got this far.'" -->
+![A watermark is just a bookmark that says 'I got this far.'](image4.png)
 
 ## Idea #2: one bookmark per topic, not one for the whole library
 
@@ -61,7 +61,7 @@ Treating that as one undifferentiated stream costs you. With a single bookmark f
 
 So instead I keep a separate bookmark for each category. Each category tracks its own progress independently. The busy categories can be re-processed without disturbing the quiet ones; a problem in one category never drags the others back to square one. And it gives me a lovely operational lever: if I ever want to force a single category to rebuild completely, say because I improved how a particular kind of profile is written, I just erase that one bookmark. The system sees "no bookmark here," assumes it's starting fresh for that category, and rebuilds only that slice. Everything else keeps humming along incrementally.
 
-<!-- image: "Independent bookmarks mean independent progress, and surgical rebuilds." -->
+![Independent bookmarks mean independent progress, and surgical rebuilds.](image5.png)
 
 ## Idea #3: the sneaky problem — things change because their neighbors changed
 
@@ -75,7 +75,7 @@ So I stopped letting "edited" define stale. Freshness in a connected corpus isn'
 
 An honest note on how far that goes. Each relationship is written onto the documents configured to show it: often both endpoints, sometimes just one, depending on which view is worth carrying. The useful property is that the staleness check and the renderer read from the same configuration. So coverage is consistent by construction: a document gets refreshed exactly when a relationship it actually displays changes. There's no gap where a card shows something but fails to notice it moved. Finding that set does still mean reading the relationship data and filtering afterwards rather than filtering as I read, so detection isn't free. But the expensive stages downstream only ever see the short list that check produces, and that's where the cost lives.
 
-<!-- image: "A document can go out of date without anyone touching it, because the world around it moved." -->
+![A document can go out of date without anyone touching it, because the world around it moved.](image6.png)
 
 ## Idea #4: don't open a giant box to check if it's empty
 
@@ -83,7 +83,7 @@ A quick one. Intelligence sources rarely commit to one delivery style. Most of w
 
 Those re-issues are enormous and, in incremental mode, almost entirely redundant. The system already holds what's inside them. Opening one costs time and a mountain of memory to learn nothing. So I peek at just the first sliver of each file, a tiny sip rather than the whole drink. That header tells me whether the file is a "full snapshot" or a "just-the-changes" file. If it's a full snapshot, I skip it instantly without ever loading the rest. It's the difference between reading the label on a box versus unpacking the entire box to find out what's inside.
 
-<!-- image: "Read the label. Don't unpack the whole box." -->
+![Read the label. Don't unpack the whole box.](image7.png)
 
 ## Idea #5: do everything at once
 
@@ -93,7 +93,7 @@ The categories don't depend on each other, and that's a property of the domain r
 
 There's a bonus I didn't expect: isolation. Because each worker owns exactly one category (and, thanks to Idea #2, one bookmark), a failure is contained. If one worker trips over a malformed record — and in this domain it will, because feed quality varies and a single publisher can emit something that parses everywhere except your pipeline — the others finish normally and update their own bookmarks. I come back, fix that one slice, and re-run only it. In the old chained design, one stumble could stall everything behind it.
 
-<!-- image: "Independent work should run at the same time, and fail alone rather than together." -->
+![Independent work should run at the same time, and fail alone rather than together.](image8.png)
 
 ## Idea #6: don't rewrite a document that didn't actually change
 
@@ -115,13 +115,13 @@ Be precise about what that buys, though. Overwriting removes one failure mode co
 
 The decision I'd defend is the one that looks wasteful. Only a tiny fraction of that catalog currently links to a known-exploited vulnerability, and the lazy move would be to hard-code around that handful. I refused: the slice carrying real intelligence grows every month, and betting the architecture on today's number is just scheduling the next crash.
 
-<!-- image: "A pile that grows every run is a deadline. One file that overwrites itself isn't." -->
+![A pile that grows every run is a deadline. One file that overwrites itself isn't.](image9.png)
 
 ## The payoff
 
 Stack all of that together and a single incremental refresh compares to the "rebuild everything" alternative:
 
-<!-- image: payoff comparison -->
+![The payoff: incremental refresh compared with rebuilding everything.](image10.png)
 
 You pay the big cost once. After that, the work that dominates every refresh is proportional to what changed, not to what you have.
 

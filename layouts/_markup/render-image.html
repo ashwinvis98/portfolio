@@ -1,0 +1,28 @@
+{{- /* Image render hook: resolve bundle resources, downscale to <=1200px and
+       re-encode to WebP q85, and wrap in a captioned <figure>. Caption + alt
+       both come from the markdown alt text; an empty alt renders a bare image
+       (used for the decorative opening image). External/unresolved images pass
+       through untouched. */ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $src := $u.String -}}
+{{- $w := 0 -}}
+{{- $h := 0 -}}
+{{- if not $u.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $u.Path -}}
+  {{- $res := or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+  {{- with $res -}}
+    {{- if eq .ResourceType "image" -}}
+      {{- $tw := cond (gt .Width 1200) 1200 .Width -}}
+      {{- $i := .Resize (printf "%dx webp q85" $tw) -}}
+      {{- $src = $i.RelPermalink -}}
+      {{- $w = $i.Width -}}
+      {{- $h = $i.Height -}}
+    {{- else -}}
+      {{- $src = .RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<figure class="post-figure">
+  <img src="{{ $src }}"{{ with .Text }} alt="{{ . }}"{{ end }} loading="lazy" decoding="async"{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }}>
+  {{- with .Text }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>
