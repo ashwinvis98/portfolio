@@ -1,10 +1,10 @@
 ---
-title: "Beaten by a Rounding Trick"
+title: "What to Put on the Wire for a Prompt Attack"
 date: 2026-09-27
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
-summary: "I built a fuzzy hash for prompt attacks, then measured it against the embedding it comes from. Rounding that embedding to 8 bits beat it — except at one thing."
+summary: "I built a fuzzy hash for prompt attacks, then measured it against the embedding it comes from. Rounding that embedding to 8 bits beats it on recall. Here is where the 32-byte version still earns its place."
 description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here are the three narrow cases where the digest still wins, and how little correlation survives across independent feeds."
 ---
 
@@ -16,7 +16,7 @@ So I built one. `promptlsh` emits a similarity digest for a prompt, and a reword
 
 ## There is more than one way to fingerprint a prompt
 
-The fix is obvious. The design question is not: *what form should the fingerprint take?* There are four plausible answers and they are not equally good.
+The fix is obvious. The design question is not. What form should the fingerprint take? There are four plausible answers and they are not equally good.
 
 ![Top: one word changes, and most of the digest survives. Bottom: the same change, to a cryptographic hash.](ill1-fuzzy-vs-exact.png)
 
@@ -28,9 +28,9 @@ Three of the four are formats this library emits, so they are worth naming once:
 
 ## The corpus is more redundant than you'd guess
 
-The problem is real and it is measurable. On the full HackAPrompt attack set — 579,953 inputs — **52.6% are exact duplicates** after normalisation, leaving 274,804 unique. The rate holds across models (36% to 52%) and climbs by challenge level (31% to 100%).
+The problem is real and measurable. On the full HackAPrompt attack set — 579,953 inputs — **52.6% are exact duplicates** after normalisation, leaving 274,804 unique. The rate holds across models (36% to 52%) and climbs by challenge level (31% to 100%).
 
-One caveat, because the headline number depends on it: HackAPrompt is multilingual, and a tokeniser that stripped non-Latin text would collapse those prompts together and inflate the duplicate rate. These figures use a Unicode-aware tokeniser, so the redundancy is real rather than an artifact of tokenisation.
+HackAPrompt is multilingual, and a tokeniser that stripped non-Latin text would collapse those prompts together and inflate the duplicate rate. These figures use a Unicode-aware tokeniser, so the redundancy is real rather than an artifact of tokenisation.
 
 Beyond exact duplicates, near-duplicates matter more. On a seeded 40k slice, 25% are exact duplicates and roughly another 35% of the *unique* prompts pull into near-duplicate clusters — an overall ~1.8x collapse. Deduplicating by digest genuinely cuts what an analyst reviews. (HackAPrompt is a competition corpus, so its redundancy sits on the high side; treat the shape, not the exact factor, as the takeaway.)
 
@@ -49,7 +49,7 @@ The task: recall@1 on WildJailbreak paraphrase pairs. Each vanilla request (abou
 
 ## The result that argues against my own tool
 
-**The int8-quantised embedding keeps essentially the entire ceiling** — 0.767 vs a 0.767 ceiling on the general model, 0.820 vs 0.820 on the domain-tuned one (both at a 400-candidate pool) — at about 384 bytes. **The 256-bit SimHash digest gives up 11 to 21 points** against that ceiling; the best case, domain-tuned and centered, is 0.708 against 0.820. That gap is the price of shrinking 384 bytes down to 32.
+**The int8-quantised embedding keeps essentially the entire ceiling:** 0.767 against a 0.767 ceiling on the general model, 0.820 against 0.820 on the domain-tuned one, both at a 400-candidate pool, all for about 384 bytes. **The 256-bit SimHash digest gives up 11 to 21 points** against that ceiling; the best case, domain-tuned and centered, is 0.708 against 0.820. That gap is the price of shrinking 384 bytes down to 32.
 
 The dependency-free lexical digest fares worse still. At 128 permutations a `plm1` digest runs about 1.1 KB — three times *larger* than the int8 embedding — and scores 0.537, well below it. Beaten on both axes at once, it is not a point on the size/fidelity curve. It sits off it.
 
@@ -57,7 +57,7 @@ The dependency-free lexical digest fares worse still. At 128 permutations a `plm
 
 The blunt version: **if you can exchange a few hundred bytes per prompt, ship the int8-quantised embedding, not a hash.** That is what the numbers say, and there is no point pretending otherwise.
 
-To be concrete, since this is advice `promptlsh` deliberately does not implement: take the embedding you already have, divide each vector by its own max absolute value over 127, round to `int8`, and keep the scale factor alongside it. That is symmetric per-vector quantisation in three lines of numpy, it is what `eval/wire_formats.py` measures, and it needs nothing from this library.
+This needs no code from `promptlsh`: take the embedding you already have, divide each vector by its own max absolute value over 127, round to `int8`, and keep the scale factor alongside it. That is symmetric per-vector quantisation in three lines of numpy, and it is what `eval/wire_formats.py` measures.
 
 ## What the hashing buys anyway
 
@@ -71,7 +71,7 @@ Second, **where you would rather not put something near-invertible on the wire.*
 
 Third — and this one I only measured while writing this up — **where the evasion you actually face is reordering.** Shuffling the words of a prompt keeps its meaning and destroys every word shingle, which makes it the cheapest possible attack on a lexical digest. It works completely: shuffle the words and `plm1` similarity falls to **0.001**, indistinguishable from two unrelated prompts. The semantic digest barely notices. On the same 300 prompts, `pls1` holds **0.843 bit agreement** — an implied cosine of **0.881**, against a raw-embedding cosine of 0.885. Almost none of the signal is lost.
 
-So the 32-byte digest is not simply a smaller, worse version of the embedding. Against a one-line evasion that reduces the lexical digest to noise, it is categorically more durable. That is a third reason to ship it, and a harder one to argue with than the byte budget.
+The 32-byte digest is more than a degraded embedding. Against a one-line evasion that reduces the lexical digest to noise, it is categorically more durable. That is a third reason to ship it, and a harder one to argue with than the byte budget.
 
 ## Putting the options side by side
 
@@ -90,7 +90,7 @@ above — but I have not measured it, and turning "a bit-signature leaks less th
 vector" into a tidy High/Medium/Low rating would be inventing precision I do not have. That
 is the same mistake as the cross-org figure below, and once is enough.
 
-**One note on lookup cost, since the table only covers the wire.** These formats do not
+**The table only covers the wire, and lookup is a separate axis.** These formats do not
 index the same way. Quantised and full vectors want approximate nearest-neighbour search —
 HNSW, IVF, the usual vector-database machinery. A 256-bit signature is a Hamming-distance
 problem: XOR and popcount, which is a single instruction on modern hardware, and which
@@ -118,8 +118,8 @@ material, which is a real result, and it says nothing whatsoever about two indep
 organisations. Labelling it cross-org was my error.
 
 So I ran the actual test: five independently collected public corpora, treated as five
-organisations, with positive controls and a null baseline so that "found nothing" could be
-distinguished from "measured it wrong." It is more sobering.
+organisations, with positive controls and a null baseline to distinguish "found nothing"
+from "measured it wrong." The result is worse than the number I retracted.
 
 **On literal text, cross-feed correlation is essentially zero.** Independent feeds do not
 share wording, so a wording-based fingerprint has nothing to grip. Across every pair of
@@ -133,7 +133,7 @@ that collect different *kinds* of artifact — jailbreak wrappers versus bare ha
 at 25 to 39 percent, turned out to be between datasets built from one another. Those measure
 my pipeline working, not the world agreeing.
 
-The practical read: a digest is strong for collapsing redundancy **inside** a feed, which is
+A digest reliably collapses redundancy **inside** a feed, which is
 the 1.8x result earlier. Treat cross-organisation correlation as opportunistic, and expect it
 only between feeds that collect the same kind of thing. Full tables in
 [`RESULTS.md`](https://github.com/ashwinvis98/promptlsh/blob/main/RESULTS.md) §2b.
@@ -141,7 +141,7 @@ only between feeds that collect the same kind of thing. Full tables in
 ## What this doesn't show
 
 - These are matching rates on one dataset's paraphrase pairs, not a detection benchmark. The digest answers "are these the same attack reworded," not "is this an attack."
-- The strongest model (`0din`) is **substantially** in-distribution here, not mildly: its model card reports pre-training on 161,396 WildJailbreak pairs, and this evaluation runs on WildJailbreak pairs. `bge-small`, a general model with no such exposure, is the honest reference to quote — which is why the headline number I stand behind is the general model's, not the domain-tuned one's.
+- The strongest model (`0din`) is heavily in-distribution: its model card reports pre-training on 161,396 WildJailbreak pairs, which is the evaluation set itself. `bge-small`, a general model without that exposure, is the honest reference, and it supplies every headline number here.
 - Recall@1 degrades as the candidate pool grows — the centered digest drops from 0.613 at 400 candidates to 0.534 at 1000 on the general model, as expected for nearest-neighbour retrieval.
 - I have not measured invertibility, only argued about it. The claim that a bit-signature exposes less than a quantised vector is structural reasoning, not a result.
 - **The candidate pools are small.** Everything here runs at 400 and 1,000 candidates, and recall already falls from 0.613 to 0.534 across that gap. A production feed indexes hundreds of thousands of observables, and nothing in this evaluation tells you where the curve lands there. I would expect it to keep falling. If you are sizing this for real, measure it at your own scale before trusting any number above.
