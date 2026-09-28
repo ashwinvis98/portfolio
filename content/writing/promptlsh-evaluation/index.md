@@ -1,5 +1,5 @@
 ---
-title: "What to Put on the Wire for a Prompt Attack"
+title: "Sizing a Fingerprint for Prompt Attacks"
 date: 2026-09-27
 draft: false
 categories: ["Research"]
