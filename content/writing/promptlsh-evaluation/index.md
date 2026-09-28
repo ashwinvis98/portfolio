@@ -1,26 +1,26 @@
 ---
-title: "What a Prompt-Attack Fuzzy Hash Actually Buys You"
+title: "Beaten by a Rounding Trick"
 date: 2026-09-27
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
-summary: "I measured my own tool against the embedding it derives from, and it loses on recall by 11 to 21 points. Then I found the one thing it wins at decisively. Here is when a 32-byte digest is the right call and when it isn't."
-description: "Measuring a similarity digest for prompt attacks against the embedding it is derived from, and finding it loses on recall. What it buys anyway, where it wins outright, and how little of that survives across independent feeds."
+summary: "I built a fuzzy hash for prompt attacks, then measured it against the embedding it comes from. Rounding that embedding to 8 bits beat it — except at one thing."
+description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here is the one case where the digest still wins, and how little correlation survives across independent feeds."
 ---
 
-I built a fuzzy hash for prompt attacks — `promptlsh`, a similarity digest where a reworded jailbreak produces a digest close to the original's, so near-duplicates line up instead of reading as unrelated. Then I measured whether it earns its place, against the thing it is derived from. The honest answer is that for most uses you should ship a quantised embedding instead. This is the measurement that says so, and the two cases where the 32-byte digest still wins.
+A prompt-attack feed lands with four hundred jailbreaks in it. Most are the same dozen templates with the words moved around. Your platform cannot tell: it keys each prompt on its exact text, so four hundred items is what you store, and four hundred items is what someone has to read.
+
+Malware intelligence solved this a long time ago. `ssdeep` and `TLSH` are fuzzy hashes — similar inputs produce similar digests, so a family clusters itself and an analyst sees one thing instead of two hundred. Prompts have no equivalent.
+
+So I built one. `promptlsh` emits a similarity digest for a prompt, and a reworded jailbreak lands close to its original. Then I measured whether it earns its place against the thing it is derived from, and it does not. For most uses you should round the embedding to 8 bits and ship that instead. This is the measurement that says so — and the one case where 32 bytes still wins.
 
 ## The question
 
-Malware intelligence has had this for years. `ssdeep` and `TLSH` are fuzzy hashes: similar inputs produce similar digests, so a platform clusters a malware family on its own. Prompt attacks have no equivalent. Store a prompt keyed on its exact text and changing one word makes it look completely unrelated — so a feed of reworded jailbreaks reads as a pile of separate items rather than one campaign seen many times.
+The fix is obvious. The design question is not: *what form should the fingerprint take?* There are four plausible answers and they are not equally good.
 
-![Top: a similarity digest is built so that a prompt with one word changed still produces a digest that mostly matches the original, which is what lets a platform cluster the two together. Bottom: a cryptographic hash is built to do the exact opposite — the same one-word change scrambles it into something unrelated. That difference is the whole reason this tool exists.](ill1-fuzzy-vs-exact.png)
+![Top: one word changes, and most of the digest survives. Bottom: the same change, to a cryptographic hash.](ill1-fuzzy-vs-exact.png)
 
-That is not an abstract problem. If you run a prompt-attack feed, most of what arrives is a slightly reworded variant of a template you already hold, and every variant lands as a new item for someone to look at.
-
-The obvious fix is to give a prompt a fuzzy fingerprint. The non-obvious question — the one worth measuring — is *what form that fingerprint should take*, because there is more than one option and they are not equally good.
-
-Three of the options below are formats this library emits, so it is worth naming them once:
+Three of the four are formats this library emits, so they are worth naming once:
 
 - **`plm1`** — 128-permutation lexical MinHash over word shingles. No embedding model. ~1.1 KB on the wire.
 - **`pls1`** — 256-bit SimHash over a sentence embedding. 32 bytes.
@@ -28,13 +28,13 @@ Three of the options below are formats this library emits, so it is worth naming
 
 ## The corpus is more redundant than you'd guess
 
-First, is the problem even real? Yes, and measurably so. On the full HackAPrompt attack set — 579,953 inputs — **52.6% are exact duplicates** after normalisation, leaving 274,804 unique. The rate holds across models (36% to 52%) and climbs by challenge level (31% to 100%).
+The problem is real and it is measurable. On the full HackAPrompt attack set — 579,953 inputs — **52.6% are exact duplicates** after normalisation, leaving 274,804 unique. The rate holds across models (36% to 52%) and climbs by challenge level (31% to 100%).
 
-One caveat that has to come first, because the number depends on it: HackAPrompt is multilingual. Around 7.4% of prompts have no ASCII alphanumerics at all, and about 13% carry material non-Latin content. A tokeniser that stripped non-Latin text would collapse all of those together and inflate the duplicate rate. The figures above use a Unicode-aware tokeniser that keeps them distinct, so the redundancy is real, not an artifact.
+One caveat, because the headline number depends on it: HackAPrompt is multilingual, and a tokeniser that stripped non-Latin text would collapse those prompts together and inflate the duplicate rate. These figures use a Unicode-aware tokeniser, so the redundancy is real rather than an artifact of tokenisation.
 
 Beyond exact duplicates, near-duplicates matter more. On a seeded 40k slice, 25% are exact duplicates and roughly another 35% of the *unique* prompts pull into near-duplicate clusters — an overall ~1.8x collapse. Deduplicating by digest genuinely cuts what an analyst reviews. (HackAPrompt is a competition corpus, so its redundancy sits on the high side; treat the shape, not the exact factor, as the takeaway.)
 
-![Left: 52.6% of the 579,953 HackAPrompt attack inputs are exact duplicates after normalisation, leaving 274,804 unique. Right: on a seeded 40k slice, exact deduplication followed by near-duplicate clustering leaves 22,019 distinct items — 1.8x fewer things for an analyst to review.](fig2-redundancy.png)
+![Left: the full corpus, by duplicate share. Right: what a digest collapses a 40,000-prompt slice down to.](fig2-redundancy.png)
 
 ## The measurement
 
@@ -55,7 +55,7 @@ Here is the part that undercuts the tool, stated first because it is the most im
 
 And the dependency-free lexical digest is worse than that: at 128 permutations a `plm1` digest is about 1.1 KB — *larger* than the 384-byte int8 embedding — and scores 0.537, well *below* it. It is beaten on both axes at once. It is not a point on the size/fidelity curve; it sits off it.
 
-![Four ways to put one prompt on the wire, measured on bge-small at a 400-candidate pool. The int8-quantised embedding matches the full float embedding's recall at a quarter of the size, and beats the lexical MinHash digest while being three times smaller. Only these four points were measured; no interpolation is implied between them.](fig1-size-fidelity.png)
+![Four formats, four measured points. Nothing is interpolated between them.](fig1-size-fidelity.png)
 
 The blunt version: **if you can exchange a few hundred bytes per prompt, ship the int8-quantised embedding, not a hash.** That is what the numbers say, and there is no point pretending otherwise.
 
@@ -63,13 +63,13 @@ To be concrete, since this is advice `promptlsh` deliberately does not implement
 
 ## What the hashing buys anyway
 
-So why does the 32-byte digest exist at all? The measurement narrows it to two honest cases.
+So why does the 32-byte digest exist at all? The measurement narrows it to three honest cases.
 
 First, **where the byte budget genuinely binds.** Thirty-two bytes against 384 is about a twelvefold difference in storage and index size. Attach a fingerprint to every observable across a high-volume feed and that multiple stops being academic.
 
 Second, **where you would rather not put something near-invertible on the wire.** A SimHash of an embedding is lossy in a way a quantised embedding is not — the quantised vector is close to recoverable, the bit-signature much less so. That is a difference in *degree of exposure*, not a privacy guarantee, and I would not dress it up as one.
 
-![Left: a quantised embedding stays close enough to the original that the message can be approximately reconstructed from it. Right: a 256-bit signature leaves much less to work with. Both leak something — this is a difference in degree of exposure, not a privacy guarantee.](ill3-recoverability.png)
+![What survives a reconstruction attempt. Left: a quantised embedding. Right: a 256-bit signature.](ill3-recoverability.png)
 
 Third — and this one I only measured while writing this up — **where the evasion you actually face is reordering.** Shuffling the words of a prompt keeps its meaning and destroys every word shingle, which makes it the cheapest possible attack on a lexical digest. It works completely: shuffle the words and `plm1` similarity falls to **0.001**, indistinguishable from two unrelated prompts. The semantic digest barely notices. On the same 300 prompts, `pls1` holds **0.843 bit agreement** — an implied cosine of **0.881**, against a raw-embedding cosine of 0.885. Almost none of the signal is lost.
 
