@@ -20,6 +20,11 @@
     {{- else -}}
       {{- $src = .RelPermalink -}}
     {{- end -}}
+  {{- else -}}
+    {{- /* A local image that doesn't resolve to a bundle resource would ship as a
+           silently broken <img>. Fail the build instead: a typo'd or missing image
+           file should never reach the live site unnoticed. */ -}}
+    {{- errorf "render-image: %q in %q did not resolve. Check the filename and that the file sits next to index.md in the page bundle." .Destination .Page.Path -}}
   {{- end -}}
 {{- end -}}
 <figure class="post-figure">
