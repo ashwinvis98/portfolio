@@ -5,16 +5,16 @@ draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
 summary: "I built a fuzzy hash for prompt attacks, then measured it against the embedding it comes from. Rounding that embedding to 8 bits beat it — except at one thing."
-description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here is the one case where the digest still wins, and how little correlation survives across independent feeds."
+description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here are the three narrow cases where the digest still wins, and how little correlation survives across independent feeds."
 ---
 
 A prompt-attack feed lands with four hundred jailbreaks in it. Most are the same dozen templates with the words moved around. Your platform cannot tell: it keys each prompt on its exact text, so four hundred items is what you store, and four hundred items is what someone has to read.
 
 Malware intelligence solved this a long time ago. `ssdeep` and `TLSH` are fuzzy hashes — similar inputs produce similar digests, so a family clusters itself and an analyst sees one thing instead of two hundred. Prompts have no equivalent.
 
-So I built one. `promptlsh` emits a similarity digest for a prompt, and a reworded jailbreak lands close to its original. Then I measured whether it earns its place against the thing it is derived from, and it does not. For most uses you should round the embedding to 8 bits and ship that instead. This is the measurement that says so — and the one case where 32 bytes still wins.
+So I built one. `promptlsh` emits a similarity digest for a prompt, and a reworded jailbreak lands close to its original. Then I measured whether it earns its place against the thing it is derived from, and it does not. For most uses you should round the embedding to 8 bits and ship that instead. This is the measurement that says so — and the three narrow cases where 32 bytes still wins.
 
-## The question
+## There is more than one way to fingerprint a prompt
 
 The fix is obvious. The design question is not: *what form should the fingerprint take?* There are four plausible answers and they are not equally good.
 
@@ -36,9 +36,9 @@ Beyond exact duplicates, near-duplicates matter more. On a seeded 40k slice, 25%
 
 ![Left: the full corpus, by duplicate share. Right: what a digest collapses a 40,000-prompt slice down to.](fig2-redundancy.png)
 
-## The measurement
+## What I actually measured
 
-So a fingerprint is worth having. The real design question is what goes on the wire, and the options form a size/fidelity curve:
+Deduplication works. The engineering choice is what goes on the wire, and the options form a size/fidelity curve:
 
 - a full float embedding — the ceiling, roughly 1.5 KB per prompt;
 - an **int8-quantised embedding** — roughly 384 bytes;
@@ -49,11 +49,9 @@ The task: recall@1 on WildJailbreak paraphrase pairs. Each vanilla request (abou
 
 ## The result that argues against my own tool
 
-Here is the part that undercuts the tool, stated first because it is the most important finding.
-
 **The int8-quantised embedding keeps essentially the entire ceiling** — 0.767 vs a 0.767 ceiling on the general model, 0.820 vs 0.820 on the domain-tuned one (both at a 400-candidate pool) — at about 384 bytes. **The 256-bit SimHash digest gives up 11 to 21 points** against that ceiling; the best case, domain-tuned and centered, is 0.708 against 0.820. That gap is the price of shrinking 384 bytes down to 32.
 
-And the dependency-free lexical digest is worse than that: at 128 permutations a `plm1` digest is about 1.1 KB — *larger* than the 384-byte int8 embedding — and scores 0.537, well *below* it. It is beaten on both axes at once. It is not a point on the size/fidelity curve; it sits off it.
+The dependency-free lexical digest fares worse still. At 128 permutations a `plm1` digest runs about 1.1 KB — three times *larger* than the int8 embedding — and scores 0.537, well below it. Beaten on both axes at once, it is not a point on the size/fidelity curve. It sits off it.
 
 ![Four formats, four measured points. Nothing is interpolated between them.](fig1-size-fidelity.png)
 
@@ -146,6 +144,8 @@ only between feeds that collect the same kind of thing. Full tables in
 - The strongest model (`0din`) is **substantially** in-distribution here, not mildly: its model card reports pre-training on 161,396 WildJailbreak pairs, and this evaluation runs on WildJailbreak pairs. `bge-small`, a general model with no such exposure, is the honest reference to quote — which is why the headline number I stand behind is the general model's, not the domain-tuned one's.
 - Recall@1 degrades as the candidate pool grows — the centered digest drops from 0.613 at 400 candidates to 0.534 at 1000 on the general model, as expected for nearest-neighbour retrieval.
 - I have not measured invertibility, only argued about it. The claim that a bit-signature exposes less than a quantised vector is structural reasoning, not a result.
+- **The candidate pools are small.** Everything here runs at 400 and 1,000 candidates, and recall already falls from 0.613 to 0.534 across that gap. A production feed indexes hundreds of thousands of observables, and nothing in this evaluation tells you where the curve lands there. I would expect it to keep falling. If you are sizing this for real, measure it at your own scale before trusting any number above.
+- **Reordering is one evasion, not the category.** The robustness result tests word-shuffling, which is the cheapest attack available. Synonym substitution, inserted noise, and structural rewrites are all untested here, and there is no reason to assume the digest holds up equally against them.
 
 ## So what should you actually ship?
 
