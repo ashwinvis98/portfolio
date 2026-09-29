@@ -4,8 +4,8 @@ date: 2026-09-29
 draft: false
 categories: ["Notes"]
 tags: ["threat-intelligence", "cti", "opencti", "entity-resolution", "record-linkage", "threat-actor-naming", "knowledge-base", "rag", "data-quality"]
-summary: "One hacking group can carry a dozen names. Merging them is easy until you merge two different groups by accident, and then your knowledge base lies with total confidence."
-description: "Teaching a threat-intelligence knowledge base that a dozen vendor names can mean one adversary, and why I deliberately stopped short of catching every duplicate."
+summary: "One hacking group can carry a dozen names. Merging them is easy until you merge two different groups by accident — which I did, ten times, including two separate countries' intelligence services."
+description: "Teaching a threat-intelligence knowledge base that a dozen vendor names can mean one adversary, why I stopped short of catching every duplicate, and what I found when I finally audited my own matcher instead of trusting the design."
 ---
 
 ![A hooded figure at a keyboard seen from behind, covered in layered stick-on name badges, one peeled off on the floor beside the chair.](01-hero.png)
@@ -68,7 +68,7 @@ I built the matcher in **two tiers**, from most certain to least certain. The ru
 
 The first pass is strict and boring, which is exactly what you want for the high-confidence cases. I take every group and build a list of all its known names and aliases, including splitting comma-separated alias strings so each nickname stands on its own. Then I check whether any name or alias of one record exactly matches a name or alias of another, ignoring capitalisation.
 
-This is the pass that catches "Cozy Bear = APT29," because reputable sources *already list* Cozy Bear as an alias of APT29. I'm not guessing; I'm trusting the aliases the intelligence community has already established. On my data this pass produced **317 confident merges**, with no mistakes I could find. Exact matching on established aliases just doesn't produce false positives.
+This is the pass that catches "Cozy Bear = APT29," because reputable sources *already list* Cozy Bear as an alias of APT29. I'm not guessing; I'm trusting the aliases the intelligence community has already established. On my data this pass merges a few hundred pairs, and I've found nothing wrong in it. Exact matching on established aliases is about as safe as this gets.
 
 ### Tier 2: the careful fuzzy pass
 
@@ -92,7 +92,7 @@ A name ending in **"Army"** looks more promising — "army" survives the filler 
 
 A merge only happens when what's left is genuinely unusual *and* points at exactly one other record. That's a narrow gate on purpose, and most names that reach it don't get through.
 
-This second pass added **59 more merges** on top of Tier 1's 317, only where a genuinely distinctive name pointed at exactly one match.
+This second pass adds a few dozen more merges on top of the first, only where a genuinely distinctive name pointed at exactly one match. It is also, as I found out later, where all of my errors were.
 
 ![A sorting office with two stacked chutes: the wide upper one passing items through briskly, the narrow lower one with an inspector rejecting almost everything into an enormous bin.](04-two-tier-funnel.png)
 
@@ -132,15 +132,40 @@ Each of these would have nudged recall up a point or two. Each also widened the 
 
 That's an uncomfortable thing to write in an engineering post: *I chose to catch fewer duplicates on purpose.* But it was the right call for a system whose job is to be trusted.
 
+## Then I went and checked
+
+Everything above is what I designed and what I believed when I first wrote this. Then I did the thing I should have done first: I re-ran the matcher over an export and read every pair it produced.
+
+The strict first pass held up. The fuzzy pass did not. **Ten of its fifty-six matches were wrong** — an 18% false positive rate in exactly the tier I'd described as cautious. Two of them were genuinely bad:
+
+```
+[peoples]   Democratic People's Republic of Korea  <->  People's Liberation Army
+                                                        Strategic Support Force (China)
+[ministry]  Ministry of Intelligence and Security  <->  Ministry of State Security
+            (Iran)                                      (China)
+```
+
+I had merged two different countries' state apparatus. Twice. In a system whose entire argument is that a wrong merge is worse than a missed one.
+
+The rest were the same shape: `Magnet Goblin` with `Goblin Panda`, `Banshee` with `Void Banshee`, `Curious Serpens` with `Curious Gorge`, and — my favourite — a placeholder record literally named `Unknown` merged with "Unknown satellite signal hijack actor."
+
+The uniqueness rule wasn't broken. It did exactly what I built it to do. The failure was one level up, in what I'd let count as *distinctive*, and the reason is worth sitting with:
+
+I built the trap-word list by frequency. Any token appearing in five or more records got excluded, which is how "bear" and "panda" and "typhoon" ended up on it. But Tier 2 *requires* a token to point at exactly one other record. So the rule is structurally blind to precisely the vocabulary that collides in two records and no more — and that's where vendor naming schemes quietly overlap, because they all draw on the same pool of evocative nouns. Frequency-based stop-listing can only see the collisions that are already common. It cannot see the ones the rule selects for.
+
+And "peoples" and "ministry" were never vendor vocabulary at all. They're ordinary institutional English, long enough to clear the minimum length, rare enough in a corpus of threat actors to look unique. I'd stop-listed the words that sound like threat intelligence and left the words that sound like government.
+
+The fix was unglamorous: institutional and geopolitical vocabulary added to the trap list, the handful of shared creature-nouns added too, placeholder names barred from matching on any tier. That removes all ten and costs nothing — the legitimate merges are unchanged. It's now covered by tests that assert each of those ten pairs stays apart, which is coverage the matcher should have had from the start and didn't.
+
 ## Where it landed
 
-The final tally: **317 merges** from the strict first pass, **59 more** from the cautious fuzzy pass. 376 pairs of records fused into complete, single cards. Every group I couldn't confidently merge kept its own card, ready to be improved later if better alias data arrives.
+A few hundred merges from the strict first pass, a few dozen from the fuzzy one, all fused into complete single cards. Every group I couldn't confidently merge kept its own card, ready to be improved later if better alias data arrives.
 
 The payoff is the APT29 card from the companion piece. It carries the *union* of the evidence that used to sit in two separate records — the malware, the techniques, the targets pooled under one entity, findable by any of its names. Ask about Midnight Blizzard, ask about NOBELIUM, ask about Cozy Bear, and they all land on the same story. Which is how a threat analyst already thinks about them.
 
 Pooled, not exhaustive: the merged card still caps each relationship list rather than printing everything, so it's the well-attested core of what both records knew rather than a complete dossier.
 
-Worth being precise about what this is not. Those 376 merges are the ones I could justify, not the full set that exists in the data. I know there are real duplicates still sitting apart, because the rules I declined to add would have found some of them. The gap is deliberate and it is not measured — I can't tell you how many I'm missing, only that the number isn't zero. Better alias data upstream would shrink it faster than any cleverness in the matcher.
+Worth being precise about what that is not. Those merges are the ones I could justify, not the full set that exists in the data. I know there are real duplicates still sitting apart, because the rules I declined to add would have found some of them. The gap is deliberate, and unlike the false merges it is *not* measured — I can't tell you how many I'm missing, only that the number isn't zero. Better alias data upstream would shrink it faster than any cleverness in the matcher.
 
 ## The broader lesson
 
@@ -150,7 +175,9 @@ Strip away the security specifics and this is a story about **matching identitie
 
 **Know who's reading your data, and tune your errors for them.** A dashboard a human scans can tolerate over-eager merging; a person spots the weird result and moves on. An AI that speaks with authority cannot. It launders your mistakes into confident prose. When the consumer can't sanity-check you, precision beats recall, and a gap beats a trap every time.
 
-I set out to teach a machine that Cozy Bear and APT29 are the same villain. The harder and more valuable lesson was teaching it when to admit it *wasn't sure*, and to leave two cards standing rather than glue together a lie.
+There's a third lesson I'd rather have learned some other way. **An argument for precision is not the same as having measured your precision.** I designed carefully, reasoned about failure modes correctly, wrote all of this down — and still shipped ten false merges, because I had never once sat down and read the output. The design thinking was sound and it was not a substitute for checking.
+
+I set out to teach a machine that Cozy Bear and APT29 are the same villain. The harder lesson was teaching it when to admit it *wasn't sure* — and then finding out I had to learn the same thing myself.
 
 Keeping all of those cards current as new reporting lands is a separate problem, and one I've written about in [a piece on refreshing the library without rebuilding it](/writing/from-half-a-day-to-a-coffee-break/).
 
