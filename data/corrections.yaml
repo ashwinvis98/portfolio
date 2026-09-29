@@ -7,3 +7,13 @@
   where: "promptlsh — RESULTS.md"
   what: "Stated the digest size advantage over a quantised embedding as roughly 10x."
   fix: "The correct ratio is roughly 12x — 384 bytes against 32. Fixed in the repository."
+
+- date: "2026-09-27"
+  where: "promptlsh — RESULTS.md §2"
+  what: "Presented a 2.9x figure (35.1% against 12.2%) under the heading \"Cross-org correlation\"."
+  fix: "The measurement is real but the label was wrong. The two \"organisations\" were random halves of a single high-redundancy competition corpus, so they shared wording by construction: it measures the gap between exact and fuzzy matching on closely related material, not a cross-organisation rate. The section is now titled \"Fuzzy vs exact matching on shared source material\" and says so explicitly. A genuine cross-feed measurement across five independently collected corpora is reported separately in §2b, and it is far more sobering — essentially zero on literal text."
+
+- date: "2026-09-27"
+  where: "promptlsh — RESULTS.md §3"
+  what: "Told readers the evaluation scripts were in eval/, when the central int8-quantisation comparison was only ever in an uncommitted scratch script."
+  fix: "No figure was wrong, but nobody could reproduce the number the whole post pivots on. The comparison is now eval/wire_formats.py with fixed seeds, and re-running it reproduces every bge-small figure exactly."
