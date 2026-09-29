@@ -1,7 +1,7 @@
 ---
 title: "The Attacks That Worked Don't Match the Taxonomy"
 date: 2026-09-28
-draft: false
+draft: true
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "mitre-atlas", "owasp", "evaluation"]
 summary: "I took 20,384 prompt attacks that actually beat a model and tried to label every one. Fewer than one in six lands anywhere on MITRE ATLAS or the OWASP LLM Top 10 — and the ones with no name are the short ones."
