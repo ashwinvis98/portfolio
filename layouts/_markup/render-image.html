@@ -11,7 +11,10 @@
   {{- $path := strings.TrimPrefix "./" $u.Path -}}
   {{- $res := or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
   {{- with $res -}}
-    {{- if eq .ResourceType "image" -}}
+    {{- /* SVG has ResourceType "image" but is not rasterisable: .Width/.Resize
+           both fail on it. Vector diagrams therefore pass straight through and
+           scale via their own viewBox. */ -}}
+    {{- if and (eq .ResourceType "image") (ne .MediaType.SubType "svg") -}}
       {{- $tw := cond (gt .Width 1200) 1200 .Width -}}
       {{- $i := .Resize (printf "%dx webp q85" $tw) -}}
       {{- $src = $i.RelPermalink -}}

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" width="100%" role="img" aria-labelledby="kgTitle kgDesc">
+  <title id="kgTitle">A knowledge graph centred on APT29</title>
+  <desc id="kgDesc">APT29 sits at the centre. Labelled threads run outward: "uses" to SUNBURST the malware, "uses" to phishing the technique, "targets" to the healthcare sector, "targets" to the United States, and "originates from" to Russia. Every fact is a labelled thread between two dots.</desc>
+
+  <style>
+    .paper { fill: #E9E5D6; }
+    .node  { fill: #E9E5D6; stroke: #1E3A32; stroke-width: 2; }
+    .hub   { fill: #BC3B5C; stroke: #1E3A32; stroke-width: 2; }
+    .edge  { stroke: #47695B; stroke-width: 2; fill: none; }
+    .lbl   { font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+             font-size: 19px; fill: #1E3A32; text-anchor: middle; }
+    .lblsm { font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+             font-size: 15px; fill: #7D8F6F; text-anchor: middle; }
+    .hublbl{ font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+             font-size: 22px; font-weight: 600; fill: #E9E5D6; text-anchor: middle; }
+    .verb  { font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+             font-size: 15px; font-style: italic; fill: #47695B; text-anchor: middle; }
+  </style>
+
+  <rect class="paper" x="0" y="0" width="700" height="440"/>
+
+  <!-- threads drawn first so nodes sit on top of them -->
+  <g class="edge">
+    <line x1="350" y1="220" x2="110" y2="80"/>
+    <line x1="350" y1="220" x2="110" y2="360"/>
+    <line x1="350" y1="220" x2="590" y2="80"/>
+    <line x1="350" y1="220" x2="600" y2="250"/>
+    <line x1="350" y1="220" x2="350" y2="400"/>
+  </g>
+
+  <!-- thread labels, each on a small paper patch so the line does not cut the text -->
+  <g>
+    <rect class="paper" x="196" y="136" width="52" height="20"/>
+    <text class="verb" x="222" y="151">uses</text>
+
+    <rect class="paper" x="196" y="284" width="52" height="20"/>
+    <text class="verb" x="222" y="299">uses</text>
+
+    <rect class="paper" x="446" y="136" width="66" height="20"/>
+    <text class="verb" x="479" y="151">targets</text>
+
+    <rect class="paper" x="452" y="226" width="66" height="20"/>
+    <text class="verb" x="485" y="241">targets</text>
+
+    <rect class="paper" x="292" y="302" width="126" height="20"/>
+    <text class="verb" x="355" y="317">originates from</text>
+  </g>
+
+  <!-- satellite nodes -->
+  <g>
+    <rect class="node" x="25"  y="51"  width="170" height="58" rx="8"/>
+    <text class="lbl"   x="110" y="76">SUNBURST</text>
+    <text class="lblsm" x="110" y="96">malware</text>
+
+    <rect class="node" x="25"  y="331" width="170" height="58" rx="8"/>
+    <text class="lbl"   x="110" y="356">Phishing</text>
+    <text class="lblsm" x="110" y="376">technique</text>
+
+    <rect class="node" x="505" y="51"  width="170" height="58" rx="8"/>
+    <text class="lbl"   x="590" y="76">Healthcare</text>
+    <text class="lblsm" x="590" y="96">sector</text>
+
+    <rect class="node" x="515" y="221" width="170" height="58" rx="8"/>
+    <text class="lbl"   x="600" y="246">United States</text>
+    <text class="lblsm" x="600" y="266">country</text>
+
+    <rect class="node" x="265" y="371" width="170" height="58" rx="8"/>
+    <text class="lbl"   x="350" y="396">Russia</text>
+    <text class="lblsm" x="350" y="416">country</text>
+  </g>
+
+  <!-- the hub -->
+  <circle class="hub" cx="350" cy="220" r="58"/>
+  <text class="hublbl" x="350" y="222">APT29</text>
+  <text class="lblsm"  x="350" y="243" fill="#E9E5D6">threat actor</text>
+</svg>

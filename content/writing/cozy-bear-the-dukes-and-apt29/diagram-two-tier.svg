@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 560" width="100%" role="img" aria-labelledby="ttTitle ttDesc">
+  <title id="ttTitle">The two-tier merge decision, most certain first</title>
+  <desc id="ttDesc">Starting from two records that might be the same group. If they share an exact name or alias, merge them as Tier 1, which produced 317 pairs. If not, strip generic filler words and vendor family words, then check whether a distinctive word remains that is shared with exactly one other record. If yes, merge as Tier 2, which produced 59 pairs. If the word is ambiguous or nothing distinctive is left, do not merge and keep the records as separate cards.</desc>
+
+  <style>
+    .paper  { fill: #E5E9E6; }
+    .box    { fill: #E5E9E6; stroke: #17314F; stroke-width: 2; }
+    .test   { fill: #E5E9E6; stroke: #3E5E7E; stroke-width: 2; }
+    .merge  { fill: #E5E9E6; stroke: #17314F; stroke-width: 2.5; }
+    .keep   { fill: #D4542A; stroke: #17314F; stroke-width: 2.5; }
+    .flow   { stroke: #3E5E7E; stroke-width: 2.5; fill: none; }
+    .t      { font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+              font-size: 18px; fill: #17314F; text-anchor: middle; }
+    .tw     { font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+              font-size: 18px; fill: #E5E9E6; text-anchor: middle; }
+    .tier   { font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+              font-size: 13px; fill: #6E8BA3; text-anchor: middle; letter-spacing: 0.06em; }
+    .yn     { font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+              font-size: 14px; fill: #3E5E7E; }
+    .count  { font-family: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+              font-size: 15px; fill: #17314F; text-anchor: middle; }
+  </style>
+
+  <rect class="paper" x="0" y="0" width="700" height="560"/>
+
+  <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5"
+          markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 1 L 9 5 L 0 9 z" fill="#3E5E7E"/>
+  </marker>
+
+  <!-- start -->
+  <rect class="box" x="195" y="16" width="310" height="52" rx="8"/>
+  <text class="t" x="350" y="48">Two records — same group?</text>
+  <line class="flow" x1="350" y1="70" x2="350" y2="96" marker-end="url(#a2)"/>
+
+  <!-- tier 1 test -->
+  <rect class="test" x="175" y="98" width="350" height="56" rx="8"/>
+  <text class="tier" x="350" y="120">TIER 1</text>
+  <text class="t"    x="350" y="142">Exact name or alias match?</text>
+
+  <!-- tier 1 yes -> merge, to the right -->
+  <path class="flow" d="M 525 126 L 600 126 L 600 170" marker-end="url(#a2)"/>
+  <text class="yn" x="536" y="118">yes</text>
+  <rect class="merge" x="500" y="172" width="185" height="62" rx="8"/>
+  <text class="t"     x="592" y="198">MERGE</text>
+  <text class="count" x="592" y="220">317 pairs</text>
+
+  <!-- tier 1 no -> continue down -->
+  <line class="flow" x1="350" y1="156" x2="350" y2="186" marker-end="url(#a2)"/>
+  <text class="yn" x="360" y="178">no</text>
+
+  <!-- strip steps -->
+  <rect class="box" x="140" y="188" width="420" height="52" rx="8"/>
+  <text class="t" x="350" y="220">Strip filler words: group, gang, apt…</text>
+  <line class="flow" x1="350" y1="242" x2="350" y2="268" marker-end="url(#a2)"/>
+
+  <rect class="box" x="140" y="270" width="420" height="52" rx="8"/>
+  <text class="t" x="350" y="302">Strip vendor family: bear, panda, typhoon…</text>
+  <line class="flow" x1="350" y1="324" x2="350" y2="350" marker-end="url(#a2)"/>
+
+  <!-- tier 2 test -->
+  <rect class="test" x="120" y="352" width="460" height="78" rx="8"/>
+  <text class="tier" x="350" y="374">TIER 2</text>
+  <text class="t"    x="350" y="396">Distinctive word left, and shared</text>
+  <text class="t"    x="350" y="418">with exactly ONE other record?</text>
+
+  <!-- tier 2 yes -> merge right -->
+  <path class="flow" d="M 580 391 L 630 391 L 630 300 L 600 300" marker-end="url(#a2)"/>
+  <text class="yn" x="588" y="383">yes</text>
+  <rect class="merge" x="415" y="272" width="185" height="62" rx="8"/>
+  <text class="t"     x="507" y="298">MERGE</text>
+  <text class="count" x="507" y="320">59 pairs</text>
+
+  <!-- tier 2 no -> keep separate -->
+  <line class="flow" x1="350" y1="432" x2="350" y2="462" marker-end="url(#a2)"/>
+  <text class="yn" x="360" y="454">no / ambiguous</text>
+  <rect class="keep" x="185" y="464" width="330" height="66" rx="8"/>
+  <text class="tw" x="350" y="492">DON'T MERGE</text>
+  <text class="tw" x="350" y="514">keep as separate cards</text>
+</svg>
