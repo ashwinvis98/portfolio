@@ -11,19 +11,18 @@ description: "Prompt attacks are new. The tooling being built around them is not
 
 ![](01-hero.png)
 
-A jailbreak lands in your logs. Someone typed a paragraph at your assistant and it did something it was never meant to do.
+Someone types a paragraph into a company's AI assistant. Not code, not a file, not an attachment — a couple of sentences of ordinary English. And the assistant does something it was built never to do: prints the instructions it was given, or reaches into a document the person asking was never cleared to read.
 
-You want to know one thing. Has anyone else seen this?
+The paragraph ends up in a log somewhere. Whoever finds it asks the oldest question in security: has anyone else seen this?
 
-That is the most ordinary question in security. For an IP, a domain, a file hash, you would have an answer inside a minute. Check the platform, check the feeds, ask a peer. Twenty-five years of plumbing exists to answer exactly that question, and most of the time it works.
-
-
-For a paragraph of English, you can't ask it at all. There is nowhere to send the question.
-
-I run a [threat intelligence platform](/writing/from-half-a-day-to-a-coffee-break/). Dozens of feeds, a few hundred thousand objects in the graph, connectors chewing through it all day. And the newest threat class coming through the door is one that infrastructure can barely hold.
+For a file, that question takes about a minute. You take its hash, you put the hash into a platform, and the platform tells you whether it is known, who saw it first, and what it did to them. Twenty-five years of plumbing exists to answer exactly that, and most of the time it works.
 
 
-So I went looking for whoever was fixing that. What I found was more interesting than a gap.
+For a paragraph of English, there is nowhere to send the question.
+
+Not because nobody has built anything. A surprising amount exists, and this piece is a walk through it — seven things, in the order a field tends to build them. Give the threat a name. Agree on what the attacks are. Learn to run them on purpose. Catch them at the door. Learn to match things that are merely *similar*. Agree on a shared format. Then actually swap them.
+
+Malware defence built all seven, over roughly twenty-five years. Prompt attacks already have most of them, assembled in a fraction of the time. The one that is missing is the last one, and it is missing for a reason that has very little to do with engineering.
 
 ---
 
@@ -45,7 +44,7 @@ One attack. Three fingerprints with nothing in common. And rewording costs the a
 ![](02-fingerprints.png)
 
 
-There's a second problem and it's the harder one. A malware sample is bad everywhere. A prompt isn't. dogesec makes the point that an indicator of prompt compromise may be a single sentence that on its own looks harmless, and the risk only becomes visible once you know what system is being asked, what data it can reach, and what happens to the answer.
+There's a second problem and it's the harder one. A malware sample is bad everywhere. A prompt isn't. [dogesec](https://www.dogesec.com/blog/modelling_ai_prompt_compromise_in_stix/) makes the point that an indicator of prompt compromise may be a single sentence that on its own looks harmless, and the risk only becomes visible once you know what system is being asked, what data it can reach, and what happens to the answer.
 
 "List all customer records" is a support ticket or an exfiltration attempt depending entirely on who is asking and what's plugged in behind the model.
 
@@ -76,11 +75,11 @@ The comparison doesn't rest on me, either. In two places the same institutions b
 You can't track what you can't name.
 
 
-Thomas Roccia named it. In *The State of Adversarial Prompts* he introduced the Indicator of Prompt Compromise, taking the oldest idea in threat intelligence and pointing it somewhere new.
+[Thomas Roccia](https://github.com/fr0gger) named it. In [*The State of Adversarial Prompts*](https://blog.securitybreak.io/the-state-of-adversarial-prompts-84c364b5d860) he introduced the Indicator of Prompt Compromise, taking the oldest idea in threat intelligence and pointing it somewhere new.
 
 Names do more work than people credit. Once a thing has one, a field can form around it, argue about its edges, and write tools that operate on it. Several people have since published competing taxonomies for what belongs inside the category, which is exactly what a healthy name looks like.
 
-Roccia also built NOVA, a rule engine for describing prompt attacks by behaviour rather than by exact text. That turns out to matter more than it sounds, and we'll come back to it.
+Roccia also built [NOVA](https://github.com/Nova-Hunting/nova-framework), a rule engine for describing prompt attacks by behaviour rather than by exact text. That turns out to matter more than it sounds, and we'll come back to it.
 
 ---
 
@@ -88,11 +87,11 @@ Roccia also built NOVA, a rule engine for describing prompt attacks by behaviour
 
 Naming one indicator isn't the same as agreeing on the shape of the threat.
 
-Malware defence solved that with MITRE ATT&CK — a shared matrix of what adversaries do, so two analysts in different companies mean the same thing by the same words.
+Malware defence solved that with [MITRE ATT&CK](https://attack.mitre.org/) — a shared matrix of what adversaries do, so two analysts in different companies mean the same thing by the same words.
 
-For AI, MITRE built ATLAS. Same structure, same tactic-and-technique decomposition, built as the deliberate counterpart. It started life in 2020 as the Adversarial ML Threat Matrix, before the current wave of language models, aimed at machine learning in general. Prompt injection sits there as `AML.T0051`.
+For AI, MITRE built [ATLAS](https://atlas.mitre.org/). Same structure, same tactic-and-technique decomposition, built as the deliberate counterpart. It started life in 2020 as the Adversarial ML Threat Matrix, before the current wave of language models, aimed at machine learning in general. Prompt injection sits there as `AML.T0051`.
 
-OWASP, separately, published the LLM Top 10. Same organisation, same format, same job as the web application Top 10 that a whole generation of engineers learned security from.
+OWASP, separately, published [the LLM Top 10](https://genai.owasp.org/llm-top-10/). Same organisation, same format, same job as the web application Top 10 that a whole generation of engineers learned security from.
 
 This is the part I keep returning to. Two of the most important institutions in security looked at AI systems and rebuilt their own flagship artefacts for the new domain. Nobody had to point out the analogy to them. They got there first, and they wrote it down.
 
@@ -107,12 +106,12 @@ If you want evidence that this field is walking a road already walked, that's it
 
 Once there's a taxonomy, someone builds tooling to test against it. Malware defence got Metasploit and structured adversary emulation. Prompt attacks got a red team stack very quickly, and most of it is free.
 
-garak, from NVIDIA's AI red team, is a vulnerability scanner for language models carrying well over a hundred probes — jailbreaks, injection, encoding attacks, data leakage, toxicity. It does for a model roughly what a port scanner does for a network. Sweep it, see what breaks, read the log.
+[garak](https://github.com/NVIDIA/garak), from NVIDIA's AI red team, is a vulnerability scanner for language models carrying well over a hundred probes — jailbreaks, injection, encoding attacks, data leakage, toxicity. It does for a model roughly what a port scanner does for a network. Sweep it, see what breaks, read the log.
 
-PyRIT, from Microsoft, orchestrates multi-turn adversarial conversations. An attacker model generates prompts, a target model receives them, a judge model scores what got through.
+[PyRIT](https://github.com/microsoft/PyRIT), from Microsoft, orchestrates multi-turn adversarial conversations. An attacker model generates prompts, a target model receives them, a judge model scores what got through.
 
 
-promptfoo sits closer to testing than attacking, and catches the case where a prompt change quietly reopens a jailbreak you'd already closed. It was acquired by OpenAI earlier this year.
+[promptfoo](https://www.promptfoo.dev/) sits closer to testing than attacking, and catches the case where a prompt change quietly reopens a jailbreak you'd already closed. It was acquired by OpenAI earlier this year.
 
 ![](05-bench.png)
 
@@ -133,9 +132,9 @@ But detection at the door answers "is this prompt bad." It doesn't answer "is th
 
 ## Five: match things that are merely similar
 
-This is the rung malware defence put real work into. When exact hashes stopped working the answer was fuzzy hashing — ssdeep in 2006, TLSH in 2013. Fingerprints built so that similar inputs produce similar outputs, and you can measure how close two things are rather than only whether they're the same.
+This is the rung malware defence put real work into. When exact hashes stopped working the answer was fuzzy hashing — [ssdeep](https://ssdeep-project.github.io/ssdeep/) in 2006, [TLSH](https://tlsh.org/) in 2013. Fingerprints built so that similar inputs produce similar outputs, and you can measure how close two things are rather than only whether they're the same.
 
-The prompt version exists, and it comes from 0DIN, Mozilla's generative AI bug bounty programme. Their toolkit produces locality-sensitive hash signatures for prompts: compact fingerprints that survive rewording, in a versioned, model-pinned format that is deliberately non-comparable across different embedding models, so you can't accidentally compare two things that were never comparable.
+The prompt version exists, and it comes from [0DIN](https://0din.ai/), Mozilla's generative AI bug bounty programme. Their toolkit produces locality-sensitive hash signatures for prompts: compact fingerprints that survive rewording, in a versioned, model-pinned format that is deliberately non-comparable across different embedding models, so you can't accidentally compare two things that were never comparable.
 
 As far as I can find, that's the closest thing to a shareable prompt fingerprint that exists. If you're looking for prior art here, start with them.
 
@@ -147,17 +146,17 @@ As far as I can find, that's the closest thing to a shareable prompt fingerprint
 
 A fingerprint is only useful if two systems can exchange it and mean the same thing by it.
 
-dogesec did that work. Their post *When Prompts Become Indicators* models prompt compromise in STIX, the format threat intelligence already travels in, introducing the prompt as a first-class observable and separating the *fact* of a prompt from any *judgment* about it.
+dogesec did that work. Their post [*When Prompts Become Indicators*](https://www.dogesec.com/blog/modelling_ai_prompt_compromise_in_stix/) models prompt compromise in STIX, the format threat intelligence already travels in, introducing the prompt as a first-class observable and separating the *fact* of a prompt from any *judgment* about it.
 
 
 Then they revised it.
 
-In a follow-up on modelling NOVA rules as structured intelligence, they explain that using STIX patterns for prompt indicators has a limitation: a STIX pattern expresses what literal text to match, whereas a NOVA rule expresses how to reason about prompt behaviour, and for prompt-centric intelligence the second is far more useful to keep.
+In a follow-up on [modelling NOVA rules as structured intelligence](https://www.dogesec.com/blog/modelling_nova_rules_structured_cti/), they explain that using STIX patterns for prompt indicators has a limitation: a STIX pattern expresses what literal text to match, whereas a NOVA rule expresses how to reason about prompt behaviour, and for prompt-centric intelligence the second is far more useful to keep.
 
 That's a design decision published, tested against reality, and openly walked back. It's also a direct challenge to anyone keeping literal-match indicators around, and I've built something that does exactly that. Their argument is good. I think there's a narrow case for holding both — an exact match is cheap, needs no rule engine, and gives you a retrieval key — but the durability point stands, and it's their post that makes it.
 
 
-The obvious objection is why STIX rather than MISP. MISP is the established open format for this, and it already has an `ai-chat-prompt` object template. I went with STIX because I wanted the relationship graph: a prompt as an observable, with indicators, technique mappings and edges hanging off it. That's a preference about shape, not a claim that MISP can't do the job.
+The obvious objection is why STIX rather than [MISP](https://www.misp-project.org/). MISP is the established open format for this, and it already has an [`ai-chat-prompt` object template](https://github.com/MISP/misp-objects/tree/main/objects/ai-chat-prompt). I went with STIX because I wanted the relationship graph: a prompt as an observable, with indicators, technique mappings and edges hanging off it. That's a preference about shape, not a claim that MISP can't do the job.
 
 ---
 
@@ -165,7 +164,7 @@ The obvious objection is why STIX rather than MISP. MISP is the established open
 
 Here's where the ladder stops. And here I have to be careful, because the obvious way to say this is wrong.
 
-People do share prompt attacks. Large public datasets exist — HackAPrompt, WildJailbreak, AdvBench, HarmBench, corpora of jailbreaks scraped from the open web. Feeds exist too: 0DIN runs one, and so does PromptIntel, which has a connector in the official OpenCTI connectors repository, so prompt intelligence is already flowing into threat intelligence platforms through standard plumbing today.
+People do share prompt attacks. Large public datasets exist — [HackAPrompt](https://arxiv.org/abs/2311.16119), [WildJailbreak](https://arxiv.org/abs/2406.18510), AdvBench, HarmBench, corpora of jailbreaks scraped from the open web. Feeds exist too: 0DIN runs one, and so does [PromptIntel](https://promptintel.novahunting.ai/), which has a connector in the official OpenCTI connectors repository, so prompt intelligence is already flowing into threat intelligence platforms through standard plumbing today.
 
 
 What I couldn't find is matching that survives rewording.
@@ -178,7 +177,7 @@ The thing malware defence has and this doesn't is the boring peer-to-peer versio
 
 ## Where the comparison breaks
 
-I've been drawing a straight line between malware and prompts. Two of those rungs are literal rather than figurative, so it's a good line. But it breaks in three places, and the breaks explain more than the similarities.
+I've been drawing a straight line between malware and prompts, and two of the rungs above are literal rather than figurative: MITRE rebuilt ATT&CK as ATLAS, and OWASP rebuilt its Top 10 for language models. So it is a good line. But it breaks in three places, and the breaks explain more than the similarities do.
 
 **An indicator of compromise is proof. A prompt is usually an attempt.** A malicious hash means something ran. A jailbreak in your logs usually means somebody tried. Different evidentiary weight, different response, different shelf life.
 
@@ -210,7 +209,7 @@ Two small open source pieces, both Apache-2.0.
 
 **`promptlsh`** is the fingerprint. A similarity digest for prompts, small enough to travel as a property on a shared object, with a dependency-free lexical variant for environments that can't run an embedding model.
 
-Then I measured whether the idea works, which is [a separate post](/writing/promptlsh-evaluation/) and is more deflating than I expected.
+Then I measured whether the idea works, and the answer was more deflating than I expected.
 
 
 The short version. Within a single corpus, deduplication is large and real — more than half of one major public dataset is exact duplicates. Reworded-twin detection works, though not as well as I'd hoped. But correlation *between independently collected feeds* turned out to be a much narrower thing than I expected.

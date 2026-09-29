@@ -10,7 +10,7 @@ description: "I built a similarity digest for prompt attacks and measured it aga
 
 A prompt-attack feed lands with four hundred jailbreaks in it. Most are the same dozen templates with the words moved around. Your platform cannot tell: it keys each prompt on its exact text, so four hundred items is what you store, and four hundred items is what someone has to read.
 
-Malware intelligence solved this a long time ago. `ssdeep` and `TLSH` are fuzzy hashes — similar inputs produce similar digests, so a family clusters itself and an analyst sees one thing instead of two hundred. Prompts have no equivalent.
+Malware intelligence solved this a long time ago. `[ssdeep](https://ssdeep-project.github.io/ssdeep/)` and `[TLSH](https://tlsh.org/)` are fuzzy hashes — similar inputs produce similar digests, so a family clusters itself and an analyst sees one thing instead of two hundred. Prompts have no equivalent.
 
 So I built one. `promptlsh` emits a similarity digest for a prompt, and a reworded jailbreak lands close to its original. Then I measured whether it earns its place against the thing it is derived from, and it does not. For most uses you should round the embedding to 8 bits and ship that instead. This is the measurement that says so — and the three narrow cases where 32 bytes still wins.
 
@@ -28,7 +28,7 @@ Three of the four are formats this library emits, so they are worth naming once:
 
 ## The corpus is more redundant than you'd guess
 
-The problem is real and measurable. On the full HackAPrompt attack set — 579,953 inputs — **52.6% are exact duplicates** after normalisation, leaving 274,804 unique. The rate holds across models (36% to 52%) and climbs by challenge level (31% to 100%).
+The problem is real and measurable. On the full [HackAPrompt](https://arxiv.org/abs/2311.16119) attack set — 579,953 inputs — **52.6% are exact duplicates** after normalisation, leaving 274,804 unique. The rate holds across models (36% to 52%) and climbs by challenge level (31% to 100%).
 
 HackAPrompt is multilingual, and a tokeniser that stripped non-Latin text would collapse those prompts together and inflate the duplicate rate. These figures use a Unicode-aware tokeniser, so the redundancy is real rather than an artifact of tokenisation.
 
@@ -45,7 +45,7 @@ Deduplication works. The engineering choice is what goes on the wire, and the op
 - a **256-bit SimHash digest** — 32 bytes (this is what `promptlsh` emits as `pls1`/`pls1c`);
 - a **dependency-free lexical MinHash** (`plm1`) — no embedding model at all.
 
-The task: recall@1 on WildJailbreak paraphrase pairs. Each vanilla request (about 113 characters) has a jailbroken rewrite (about 979 characters) — same intent, very different surface. For each vanilla request, is its true rewrite the top match among N candidates? I ran it on a general model (`bge-small`, the clean reference) and a domain-tuned one (`0din`).
+The task: recall@1 on [WildJailbreak](https://arxiv.org/abs/2406.18510) paraphrase pairs. Each vanilla request (about 113 characters) has a jailbroken rewrite (about 979 characters) — same intent, very different surface. For each vanilla request, is its true rewrite the top match among N candidates? I ran it on a general model (`bge-small`, the clean reference) and a domain-tuned one (`0din`).
 
 ## The result that argues against my own tool
 
@@ -178,3 +178,35 @@ repo](https://github.com/ashwinvis98/promptlsh), with the full tables in
 Everything runs on public corpora — HackAPrompt, JailbreakBench, HarmBench, WildJailbreak —
 and no corpus is committed to the repo. WildJailbreak is gated, so you will need to accept
 its terms on HuggingFace before the paraphrase-pair evaluation will run.
+
+## Credits
+
+None of the pieces here are mine. The measurement is.
+
+**Prior art.** Similarity hashing for correlation is long-established in malware analysis —
+[ssdeep](https://ssdeep-project.github.io/ssdeep/) (Kornblum, 2006),
+[TLSH](https://tlsh.org/) (Oliver et al., 2013), and sdhash. The underlying maths is older:
+Broder's MinHash for Jaccard over shingle sets, and Charikar's SimHash for
+random-hyperplane LSH. Applying it to prompts is not new either —
+[0DIN](https://0din.ai/)'s [`prompt-toolkit`](https://github.com/0din-ai/prompt-toolkit)
+emits 256-bit SimHash signatures for prompts in a versioned, model-pinned format, and
+independently arrived at the same model-identity safeguard this library uses. If you want
+the closest existing work, start there.
+
+**The domain model.** [`0dinai/jailbreak-embeddings-base-onnx`](https://huggingface.co/0dinai/jailbreak-embeddings-base-onnx),
+a `multilingual-e5-base` fine-tune published by 0DIN (Mozilla). Note its training data
+overlaps this evaluation set, which is why `bge-small` supplies the headline numbers.
+
+**Datasets.** [HackAPrompt](https://arxiv.org/abs/2311.16119) (Schulhoff et al., EMNLP 2023) ·
+[WildJailbreak / WildTeaming](https://arxiv.org/abs/2406.18510) (AI2) ·
+[HarmBench](https://arxiv.org/abs/2402.04249) (Mazeika et al.) ·
+[JailbreakBench](https://arxiv.org/abs/2404.01318) (Chao et al.) ·
+AdvBench ([Zou et al.](https://arxiv.org/abs/2307.15043)) ·
+the in-the-wild jailbreak corpus of [Shen et al.](https://arxiv.org/abs/2308.03825).
+
+**Tooling.** [`fastembed`](https://github.com/qdrant/fastembed) (Qdrant),
+[`onnxruntime`](https://onnxruntime.ai/), and the
+[`BAAI/bge-small-en-v1.5`](https://huggingface.co/BAAI/bge-small-en-v1.5) embedding model.
+
+**Code.** [`promptlsh`](https://github.com/ashwinvis98/promptlsh) and
+[`adversarial-ai-cti`](https://github.com/ashwinvis98/adversarial-ai-cti), both Apache-2.0.
