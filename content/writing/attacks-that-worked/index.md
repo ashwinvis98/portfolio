@@ -8,6 +8,8 @@ summary: "18,479 attacks that beat a language model, all of them prompt injectio
 description: "A technique survey of 18,479 successful prompt attacks where the correct MITRE ATLAS label is known in advance from how the competition was scored. Keyword attribution recovers 11.4% of it, and most of the remaining breakdown describes the challenges rather than the attackers."
 ---
 
+![](01-hero.png)
+
 The form has a dropdown. You have caught a prompt that got your assistant to do something it shouldn't, you are writing it up, and the field wants to know which technique it was. Prompt injection. Jailbreak. Obfuscation. You pick the closest one, because the form needs a value, and you move on.
 
 I wanted to know how often that dropdown has a right answer, so I took the largest public collection of prompt attacks that actually worked and tried to label every one of them.
@@ -137,6 +139,8 @@ It also puts a ceiling on rule-based detection keyed to named techniques. A rule
 - **`category-fallback` at 0% is a property of the design, not a quality signal.** The detector emits the vocabulary the keyword rules match on, so of course they match.
 - **The submission count differs from a figure I've published before.** 601,757 is every row in the dataset; an earlier redundancy measurement used 579,953, which counted non-empty attack inputs only. Same dataset, two different questions.
 - **Deduplication is within each corpus, not across them.** The 2023 and 2025 figures are separate.
+
+![](03-closing.png)
 
 ## Reproduce it
 
