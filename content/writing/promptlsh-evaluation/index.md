@@ -8,11 +8,11 @@ summary: "I built a fuzzy hash for prompt attacks, then measured it against the 
 description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here are the three narrow cases where the digest still wins, and how little correlation survives across independent feeds."
 ---
 
-A prompt-attack feed lands with four hundred jailbreaks in it. Most are the same dozen templates with the words moved around. Your platform cannot tell: it keys each prompt on its exact text, so four hundred items is what you store, and four hundred items is what someone has to read.
+A fingerprint has to fit somewhere. In a column beside every record, in an index that has to stay fast, in a payload two systems exchange all day. So the first question is not how clever the fingerprint is. It is how many bytes you are willing to spend on one, and what each size actually buys.
 
-Malware intelligence solved this a long time ago. `[ssdeep](https://ssdeep-project.github.io/ssdeep/)` and `[TLSH](https://tlsh.org/)` are fuzzy hashes — similar inputs produce similar digests, so a family clusters itself and an analyst sees one thing instead of two hundred. Prompts have no equivalent.
+I built one of these. `promptlsh` turns an adversarial prompt into a short **similarity digest** — a fingerprint built so that near-identical inputs produce near-identical output, which is the opposite of how a normal hash behaves. [`ssdeep`](https://ssdeep-project.github.io/ssdeep/) and [`TLSH`](https://tlsh.org/) have done this for malware files since 2006 and 2013 respectively. There was no equivalent for prompts, so I wrote one.
 
-So I built one. `promptlsh` emits a similarity digest for a prompt, and a reworded jailbreak lands close to its original. Then I measured whether it earns its place against the thing it is derived from, and it does not. For most uses you should round the embedding to 8 bits and ship that instead. This is the measurement that says so — and the three narrow cases where 32 bytes still wins.
+Then I measured it against the alternatives at four different sizes, and it lost. Take an ordinary sentence embedding, round each number in it down to 8 bits, and you get 384 bytes that retain the full retrieval ceiling. My 32-byte digest gives up 11 to 21 points to buy its smaller footprint. This is that measurement, and the three narrow cases where 32 bytes is still the right call.
 
 ## There is more than one way to fingerprint a prompt
 
@@ -25,6 +25,17 @@ Three of the four are formats this library emits, so they are worth naming once:
 - **`plm1`** — 128-permutation lexical MinHash over word shingles. No embedding model. ~1.1 KB on the wire.
 - **`pls1`** — 256-bit SimHash over a sentence embedding. 32 bytes.
 - **`pls1c`** — the same, mean-centered against a shared reference. Also 32 bytes, and only comparable to digests built from the same model *and* the same reference mean.
+
+And the vocabulary, once, so the rest reads without footnotes:
+
+- **shingles** — overlapping runs of consecutive words. "the cat sat" and "cat sat down" are two three-word shingles of the same sentence.
+- **MinHash** — a way to estimate how much two *sets* overlap without comparing them directly. Here the sets are shingles, so it measures shared wording.
+- **SimHash** — the same trick for *vectors* rather than sets. It slices the space with random planes and records which side of each plane a vector falls on, so similar vectors get similar bit patterns.
+- **embedding** — a model's numeric representation of a piece of text, typically a few hundred numbers. Similar meanings land near each other.
+- **quantising to int8** — rounding each of those numbers to a whole number between −127 and 127, so each takes one byte instead of four.
+- **recall@1** — the headline score below. Given one prompt and a pile of candidates, does its true match come back as the single closest result? Recall@1 of 0.767 means that happened 76.7% of the time.
+- **candidate pool** — the size of that pile. A bigger pool is harder, because there is more to be wrong about.
+- **the ceiling** — what the full, unshrunk embedding scores on the same task. It is the best any smaller version of it could hope to match.
 
 ## The corpus is more redundant than you'd guess
 
@@ -69,7 +80,7 @@ Second, **where you would rather not put something near-invertible on the wire.*
 
 ![What survives a reconstruction attempt. Left: a quantised embedding. Right: a 256-bit signature.](ill3-recoverability.png)
 
-Third — and this one I only measured while writing this up — **where the evasion you actually face is reordering.** Shuffling the words of a prompt keeps its meaning and destroys every word shingle, which makes it the cheapest possible attack on a lexical digest. It works completely: shuffle the words and `plm1` similarity falls to **0.001**, indistinguishable from two unrelated prompts. The semantic digest barely notices. On the same 300 prompts, `pls1` holds **0.843 bit agreement** — an implied cosine of **0.881**, against a raw-embedding cosine of 0.885. Almost none of the signal is lost.
+Third, **where the evasion you face is reordering.** Shuffling the words of a prompt keeps its meaning and destroys every word shingle, which makes it the cheapest possible attack on a lexical digest. It works completely: shuffle the words and `plm1` similarity falls to **0.001**, indistinguishable from two unrelated prompts. The semantic digest barely notices. On the same 300 prompts, `pls1` keeps **84.3% of its bits identical** — the same closeness as a cosine of **0.881**, against 0.885 for the full unshrunk embedding. Almost none of the signal is lost.
 
 The 32-byte digest is more than a degraded embedding. Against a one-line evasion that reduces the lexical digest to noise, it is categorically more durable. That is a third reason to ship it, and a harder one to argue with than the byte budget.
 
@@ -92,7 +103,7 @@ is the same mistake as the cross-org figure below, and once is enough.
 
 **The table only covers the wire, and lookup is a separate axis.** These formats do not
 index the same way. Quantised and full vectors want approximate nearest-neighbour search —
-HNSW, IVF, the usual vector-database machinery. A 256-bit signature is a Hamming-distance
+HNSW, IVF, the usual vector-database machinery. A 256-bit signature is instead a Hamming-distance
 problem: XOR and popcount, which is a single instruction on modern hardware, and which
 multi-index hashing partitions cheaply. I have not benchmarked the two at scale, so I will
 not claim a latency winner. But if your deployment constraint is index cost rather than
@@ -102,24 +113,25 @@ The lexical `plm1` has exactly one reason to exist, and it is neither size nor a
 **zero ML dependency.** No model to download, pin, or run; fully deterministic and offline.
 Use it when you cannot run an embedding model at all. Otherwise the embedding path wins.
 
-Two smaller findings worth carrying: mean-centering (`pls1c`) buys the digest about 5 to 6 points and is essentially free, and a domain-tuned model beats a general one at both the ceiling and the digest. But a general model already gives a usable result — around 0.61 recall@1 at a 400-candidate pool — so no fine-tuning is required to get value.
+Two smaller findings worth carrying. Mean-centering (`pls1c`) — subtracting the average of a shared reference set before hashing, so that what every prompt has in common stops crowding out what makes each one distinct — buys the digest about 5 to 6 points and is essentially free. And a domain-tuned model beats a general one at both the ceiling and the digest. But a general model already gives a usable result — around 0.61 recall@1 at a 400-candidate pool — so no fine-tuning is required to get value.
 
 ## The hard part: correlating across feeds barely works
 
-Everything above measures one corpus against itself. The reason you would attach a
-fingerprint to a shared observable in the first place is different: so two organisations can
-discover they are looking at the same attack. I had a number for that, and it was wrong.
+Everything above measures one corpus against itself. The reason to attach a fingerprint to a
+shared observable is different: so two organisations can discover they are looking at the
+same attack. That is a harder measurement, and it is easy to get a flattering number by
+accident.
 
-I used to quote the digest finding about **2.9x** the overlap of exact matching (35.1% vs
-12.2%) and I labelled it cross-org correlation. It came from randomly splitting *one*
-high-redundancy corpus in half. Both halves were drawn from the same competition, so they
-shared wording by construction. It measures the exact-versus-fuzzy gap on closely related
-material, which is a real result, and it says nothing whatsoever about two independent
-organisations. Labelling it cross-org was my error.
+Split one corpus in half, call the halves two organisations, and the digest finds about
+**2.9x** the overlap that exact matching does — 35.1% against 12.2%. That number is real,
+but both halves came from the same competition and shared wording by construction, so what
+it measures is the exact-versus-fuzzy gap on closely related material. It says nothing about
+two organisations that collected independently.
 
-So I ran the actual test: five independently collected public corpora, treated as five
-organisations, with positive controls and a null baseline to distinguish "found nothing"
-from "measured it wrong." The result is worse than the number I retracted.
+The test worth running uses corpora that never touched each other: five independently
+collected public sources, treated as five organisations, with positive controls and a null
+baseline to separate "found nothing" from "measured it wrong." The picture is a good deal
+thinner.
 
 **On literal text, cross-feed correlation is essentially zero.** Independent feeds do not
 share wording, so a wording-based fingerprint has nothing to grip. Across every pair of
