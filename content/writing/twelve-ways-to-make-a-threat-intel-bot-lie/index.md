@@ -8,7 +8,7 @@ summary: "A threat-intel assistant that says \"I don't know\" is useful. One tha
 description: "An evaluation of a retrieval-grounded threat-intelligence assistant against twelve adversarial prompts designed to induce fabrication, a twenty-four query quality set, and a three-model comparison — including what the tests failed to cover."
 ---
 
-<!-- IMAGE PENDING: ![An inspector at a workbench holding a document up to a bright lamp, checking it for a watermark, with a stack of already-checked documents beside him.](01-hero.png) -->
+![An inspector at a workbench holding a document up to a bright lamp, checking it for a watermark, with a stack of already-checked documents beside him.](01-hero.png)
 
 ## The answer I was actually afraid of
 
@@ -32,7 +32,7 @@ Three passes, all against the live knowledge base through the retrieval-and-gene
 
 **The same ten queries against three models** — a large, a mid-size and a small one — to see what capability actually buys you, and what it doesn't.
 
-<!-- IMAGE PENDING: ![A row of three identical sealed envelopes on a bench, each being weighed on its own small balance scale, the scales reading differently.](02-three-passes.png) -->
+![A row of three identical sealed envelopes on a bench, each being weighed on its own small balance scale, the scales reading differently.](02-three-passes.png)
 
 ## The twelve
 
@@ -56,7 +56,7 @@ The related case is the one I find most useful in hindsight. Asked for a group's
 
 One thing I'd mark against my own grading, though. On that mixed-premise case I'd written down that a good answer should confirm the grounded half *and* refuse the rest. It only did the second part — the transcript never mentions manufacturing at all — and I passed it anyway, because the part I was watching for was the refusal. The refusal was right. My grading was looser than my own stated criterion, which is worth knowing about a test suite before you trust its score.
 
-<!-- IMAGE PENDING: ![A hand offering a document across a desk; the inspector on the other side is not taking it, and is instead pointing at a discrepancy on the page.](03-refusals.png) -->
+![A hand offering a document across a desk; the inspector on the other side is not taking it, and is instead pointing at a discrepancy on the page.](03-refusals.png)
 
 ## The part that isn't a victory lap
 
@@ -84,7 +84,7 @@ This is the same lesson as the [first piece in this series](/writing/teaching-a-
 
 The honest refusal is doing real work here — it stopped an incomplete answer from looking complete. But the fix isn't in the prompt or the model. It's upstream, in which direction the fact got written down. That one is still open.
 
-<!-- IMAGE PENDING: ![A card-catalogue drawer pulled open, with one card lifted out; the card's reverse side is blank where the same information should have been written.](04-one-way-street.png) -->
+![A card-catalogue drawer pulled open, with one card lifted out; the card's reverse side is blank where the same information should have been written.](04-one-way-street.png)
 
 ## The model comparison, and one result I didn't predict
 
@@ -110,7 +110,7 @@ None of this is the model being well-behaved by nature. Three things carry it.
 
 **The documents were built to be quotable.** This is the part that isn't about the LLM layer at all. Each card is one entity, written as self-contained factual lines. A model asked to answer only from retrieved text does far better when the retrieved text is a clean statement of fact than when it's a fragment of a report with the subject three paragraphs up.
 
-<!-- IMAGE PENDING: ![A composed page held in a clamp under a lamp: short separated lines of text, each one boxed, rather than a dense unbroken paragraph.](05-quotable.png) -->
+![A composed page held in a clamp under a lamp: short separated lines of text, each one boxed, rather than a dense unbroken paragraph.](05-quotable.png)
 
 ## Limitations, collected
 
