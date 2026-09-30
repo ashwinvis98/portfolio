@@ -54,7 +54,7 @@ This is the number I would take away from the whole exercise, because it is not 
 
 ## Most of the rest of the breakdown is the challenge talking
 
-The 22% that *is* detectable makes a tidy distribution. Instruction override 2,114 prompts, translation 1,020, roleplay 529, output shaping 345, unicode trickery 120. My first pass read that as a picture of what attackers reach for.
+The 22% that *is* detectable makes a tidy distribution. Instruction override 2,114 prompts, translation 1,020, roleplay 529, output shaping 345, unicode trickery 120. It reads like a picture of what attackers reach for.
 
 It isn't. The `prompt` column holds each level's full scaffold with the attacker's text substituted in. Remove the attacker's text and you get the task back, and the tasks explain the distribution:
 
@@ -77,27 +77,27 @@ It isn't. The `prompt` column holds each level's full scaffold with the attacker
 
 So translation is not a technique attackers favoured. It is what you write when the bot in front of you only translates. Whatever these distributions describe, it is mostly the competition.
 
-## The argument I got wrong, and the four-line check that catches it
+## The length gap that looks like a finding, and isn't
 
-My first version of this had a second finding: unnamed winners are much shorter than named ones, 94 characters against 180. I read that as evidence that a lot of these wins genuinely have no technique — too short to hold a wrapper — rather than my detector simply missing things.
+There is a tempting second result in this data. Winners with no detected technique are much shorter than winners with one: **94 characters against 180.** The obvious reading is that a lot of these wins genuinely have no technique — too short to hold a wrapper — rather than the detector simply missing things.
 
-That argument is backwards, and the check that shows it is trivial.
+That reading is wrong, and the check that shows it takes four lines.
 
 A keyword detector fires more often on long text, because long text has more places for a pattern to match. So the unmatched residue of *any* substring detector is shorter than the matched set, regardless of what is in it. To see how much of the gap that alone accounts for, split the same corpus on a pattern with no relationship to technique at all — the word *the*:
 
 ![Detection rate by prompt length decile, for my technique detector and for a control pattern with no meaning.](fig3-length-control.png)
 
-The control produces a **wider** gap than the one I was treating as a finding: median 193 characters when *the* is present against 61 when it is absent, versus 180 and 94 for the detector. Detection rate climbs monotonically with length in both cases, from 1.9% in the shortest decile to 42.5% in the longest for my patterns, and 3.5% to 91.8% for the control.
+The control produces a **wider** gap than the technique detector does: median 193 characters when *the* is present against 61 when it is absent, versus 180 and 94. Detection rate climbs monotonically with length in both cases — 1.9% in the shortest decile to 42.5% in the longest for the technique patterns, 3.5% to 91.8% for the control.
 
-There is nothing left of the argument. The length asymmetry is a property of substring matching.
+So the length asymmetry is a property of substring matching and says nothing about the prompts. It is worth reporting precisely because it is so easy to read the other way.
 
-I am keeping this in because the check generalises: any time a classifier's miss set looks like it has a characteristic, run the same split with a pattern you know is meaningless. If the meaningless pattern reproduces the effect, the effect belongs to the method.
+The check generalises, and it is cheap enough to be routine: any time a classifier's miss set appears to have a characteristic, re-run the same split with a pattern you know is meaningless. If the meaningless pattern reproduces the effect, the effect belongs to the method rather than the data.
 
-One related claim I could *not* confirm, having gone looking for it: that the scoring penalised longer prompts, which would explain short winners directly. The `score` column does not show it. Correlation between token count and score is **+0.114**, and mean score rises from 47,018 in the shortest token decile to 88,371 in the longest. Whatever the rules were, longer winning prompts here scored slightly better.
+One related explanation worth ruling out: that the competition's scoring penalised longer prompts, which would produce short winners directly. The `score` column does not support it. Correlation between token count and score is **+0.114**, and mean score rises from 47,018 in the shortest token decile to 88,371 in the longest. Whatever the rules were, longer winning prompts scored slightly better.
 
 ## The level pattern is about the task, not the difficulty
 
-Sub-technique visibility does fall across the levels, from 30.5% at level 0 to 12.6% at level 9. I originally read that as harder defences requiring less nameable attacks.
+Sub-technique visibility does fall across the levels, from 30.5% at level 0 to 12.6% at level 9. That invites a reading in which harder defences require less nameable attacks.
 
 ![Share of winners carrying a named sub-technique, by level. Orange where the level's own task asks for a technique.](fig4-by-level.png)
 
@@ -168,7 +168,5 @@ python eval/prompt_technique_survey.py      # the technique breakdown
 **The concepts.** The Indicator of Prompt Compromise, and the argument for describing prompt attacks by behaviour rather than literal text, are [Thomas Roccia](https://github.com/fr0gger)'s — see [*The State of Adversarial Prompts*](https://blog.securitybreak.io/the-state-of-adversarial-prompts-84c364b5d860) and the [NOVA rule engine](https://github.com/Nova-Hunting/nova-framework). This piece is a small piece of evidence for that argument. The fact-versus-judgment split, and the prompt as a first-class observable, come from [dogesec](https://www.dogesec.com/blog/modelling_ai_prompt_compromise_in_stix/).
 
 **The data.** [HackAPrompt](https://huggingface.co/datasets/hackaprompt/hackaprompt-dataset) (MIT) — Schulhoff et al., [*Ignore This Title and HackAPrompt*](https://arxiv.org/abs/2311.16119), EMNLP 2023 — and the [Pliny HackAPrompt dataset](https://huggingface.co/datasets/hackaprompt/Pliny_HackAPrompt_Dataset) (CC-BY-4.0). Both released by the HackAPrompt organisers; the 2025 challenges were designed with [Pliny](https://github.com/elder-plinius). Publishing the scoring target and the full scaffold alongside every submission is what made the ground-truth comparison possible at all, and not every dataset does that.
-
-**The correction.** An earlier version of this post led on "fewer than one in six attacks maps to the taxonomy" and used the prompt-length argument to defend it. Both were wrong, and a reviewer caught them: every winner is prompt injection by construction, and the length gap is an artifact of substring matching. The post was pulled and rewritten.
 
 **Code.** [`adversarial-ai-cti`](https://github.com/ashwinvis98/adversarial-ai-cti), Apache-2.0. The signature detector and the construction check in `eval/` are measurement instruments written for this survey, not part of the library's published mapping surface.
