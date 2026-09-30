@@ -24,7 +24,8 @@
   --code-bg:   #F1EFE9;
 }
 
-.dark {
+/* PaperMod marks dark mode with data-theme on <html>, not a .dark class. */
+:root[data-theme="dark"] {
   --theme:     #14140F;
   --entry:     #1C1C17;
   --primary:   #EDEBE4;
@@ -201,12 +202,6 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
 .receipts { margin: 0.5rem 0 0; font-size: 11px; color: var(--tertiary); }
 .receipts .receipt:not(:last-child)::after { content: "\00b7"; margin: 0 0.5rem; color: var(--border); }
 
-/* corrections (home excerpt + full page) */
-.corrections-list, .corrections-full { list-style: none; margin: 0; padding: 0; }
-.correction { padding: 1rem 0; border-top: 0.5px solid var(--border); }
-.corrections-list .correction:last-child,
-.corrections-full .correction:last-child { border-bottom: 0.5px solid var(--border); }
-.correction .mono-meta { font-size: 11px; display: block; margin-bottom: 0.35rem; }
 .corr-what { color: var(--primary); font-size: 15.5px; }
 .corr-fix { color: var(--secondary); font-size: 15.5px; margin-top: 0.2rem; }
 .section-more { margin: 1rem 0 0; font-family: var(--font-mono); font-size: 12px; }
@@ -277,4 +272,62 @@ main .post-entry:last-of-type { border-bottom: 0.5px solid var(--border); }
   .masthead-statement .statement { font-size: 24px; }
   .record-head { flex-direction: column; gap: 0.2rem; }
   .record-meta { white-space: normal; }
+}
+
+/* home link row under the masthead caption */
+.statement-links { margin: 1.1rem 0 0; font-size: 12px; }
+.statement-links a { color: var(--accent); }
+
+/* About portrait (renders only when static/images/portrait.* exists) */
+.post-content img.portrait {
+  float: right;
+  width: 160px;
+  height: auto;
+  margin: 0.3rem 0 1rem 1.75rem;
+  border-radius: 4px;
+  border: 0.5px solid var(--border);
+}
+@media (max-width: 700px) {
+  .post-content img.portrait { float: none; display: block; width: 140px; margin: 0 0 1.25rem; }
+}
+
+/* Mobile header: name on its own row, nav on the row below, full width.
+   The desktop one-row header can't fit the name plus four nav items at
+   phone width; it crushed the name onto two lines and clipped "resume". */
+@media (max-width: 700px) {
+  .header-nav { flex-wrap: wrap !important; row-gap: 0.35rem; }
+  .header .logo { width: 100%; }
+  .header .logo a { white-space: nowrap; }
+  #menu.menu { width: 100%; flex-wrap: wrap !important; white-space: normal !important; }
+  #menu li + li::before { margin: 0 0.45rem; }
+}
+
+/* About: "Off the clock" photo row. Four across, two on phones. */
+.photo-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 1.25rem 0 0.5rem;
+}
+.photo-row figure { margin: 0; }
+.photo-row img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 4px;
+  margin: 0;
+}
+.md-content .photo-row figure > figcaption {
+  margin-top: 0.4rem;
+  font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--tertiary);
+  text-align: left;
+}
+@media (max-width: 700px) {
+  .photo-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

@@ -1,8 +1,18 @@
 {{/* Home masthead statement + caption (overrides PaperMod's home-info block).
-     Not a banner — a typographic statement. Rendered from homeInfoParams. */}}
+     Not a banner — a typographic statement. Rendered from homeInfoParams.
+     The link row gives a visitor every way to act (email, resume, profiles)
+     without leaving the first screen. Values come from [params] in hugo.toml. */}}
 {{- with site.Params.homeInfoParams }}
 <section class="masthead-statement">
   <h1 class="statement">{{ .Title | markdownify }}</h1>
   <div class="statement-caption">{{ .Content | markdownify }}</div>
+  {{- with site.Params }}
+  <p class="statement-links mono-meta">
+    {{- with .email }}<a href="mailto:{{ . }}">email</a>{{ end -}}
+    {{- with .resume }} &middot; <a href="{{ . | relURL }}">resume</a>{{ end -}}
+    {{- with .github }} &middot; <a href="{{ . }}" rel="me">github</a>{{ end -}}
+    {{- with .linkedin }} &middot; <a href="{{ . }}" rel="me">linkedin</a>{{ end -}}
+  </p>
+  {{- end }}
 </section>
 {{- end -}}

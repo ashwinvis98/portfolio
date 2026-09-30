@@ -1,8 +1,8 @@
 {{/*
   Standing closing block. PaperMod renders partials/extend_footer.html on every
   page automatically, so this appears site-wide without being pasted per-post.
-  This is the conversion path (post -> GitHub / LinkedIn). Keep it minimal:
-  a top border and muted text, no heavy design.
+  This is the conversion path (post -> email / resume / GitHub / LinkedIn).
+  Contact values come from [params] in hugo.toml.
 */}}
 <div class="closing-block">
   <p>
@@ -10,9 +10,10 @@
     engineering decisions behind them.
   </p>
   <p>
-    <a href="https://github.com/ashwinvis98" rel="me">GitHub</a>
-    &middot;
-    <a href="https://www.linkedin.com/in/ashwinviswamithiran/" rel="me">LinkedIn</a>
+    {{- with site.Params.email }}<a href="mailto:{{ . }}">Email</a>{{ end -}}
+    {{- with site.Params.resume }} &middot; <a href="{{ . | relURL }}">Resume</a>{{ end -}}
+    {{- with site.Params.github }} &middot; <a href="{{ . }}" rel="me">GitHub</a>{{ end -}}
+    {{- with site.Params.linkedin }} &middot; <a href="{{ . }}" rel="me">LinkedIn</a>{{ end -}}
   </p>
 </div>
 

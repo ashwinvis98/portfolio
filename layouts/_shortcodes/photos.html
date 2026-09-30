@@ -1,0 +1,12 @@
+{{- /* Photo row for the About page. Reads data/life.yaml; files live in
+     static/images/life/. Four across on desktop, two across on phones. */ -}}
+{{- with hugo.Data.life }}
+<div class="photo-row">
+  {{- range . }}
+  <figure>
+    <img src="{{ printf "images/life/%s" .file | relURL }}" alt="{{ .alt }}" loading="lazy" width="640" height="800">
+    {{- with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+  {{- end }}
+</div>
+{{- end }}

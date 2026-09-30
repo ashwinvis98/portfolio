@@ -1,5 +1,5 @@
 baseURL = "https://ashwinviswamithiran.com/"
-languageCode = "en-us"
+locale = "en-us"
 title = "Ashwin Viswamithiran"
 theme = "PaperMod"
 enableRobotsTXT = true
@@ -15,12 +15,17 @@ enableRobotsTXT = true
   TocOpen = false
   # Home writing list is rendered by layouts/index.html from this section.
   mainSections = ["writing"]
+  # Contact details, used by the home link row, About, and the footer.
+  email = "ashwinvis98@gmail.com"
+  resume = "/resume.pdf"
+  github = "https://github.com/ashwinvis98"
+  linkedin = "https://www.linkedin.com/in/ashwinviswamithiran/"
 
 # Home masthead: positioning statement (Title) + caption (Content).
 # Rendered by the home_info.html override, called from layouts/index.html.
 [params.homeInfoParams]
   Title = "I build systems that make security teams effective."
-  Content = "Threat intelligence platforms, detection pipelines, and security automation. Currently building a CTI platform and threat research program from scratch. Previously: a 120TB SIEM migration, detection content, and SOC transition work."
+  Content = "I'm Ashwin, a security engineer in Denver. I build threat intelligence platforms, detection pipelines and the automation that connects them, most recently a threat research program built from scratch at a satellite and 5G company. Before that, SIEM and SOC engineering, including a 120TB migration."
 
 [[menu.main]]
   name = "writing"
@@ -31,12 +36,12 @@ enableRobotsTXT = true
   url = "/projects/"
   weight = 2
 [[menu.main]]
-  name = "corrections"
-  url = "/corrections/"
-  weight = 3
-[[menu.main]]
   name = "about"
   url = "/about/"
+  weight = 3
+[[menu.main]]
+  name = "resume"
+  url = "/resume.pdf"
   weight = 4
 
 [outputs]

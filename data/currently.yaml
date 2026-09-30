@@ -1,4 +1,4 @@
-# Ashwin supplies these lines — do not auto-populate. Each entry:
-#   - date: "2026-08"
-#     text: "One sentence, specific, present tense, work actually underway."
-# Left intentionally empty: the `currently` section renders nothing until this is filled.
+# Dated lines of work genuinely underway. Rendered on the home page, newest first.
+# One sentence each, specific, present tense. Remove a line when the work ships.
+- date: "2026-09"
+  text: "Preparing an LLM enrichment connector for OpenCTI for public release, with a write-up of how it performed to follow."
