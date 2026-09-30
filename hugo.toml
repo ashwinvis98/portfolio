@@ -24,8 +24,8 @@ enableRobotsTXT = true
 # Home masthead: positioning statement (Title) + caption (Content).
 # Rendered by the home_info.html override, called from layouts/index.html.
 [params.homeInfoParams]
-  Title = "I build systems that make security teams effective."
-  Content = "I'm Ashwin, a security engineer in Denver. I build threat intelligence platforms, detection pipelines and the automation that connects them, most recently a threat research program built from scratch at a satellite and 5G company. Before that, SIEM and SOC engineering, including a 120TB migration."
+  Title = "I build the engineering that lets a threat research team get ahead of attacks."
+  Content = "I'm Ashwin, a security engineer in Denver. My work sits where research meets engineering: turning what we learn about adversaries into defences that act on their own, and asking a little earlier each time what is coming next. I write here about the decisions behind that work, including the ones I got wrong."
 
 [[menu.main]]
   name = "writing"

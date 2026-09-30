@@ -4,7 +4,8 @@
      without leaving the first screen. Values come from [params] in hugo.toml. */}}
 {{- with site.Params.homeInfoParams }}
 <section class="masthead-statement">
-  <h1 class="statement">{{ .Title | markdownify }}</h1>
+  <h1 class="masthead-name">{{ site.Title }}</h1>
+  <p class="statement">{{ .Title | markdownify }}</p>
   <div class="statement-caption">{{ .Content | markdownify }}</div>
   {{- with site.Params }}
   <p class="statement-links mono-meta">
