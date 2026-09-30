@@ -17,7 +17,9 @@ streaming and content business on top of it all. Every one of those has its own
 threat actors, its own vendors and its own ways of being attacked. That breadth
 is the best part of the job and the hardest part of it. There is always more
 threat than there is time, so the whole program comes down to one skill:
-deciding what matters to us, and ignoring the rest with a clear conscience.
+deciding what matters to us. That means the actors and techniques aimed at our
+industries today, and the emerging capabilities that could be aimed at them
+tomorrow.
 
 ## How I approach the work
 
@@ -28,12 +30,17 @@ the order: to study how the groups that target us build their tools and shift
 their habits, so we can anticipate the next technique, the next piece of
 infrastructure or the next campaign before it reaches us.
 
-Two years of working that way has changed how I approach any problem. I start
-by asking what will be true in six months, not only what is true today. I build
-things so they can be checked, because a system that measures itself gets
-better instead of just getting bigger. And I treat research and engineering as
-one job: the research says where to look, and the engineering makes looking
-cheap enough to do every day.
+Two years of working that way has changed how I approach any problem. I look
+past the incident in front of me to the pattern behind it, and ask where that
+pattern is heading. I build things so they can be checked, because a system
+that measures itself gets better instead of just getting bigger. And I treat
+research and engineering as one job: the research says where to look, and the
+engineering makes looking cheap enough to do every day.
+
+AI has changed the engineering half of that. With coding assistants and agents
+alongside me, the distance between an idea and a working system has shrunk from
+months to days. I spend the time that frees up on testing more ideas, and on
+checking that the ones I keep actually work.
 
 That's what I bring to a team. Not a particular tool, but the habit of getting
 ahead of the problem, and building the feedback loop that shows whether I did.
@@ -42,30 +49,46 @@ ahead of the problem, and building the feedback loop that shows whether I did.
 
 When I joined in 2024, the program was a plan, a MISP server that kept falling
 over, and a handful of dark web keyword alerts. Today it runs on a production
-OpenCTI platform in AWS that pulls from more than fifty open-source, dark web
+OpenCTI platform in AWS that pulls from a wide range of open-source, dark web
 and commercial sources, and pushes what it learns into our firewalls and
-endpoint protection automatically. It has a tiered list of the threat actors
-that actually go after our industries, a way of deciding whether a feed is worth
-paying for, an assistant that answers analysts' questions from the threat graph
-with its sources attached (and now feeds the team's risk prioritisation and
-forecasting work), and an AI track that treats malicious prompts as
-threat intelligence. I did most of the building, with a small team, and some of
-it I've since open-sourced.
+endpoint protection automatically. I did most of the building, with a small
+team.
 
-I also do part of this in the open, mostly on attacks against AI systems. The
-[projects](/projects/) are the tools that came out of it, and the
-[writing](/writing/) is where I show the measurements, including the ones that
-argue against my own work.
+Two directions interest me most from here. The first is what happens when
+security tools start talking to each other. Through the Model Context Protocol,
+an AI agent can reach a threat intelligence platform, a commercial intelligence
+service and a security operations platform in the same conversation, and carry
+a question from "what is this?" all the way to "it's contained". I'm exploring
+how far that chain can run, from intelligence to remediation, with a person
+still deciding at the points that matter.
+
+The second is AI as a target. Two years ago there was almost no threat
+intelligence about attacks on AI systems. Now there are feeds, frameworks like
+MITRE ATLAS and the OWASP Top 10 for LLMs, and a small community working out how
+to describe a malicious prompt the way we already describe malware. I've been
+part of that from early on, and I expect it to become as ordinary a part of a
+threat program as phishing is today.
+
+Some of this I work on in public. The [projects](/projects/) are tools I've
+released, and the [writing](/writing/) is where I test ideas against real data
+and report what I find, even when it cuts against my own work.
 
 ## Where I came from
 
 I studied instrumentation and control engineering at NIT Trichy, which is
 mostly the study of sensors, signals and feedback loops. I didn't expect that to
-follow me into security, but it did. A SIEM is a wall of sensors, and three
-years of SOC engineering at Wipro taught me that a lot of its alarms are bad
-plumbing rather than bad actors. A threat feed is a sensor too, one whose
-readings go stale. After Wipro came a master's in computer science at CU
-Boulder, a stint building LLM services, and then threat intelligence.
+follow me into security, but it did.
+
+I spent three years in SIEM and SOC engineering at Wipro, bringing
+organisations onto a shared SIEM. That meant sitting with each team to work out
+what their systems could log and what they should, building the parsers that
+turned raw logs into normalised fields a rule could read, and threat modelling
+each environment to decide which detections it needed first. A SIEM is a wall
+of sensors, and it is only as good as what it has been wired to read. A threat
+feed is a sensor too, one whose readings go stale.
+
+After Wipro came a master's in computer science at CU Boulder, a stint building
+LLM services, and then the move into the threat intelligence landscape.
 
 **2024 — now · Security Engineer II, DISH Network (EchoStar), Denver**\
 Threat intelligence platform and threat research program.
@@ -81,41 +104,42 @@ transformation.
 
 **2015 — 2019 · B.Tech Instrumentation and Control Engineering, NIT Trichy**
 
-## Things I believe
+## What being ahead of the curve means
 
-**A score of 50 is not a score.** When we started pulling in feeds, a lot of
-indicators arrived stamped with a default score of 50, and some sources rated
-nearly everything above 90. Neither number tells you anything. Nothing we push
-to a firewall should inherit someone else's guess, so it gets re-scored on its
-source, its age and whether anyone else has seen it.
+**The clock starts before the report.** Intelligence has a shelf life, and much
+of it is spent waiting: to be validated, written up, published and read. Every
+hour of that is an hour the adversary gets for free. Being ahead is often less
+about knowing more than about shortening the distance between knowing something
+and acting on it.
 
-**Every block should expire.** An indicator is a reading, and readings go
-stale. An IP that hosted malware in March is somebody's web server by June.
-Every block we push gets a lifetime, and when an indicator stops earning its
-place, the block comes off on its own.
+**Watch capability, not just activity.** Activity tells you what an adversary
+did. Capability tells you what they could do next. New tools, new techniques
+and new services for sale on criminal markets appear well before the campaigns
+that use them, and that lead time is the whole advantage.
 
-**Prioritise by who you are, not by how scary they are.** Our threat actor list
-had grown past three hundred names. We cut it to a core set by asking which
-actors go after satellite, wireless, streaming and in-home services, not which
-ones are the most sophisticated. A brilliant actor who never targets your
-industry is someone else's problem. The ones we retired stay searchable, so old
-hunts still work.
+**AI raises the floor for attackers first.** AI hasn't created a new kind of
+adversary so much as made the existing ones faster, cheaper and more fluent. An
+average operator with the right model writes better lures, runs reconnaissance
+at scale and reworks tooling in hours. The question isn't whether that shift
+reaches you, but whether you saw it before it did.
 
-**A forecast you can't be wrong about isn't a forecast.** My team does
-forecasting work, and the rule I care about most is simple: every prediction
-names an actor, a target and a time window, so it can be marked right or wrong
-later. Most predictive intelligence is never checked. That's the gap worth
-closing.
+**You can't detect what you never logged.** Onboarding organisations onto a
+SIEM taught me that the most important conversation happens before any rule is
+written: sitting with the people who run each system and agreeing what it
+should record. Nearly every detection gap I've seen traces back to that
+conversation, or to its absence.
 
-**Intelligence is an input, not a product.** A threat report nobody acts on is
-a well-formatted opinion. The test for anything we produce is whether it changes
-a decision: a block, a hunt, a patch, a priority. If it doesn't, it's noise,
-however interesting it is.
+**Detection is won in normalisation.** A log the SIEM can't parse might as
+well not exist. Most of the value of a detection program sits in the
+unglamorous layer that maps every source into the same fields, so a rule
+written once works everywhere.
 
 ## What I work with
 
-**Threat intelligence and detection:** OpenCTI, Intsights, STIX/TAXII, Sigma,
-YARA, MITRE ATT&CK, D3FEND and ATLAS, OSINT.
+**Threat intelligence and detection:** OpenCTI, STIX/TAXII, Sigma, YARA,
+OpenAEV, OSINT, Intsights.
+
+**Frameworks:** MITRE ATT&CK, MITRE ATLAS, D3FEND.
 
 **SIEM, SOAR and XDR:** Cortex XSIAM, Palo Alto XDR, IBM QRadar, Splunk, Azure
 Sentinel, Elastic Stack, IBM Resilient SOAR.
