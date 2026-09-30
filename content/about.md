@@ -28,7 +28,8 @@ and commercial sources, and pushes what it learns into our firewalls and
 endpoint protection automatically. It has a tiered list of the threat actors
 that actually go after our industries, a way of deciding whether a feed is worth
 paying for, an assistant that answers analysts' questions from the threat graph
-with its sources attached, and an AI track that treats malicious prompts as
+with its sources attached (and now feeds the team's risk prioritisation and
+forecasting work), and an AI track that treats malicious prompts as
 threat intelligence. I did most of the building, with a small team, and some of
 it I've since open-sourced.
 
@@ -78,11 +79,11 @@ ones are the most sophisticated. A brilliant actor who never targets your
 industry is someone else's problem. The ones we retired stay searchable, so old
 hunts still work.
 
-**A forecast you can't be wrong about isn't a forecast.** When we built a
-pipeline that forecasts cyber activity from world events, every prediction had
-to name an actor, a target and a time window, so that it could later be marked
-right or wrong. Most predictive intelligence is never checked. Ours keeps
-score.
+**A forecast you can't be wrong about isn't a forecast.** My team does
+forecasting work, and the rule I care about most is simple: every prediction
+names an actor, a target and a time window, so it can be marked right or wrong
+later. Most predictive intelligence is never checked. That's the gap worth
+closing.
 
 **Intelligence is an input, not a product.** A threat report nobody acts on is
 a well-formatted opinion. The test for anything we produce is whether it changes
