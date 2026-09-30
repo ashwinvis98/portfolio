@@ -6,6 +6,14 @@ categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "mitre-atlas", "owasp", "evaluation"]
 summary: "18,479 attacks that beat a language model, all of them prompt injection by construction. That makes the corpus a rare thing: a technique label you already know the answer to. Deriving it from the prompt text recovers 11.4% of it."
 description: "A technique survey of 18,479 successful prompt attacks where the correct MITRE ATLAS label is known in advance from how the competition was scored. Keyword attribution recovers 11.4% of it, and most of the remaining breakdown describes the challenges rather than the attackers."
+# Social card only. Without this the theme picks the first image resource, which here is a
+# dense data chart that is illegible at preview size. hidden keeps it out of the page and
+# the list, where the hero already appears in the body.
+cover:
+  image: "01-hero.png"
+  relative: true
+  hidden: true
+  alt: "A cabinet of mostly blank label plates, with far more unlabelled prompts spilling across the floor than there are drawers to hold them."
 ---
 
 ![](01-hero.png)

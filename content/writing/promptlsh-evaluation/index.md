@@ -6,6 +6,13 @@ categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
 summary: "I built a fuzzy hash for prompt attacks, then measured it against the embedding it comes from. Rounding that embedding to 8 bits beats it on recall. Here is where the 32-byte version still earns its place."
 description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here are the three narrow cases where the digest still wins, and how little correlation survives across independent feeds."
+# Social card only; hidden in the page and the list. Left to itself the theme picked
+# ill3-recoverability, which is the least self-explanatory image in the post.
+cover:
+  image: "ill1-fuzzy-vs-exact.png"
+  relative: true
+  hidden: true
+  alt: "One word changes and most of the fuzzy digest survives; the same change to a cryptographic hash rewrites it entirely."
 ---
 
 A fingerprint has to fit somewhere. In a column beside every record, in an index that has to stay fast, in a payload two systems exchange all day. So the first question is not how clever the fingerprint is. It is how many bytes you are willing to spend on one, and what each size actually buys.

@@ -6,6 +6,13 @@ categories: ["Notes"]
 tags: ["threat-intelligence", "prompt-injection", "llm-security", "stix", "mitre-atlas"]
 summary: "Prompt attacks are a new kind of threat. The tooling growing up around them is a ladder security has already climbed once."
 description: "Prompt attacks are new. The tooling being built around them is not. It's the same ladder malware defence climbed over twenty-five years, being climbed again in a handful."
+# Social card only; hidden in the page and the list. Without it this post fell back to the
+# generic site default, which wastes the strongest illustration of the three.
+cover:
+  image: "01-hero.png"
+  relative: true
+  hidden: true
+  alt: "An empty cinema seen from the back row, one figure watching a screen filled with scattered text fragments."
 ---
 
 
