@@ -8,7 +8,7 @@ summary: "One hacking group can carry a dozen names. Merging them is easy until 
 description: "Teaching a threat-intelligence knowledge base that a dozen vendor names can mean one adversary, why I stopped short of catching every duplicate, and what I found when I finally audited my own matcher instead of trusting the design."
 ---
 
-![A hooded figure at a keyboard seen from behind, covered in layered stick-on name badges, one peeled off on the floor beside the chair.](01-hero.png)
+![A hooded figure at a keyboard seen from behind, covered in layered stick-on name badges, one peeled off on the floor beside the chair.](01-hero.png "One group, six names, and six chances to look like six threats.")
 
 ## One villain, a closet full of masks
 
@@ -32,7 +32,7 @@ Different security companies discover and track threats independently. Each has 
 
 The industry openly acknowledges the mess. Trade press has described the tangle of overlapping names as [confusing but essential](https://www.techtarget.com/searchSecurity/feature/Vendors-Threat-actor-taxonomies-are-confusing-but-essential/), and in 2025 CrowdStrike and Microsoft announced a joint effort to [harmonise their threat-actor names](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-microsoft-collaborate-deconflict-cyber-threat-attribution/) precisely because the fragmentation slows defenders down. When the two biggest names in the industry launch a project just to agree on what to *call* things, the problem is real.
 
-![A life-drawing class where four artists at easels paint the same seated subject, and every canvas shows something completely different.](02-naming-factories.png)
+![A life-drawing class where four artists at easels paint the same seated subject, and every canvas shows something completely different.](02-naming-factories.png "Every vendor names what it sees through its own lens.")
 
 For a human analyst this is an annoyance you learn to live with. For an automated knowledge base it's a landmine.
 
@@ -46,7 +46,7 @@ Each record held a *different subset* of the truth. So generating a card per rec
 
 Half a card is worse than it sounds. In a system meant to inform security decisions, a *confidently incomplete* answer is dangerous. The assistant wouldn't say "I only have partial data." It would answer from the thin card and sound perfectly sure.
 
-![Three people each squinting at one torn third of the same photograph; beside them, one person holding the photograph taped back together.](03-torn-photograph.png)
+![Three people each squinting at one torn third of the same photograph; beside them, one person holding the photograph taped back together.](03-torn-photograph.png "Three partial truths, or one complete one.")
 
 So the records had to be merged. Which sounds easy, until you try.
 
@@ -94,13 +94,13 @@ A merge only happens when what's left is genuinely unusual *and* points at exact
 
 This second pass adds a few dozen more merges on top of the first, only where a genuinely distinctive name pointed at exactly one match. It is also, as I found out later, where all of my errors were.
 
-![A sorting office with two stacked chutes: the wide upper one passing items through briskly, the narrow lower one with an inspector rejecting almost everything into an enormous bin.](04-two-tier-funnel.png)
+![A sorting office with two stacked chutes: the wide upper one passing items through briskly, the narrow lower one with an inspector rejecting almost everything into an enormous bin.](04-two-tier-funnel.png "Most certain first. Everything doubtful stays in the bin.")
 
 Drawn as a decision path:
 
-![A decision flow: if two records share an exact name or alias, merge as Tier 1. Otherwise strip filler and vendor family words; if a distinctive word is shared with exactly one record, merge as Tier 2; if ambiguous, keep them separate.](diagram-two-tier.svg)
+![A decision flow: if two records share an exact name or alias, merge as Tier 1. Otherwise strip filler and vendor family words; if a distinctive word is shared with exactly one record, merge as Tier 2; if ambiguous, keep them separate.](diagram-two-tier.svg "Merge only on certainty. When in doubt, stay apart.")
 
-![Three visibly different bears in a police lineup wearing identical caps, while a witness behind the glass points confidently at the wrong one.](05-bear-lineup.png)
+![Three visibly different bears in a police lineup wearing identical caps, while a witness behind the glass points confidently at the wrong one.](05-bear-lineup.png "Bear means probably Russian. It does not mean same group.")
 
 ## A wrong merge is worse than no merge
 
@@ -118,7 +118,7 @@ A **false merge** produces one card claiming Group A did the things Group B did.
 
 In a system people trust to make security decisions, the second failure is far more expensive than the first. A missing fact is a gap. A wrong fact is a trap. So I tuned the whole thing to prefer gaps over traps: precision over recall. When I wasn't sure, I left the records apart.
 
-![A clerk shrugging at two duplicate folders pulled from a cabinet; beside him, the same clerk presenting one merged folder to a nodding room while two different bears walk out of frame behind him.](06-failure-modes.png)
+![A clerk shrugging at two duplicate folders pulled from a cabinet; beside him, the same clerk presenting one merged folder to a nodding room while two different bears walk out of frame behind him.](06-failure-modes.png "A missed merge is a gap. A false merge is a trap.")
 
 ## Saying no to obvious improvements
 

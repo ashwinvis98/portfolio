@@ -8,7 +8,7 @@ summary: "A knowledge graph holds its best facts in the connections between reco
 description: "Why a capable AI assistant could not answer an easy question about a well-documented threat actor, and the unglamorous fix: flattening a threat-intelligence graph into one readable card per entity, ahead of time."
 ---
 
-![An archivist tangled in a floor-to-ceiling web of string and pinned cards on one side of a room; the same man on the other side, calm, holding a single index card.](01-hero.png)
+![An archivist tangled in a floor-to-ceiling web of string and pinned cards on one side of a room; the same man on the other side, calm, holding a single index card.](01-hero.png "Same facts. One shape you can actually read.")
 
 ## A question that should have been easy
 
@@ -48,11 +48,11 @@ This structure is called a **knowledge graph**, and it's genuinely the right way
 
 The industry standard for writing this down is **STIX**. In STIX language the dots are "domain objects" and the threads are "relationship objects." You don't need the jargon. Just hold onto the picture: **dots and threads. A web.**
 
-![A kinetic mobile of wooden discs, one large disc at the centre with smaller ones radiating from it, while a technician on a stepladder nudges one level with a long pole.](02-the-web.png)
+![A kinetic mobile of wooden discs, one large disc at the centre with smaller ones radiating from it, while a technician on a stepladder nudges one level with a long pole.](02-the-web.png "The intelligence is the connections, not the dots.")
 
 Here's that same picture drawn precisely:
 
-![A node-and-edge diagram centred on APT29, with labelled threads running out to SUNBURST, phishing, healthcare, the United States and Russia.](diagram-knowledge-graph.svg)
+![A node-and-edge diagram centred on APT29, with labelled threads running out to SUNBURST, phishing, healthcare, the United States and Russia.](diagram-knowledge-graph.svg "Every fact is a labelled thread between two dots.")
 
 That's the data. Now the second concept: how an AI actually searches it.
 
@@ -73,7 +73,7 @@ But notice the assumption hiding in there: **the answer has to live inside a sin
 
 That's the trap.
 
-![A blindfolded librarian on a rolling ladder reaches out without looking and plucks exactly one book from a shelf, while a waiting patron checks his pocket watch.](03-vibe-librarian.png)
+![A blindfolded librarian on a rolling ladder reaches out without looking and plucks exactly one book from a shelf, while a waiting patron checks his pocket watch.](03-vibe-librarian.png "Vector search doesn't match words. It matches meaning.")
 
 ## The wall: the librarian can't see the threads
 
@@ -91,7 +91,7 @@ This isn't a quirk of my project — it's a well-known limitation. When Microsof
 
 The common fix is to bolt a graph engine onto the system so it can walk the threads at question time. That works, but it's a whole extra moving part: a second database, more infrastructure, more that can break. I wanted something simpler.
 
-![A paper aeroplane stuck fast in a string web with a spider inspecting it; beside it, the same aeroplane sailing cleanly through the slot of a card-catalogue drawer onto a waiting index card.](04-miss-and-hit.png)
+![A paper aeroplane stuck fast in a string web with a spider inspecting it; beside it, the same aeroplane sailing cleanly through the slot of a card-catalogue drawer onto a waiting index card.](04-miss-and-hit.png "Same question. All that changed is how the fact was stored.")
 
 ## The fix: stop storing a web, start writing biographies
 
@@ -159,7 +159,7 @@ Read it the way the AI does. Every line is a self-contained fact in plain Englis
 
 One honest limit on that. The lists are capped — each relationship type shows up to fifty entries, most recent first, and then says how many more there are. A heavily-documented group has more connections than any single readable document should carry, so the card is the well-attested core rather than the complete set. That's a deliberate ceiling, not an accident, but it does mean "what does this group use?" is answered from a generous sample rather than an exhaustive one.
 
-![A large index card mounted on a museum display board with leader lines running out to blank plaques, while a curator on a stepladder points at one line with an absurdly long pointer.](05-card-anatomy.png)
+![A large index card mounted on a museum display board with leader lines running out to blank plaques, while a curator on a stepladder points at one line with an absurdly long pointer.](05-card-anatomy.png "Each section is a bundle of threads, flattened into prose.")
 
 ## Cleaning the text so the librarian isn't distracted
 
@@ -171,7 +171,7 @@ So before a card gets stored, its text runs through a fixed cleanup routine that
 
 That fifth step is a good example of how fiddly "simple" text is. When you rip out an HTML tag, two sentences can slam together: `was compromised.The attackers`. You want a space so it reads `was compromised. The attackers`. Easy — until you realise the same rule wrecks `Ransomware.Live`, a real threat-intel site, by turning it into `Ransomware. Live`. So the rule has to know when a full stop ends a sentence and when it's part of a name. Small detail, real consequences for how the answer reads.
 
-![A man holding a page at arm's length, its edges crusted with barnacles and burrs; beside him the same page hanging crisp and clean on a washing line.](06-cleaning.png)
+![A man holding a page at arm's length, its edges crusted with barnacles and burrs; beside him the same page hanging crisp and clean on a washing line.](06-cleaning.png "Markup is noise. The model reads the clean version.")
 
 ## One entity, one document
 
@@ -197,7 +197,7 @@ So for places, industries and other victim-side entities, I deliberately walk th
 
 It's a small idea with a large payoff: the same web, read from both ends, so the answer is in whichever card the question lands on.
 
-![Two roadside mailboxes, one overflowing and one empty with a cobweb; beside them the same pair both full, because the postman is walking deliberately backwards to fill the second.](07-reverse-arrows.png)
+![Two roadside mailboxes, one overflowing and one empty with a cobweb; beside them the same pair both full, because the postman is walking deliberately backwards to fill the second.](07-reverse-arrows.png "Write a fact from both ends, and both cards can answer.")
 
 ## Did it work?
 
@@ -209,11 +209,11 @@ Ask what malware APT29 uses and the APT29 card surfaces, malware list and all. A
 
 The architecture stayed refreshingly boring, too. No query-time graph engine, no second database, no multi-hop orchestration. Do the graph work once, write it down as good prose, and let a plain vector search do what it's good at. The complexity moved from question time, where it's slow and fragile and happens constantly, to build time, where it happens once and I can inspect the output with my own eyes.
 
-![A workshop conveyor: a tangled ball of string and cards enters at one end, is combed, pressed, cleaned and stamped along the belt, and finished index cards fly off the far end into a worker's upturned hat.](08-pipeline.png)
+![A workshop conveyor: a tangled ball of string and cards enters at one end, is combed, pressed, cleaned and stamped along the belt, and finished index cards fly off the far end into a worker's upturned hat.](08-pipeline.png "The graph work happens once, up front.")
 
 Drawn precisely, the same flow:
 
-![A left-to-right flow diagram: knowledge graph, gather each entity's threads, write a plain-text card, clean the text, store one card per entity, vector search answers questions.](diagram-pipeline.svg)
+![A left-to-right flow diagram: knowledge graph, gather each entity's threads, write a plain-text card, clean the text, store one card per entity, vector search answers questions.](diagram-pipeline.svg "Flattened at build time, so every later question stays cheap.")
 
 Paying that build cost once, rather than on every question, does mean the cards have to be kept current as the graph moves underneath them. That turned into its own engineering problem, and it's the subject of [a separate piece on keeping the library fresh](/writing/from-half-a-day-to-a-coffee-break/).
 

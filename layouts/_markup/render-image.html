@@ -1,8 +1,19 @@
 {{- /* Image render hook: resolve bundle resources, downscale to <=1200px and
-       re-encode to WebP q85, and wrap in a captioned <figure>. Caption + alt
-       both come from the markdown alt text; an empty alt renders a bare image
-       (used for the decorative opening image). External/unresolved images pass
-       through untouched. */ -}}
+       re-encode to WebP q85, and wrap in a captioned <figure>.
+
+       Alt text and caption are separate concerns and want different lengths.
+       Alt describes the picture for someone who cannot see it; the caption says
+       why the picture is here. So:
+
+         ![alt text](file.png "Caption")   alt = alt text, caption = Caption
+         ![alt text](file.png)             alt = alt text, caption = alt text
+         ![](file.png)                     bare image, no caption (decorative)
+
+       The two-argument form lets alt stay properly descriptive while the caption
+       stays short. The single-argument form is the original behaviour and is
+       unchanged, so existing posts render exactly as before.
+
+       External/unresolved images pass through untouched. */ -}}
 {{- $u := urls.Parse .Destination -}}
 {{- $src := $u.String -}}
 {{- $w := 0 -}}
@@ -30,7 +41,8 @@
     {{- errorf "render-image: %q in %q did not resolve. Check the filename and that the file sits next to index.md in the page bundle." .Destination .Page.Path -}}
   {{- end -}}
 {{- end -}}
+{{- $caption := or .Title .Text -}}
 <figure class="post-figure">
   <img src="{{ $src }}"{{ with .Text }} alt="{{ . }}"{{ end }} loading="lazy" decoding="async"{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }}>
-  {{- with .Text }}<figcaption>{{ . }}</figcaption>{{ end -}}
+  {{- with $caption }}<figcaption>{{ . }}</figcaption>{{ end -}}
 </figure>
