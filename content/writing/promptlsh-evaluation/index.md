@@ -4,8 +4,8 @@ date: 2026-09-27
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
-summary: "I built a fuzzy hash for prompt attacks, then measured it against the embedding it comes from. Rounding that embedding to 8 bits beats it on recall. Here is where the 32-byte version still earns its place."
-description: "I built a similarity digest for prompt attacks and measured it against the embedding it derives from. Quantising that embedding to 384 bytes beats the 32-byte digest on recall. Here are the three narrow cases where the digest still wins, and how little correlation survives across independent feeds."
+summary: "Thirty-two bytes is enough to ask a peer organisation whether they have seen the same prompt attack — without either of you sending the prompt. This is what each size on that curve buys, measured, and where the smallest option is the right call."
+description: "Two organisations cannot compare prompt attacks by sharing the prompts: those are things users wrote. A compact derived fingerprint solves that, and this measures what each size actually buys — full float, 384-byte quantised, 32-byte digest, dependency-free lexical — on recall, on evasion resistance, and on what survives across independently collected feeds."
 # Social card only; hidden in the page and the list. Left to itself the theme picked
 # ill3-recoverability, which is the least self-explanatory image in the post.
 cover:
@@ -19,7 +19,7 @@ A fingerprint has to fit somewhere. In a column beside every record, in an index
 
 I built one of these. `promptlsh` turns an adversarial prompt into a short **similarity digest** — a fingerprint built so that near-identical inputs produce near-identical output, which is the opposite of how a normal hash behaves. [`ssdeep`](https://ssdeep-project.github.io/ssdeep/) and [`TLSH`](https://tlsh.org/) have done this for malware files since 2006 and 2013 respectively. There was no equivalent for prompts, so I wrote one.
 
-Then I measured it against the alternatives at four different sizes, and it lost. Take an ordinary sentence embedding, round each number in it down to 8 bits, and you get 384 bytes that retain the full retrieval ceiling. My 32-byte digest gives up 11 to 21 points to buy its smaller footprint. This is that measurement, and the three narrow cases where 32 bytes is still the right call.
+Then I measured what each size on that curve actually buys, and the answer is sharper than I expected. **Take an ordinary sentence embedding, round each number down to 8 bits, and 384 bytes retains the full retrieval ceiling** — so if you can afford a few hundred bytes per prompt, that is the default and no hashing is required. Shrink to 32 bytes and you give up 11 to 21 points of recall, which buys a twelvefold reduction in storage and index cost, a derived value that is far harder to reconstruct than a quantised vector, and robustness to an evasion that destroys the lexical alternative outright. This is that measurement, and the three cases where 32 bytes is the right call.
 
 ## There is more than one way to fingerprint a prompt
 
