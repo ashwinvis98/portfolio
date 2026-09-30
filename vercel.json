@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/resume.pdf",
+      "destination": "/Ashwin-Viswamithiran-Resume.pdf",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

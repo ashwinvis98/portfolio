@@ -17,7 +17,7 @@ enableRobotsTXT = true
   mainSections = ["writing"]
   # Contact details, used by the home link row, About, and the footer.
   email = "ashwinvis98@gmail.com"
-  resume = "/resume.pdf"
+  resume = "/Ashwin-Viswamithiran-Resume.pdf"
   github = "https://github.com/ashwinvis98"
   linkedin = "https://www.linkedin.com/in/ashwinviswamithiran/"
 
@@ -41,7 +41,7 @@ enableRobotsTXT = true
   weight = 3
 [[menu.main]]
   name = "resume"
-  url = "/resume.pdf"
+  url = "/Ashwin-Viswamithiran-Resume.pdf"
   weight = 4
 
 [outputs]

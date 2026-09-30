@@ -142,6 +142,6 @@ alike.
 I'm glad to talk about threat intelligence platforms, detection engineering and
 AI security. Email is the fastest way to reach me:
 [ashwinvis98@gmail.com](mailto:ashwinvis98@gmail.com).
-My résumé is [here](/resume.pdf), and my code is on
+My résumé is [here](/Ashwin-Viswamithiran-Resume.pdf), and my code is on
 [GitHub](https://github.com/ashwinvis98). I'm also on
 [LinkedIn](https://www.linkedin.com/in/ashwinviswamithiran/).
