@@ -16,7 +16,7 @@ cover:
 ---
 
 
-![](01-hero.png)
+![An empty cinema seen from the back row, one silhouetted figure watching a screen filled with scattered text fragments and speech-bubble outlines.](01-hero.png "We have seen this film before.")
 
 Someone types a paragraph into a company's AI assistant. Not code, not a file, not an attachment — a couple of sentences of ordinary English. And the assistant does something it was built never to do: prints the instructions it was given, or reaches into a document the person asking was never cleared to read.
 
@@ -48,7 +48,7 @@ Prompts don't behave.
 
 One attack. Three fingerprints with nothing in common. And rewording costs the attacker nothing at all — no compiler, no packer, no skill. Just typing.
 
-![](02-fingerprints.png)
+![Six speech bubbles in a loose grid, each connected by a dashed line to a fingerprint below it. Every fingerprint has a different ridge pattern.](02-fingerprints.png "The same attack, and no two copies hash alike.")
 
 
 There's a second problem and it's the harder one. A malware sample is bad everywhere. A prompt isn't. [dogesec](https://www.dogesec.com/blog/modelling_ai_prompt_compromise_in_stix/) makes the point that an indicator of prompt compromise may be a single sentence that on its own looks harmless, and the risk only becomes visible once you know what system is being asked, what data it can reach, and what happens to the answer.
@@ -73,7 +73,7 @@ Prompt attacks are climbing the same ladder right now, in a different order and 
 
 The comparison doesn't rest on me, either. In two places the same institutions built the same artefact a second time, on purpose.
 
-![](03-ladders.png)
+![Two ladders side by side: a tall weathered one with widely spaced rungs, and a shorter one with tightly packed rungs whose topmost rung is still unfinished.](03-ladders.png "The same rungs, climbed again, in a fraction of the time.")
 
 ---
 
@@ -102,7 +102,7 @@ OWASP, separately, published [the LLM Top 10](https://genai.owasp.org/llm-top-10
 
 This is the part I keep returning to. Two of the most important institutions in security looked at AI systems and rebuilt their own flagship artefacts for the new domain. Nobody had to point out the analogy to them. They got there first, and they wrote it down.
 
-![](04-blueprint.png)
+![Two architectural blueprints side by side showing an identical grid-and-matrix structure: the left sheet aged and yellowed, the right sheet freshly drawn.](04-blueprint.png "The new taxonomy is the old one, drawn again.")
 
 
 If you want evidence that this field is walking a road already walked, that's it.
@@ -120,7 +120,7 @@ Once there's a taxonomy, someone builds tooling to test against it. Malware defe
 
 [promptfoo](https://www.promptfoo.dev/) sits closer to testing than attacking, and catches the case where a prompt change quietly reopens a jailbreak you'd already closed. It was acquired by OpenAI earlier this year.
 
-![](05-bench.png)
+![An overhead view of a workbench with inspection tools arranged in rows around a single speech bubble held in a clamp, with measurement lines radiating from it.](05-bench.png "Attacking becomes a discipline once the tools are shared.")
 
 What this rung really does is turn attacking into a discipline with shared tools and repeatable results. That's the moment a threat class stops being folklore.
 
@@ -145,7 +145,7 @@ The prompt version exists, and it comes from [0DIN](https://0din.ai/), Mozilla's
 
 As far as I can find, that's the closest thing to a shareable prompt fingerprint that exists. If you're looking for prior art here, start with them.
 
-![](06-partial-match.png)
+![Two large overlapping fingerprints forming a Venn diagram. In the overlap the ridges align and are highlighted; outside it they diverge.](06-partial-match.png "Close enough is the whole point of a fuzzy match.")
 
 ---
 
@@ -193,7 +193,7 @@ I've been drawing a straight line between malware and prompts, and two of the ru
 
 I think this is the real reason matching hasn't happened.
 
-![](07-privacy.png)
+![Sealed envelopes travelling between two building silhouettes. As they cross a dotted boundary at the midpoint they transform into abstract fingerprint tokens.](07-privacy.png "Only the fingerprint crosses the boundary. The words stay home.")
 
 
 When you hand a peer a malicious binary, privacy rarely comes into it. It's attacker-authored infrastructure. When you hand them the prompts your users typed into your assistant, you are handing over things people wrote. Names. Business context. Customer details. Medical questions. Anything at all. There is no version of "let's build a prompt-sharing network" that doesn't run straight into that on day one.
@@ -239,7 +239,7 @@ I set out to build a missing piece and came away less certain than I started. Th
 
 **Does any of this survive an attacker who reads it?** Fingerprints are evasion-fragile by construction. Reorder the sentences and a lexical digest collapses. Write the payload in another script and it changes shape entirely. I don't know whether portable prompt indicators are durable enough to justify the plumbing, and I don't think anyone else knows either.
 
-![](08-closing.png)
+![A bridge spanning the frame: the left half solid and complete, the right half only a dashed unbuilt outline, with a small figure standing at the edge of the gap.](08-closing.png "The last rung isn't built yet. That's the whole problem.")
 
 
 The last time this ladder got climbed it took about twenty-five years, and the rung that mattered most was the one where defenders told each other what they were seeing.
