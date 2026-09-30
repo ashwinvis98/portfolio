@@ -146,6 +146,15 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
 .home { padding-top: 1.25rem; }
 
 .masthead-statement { margin: 1.25rem 0 3rem; }
+.masthead-statement .masthead-name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 52px;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--primary);
+  margin: 0 0 1.1rem;
+}
 .masthead-statement .statement {
   font-family: var(--font-serif);
   font-weight: 400;
@@ -269,6 +278,7 @@ main .post-entry:last-of-type { border-bottom: 0.5px solid var(--border); }
 /* ---- responsive ---------------------------------------------------------- */
 
 @media (max-width: 700px) {
+  .masthead-statement .masthead-name { font-size: 38px; }
   .masthead-statement .statement { font-size: 24px; }
   .record-head { flex-direction: column; gap: 0.2rem; }
   .record-meta { white-space: normal; }
@@ -281,14 +291,14 @@ main .post-entry:last-of-type { border-bottom: 0.5px solid var(--border); }
 /* About portrait (renders only when static/images/portrait.* exists) */
 .post-content img.portrait {
   float: right;
-  width: 160px;
+  width: 260px;
   height: auto;
   margin: 0.3rem 0 1rem 1.75rem;
   border-radius: 4px;
   border: 0.5px solid var(--border);
 }
 @media (max-width: 700px) {
-  .post-content img.portrait { float: none; display: block; width: 140px; margin: 0 0 1.25rem; }
+  .post-content img.portrait { float: none; display: block; width: 100%; max-width: 320px; margin: 0 0 1.25rem; }
 }
 
 /* Mobile header: name on its own row, nav on the row below, full width.

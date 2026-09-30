@@ -19,6 +19,25 @@ is the best part of the job and the hardest part of it. There is always more
 threat than there is time, so the whole program comes down to one skill:
 deciding what matters to us, and ignoring the rest with a clear conscience.
 
+## How I approach the work
+
+Most security work is reactive by design. An alert fires, a report lands, an
+indicator shows up in a feed, and someone responds. That work matters, but it
+means the adversary always moves first. The team I'm on is trying to change
+the order: to study how the groups that target us build their tools and shift
+their habits, so we can anticipate the next technique, the next piece of
+infrastructure or the next campaign before it reaches us.
+
+Two years of working that way has changed how I approach any problem. I start
+by asking what will be true in six months, not only what is true today. I build
+things so they can be checked, because a system that measures itself gets
+better instead of just getting bigger. And I treat research and engineering as
+one job: the research says where to look, and the engineering makes looking
+cheap enough to do every day.
+
+That's what I bring to a team. Not a particular tool, but the habit of getting
+ahead of the problem, and building the feedback loop that shows whether I did.
+
 ## What I've built
 
 When I joined in 2024, the program was a plan, a MISP server that kept falling
@@ -33,6 +52,11 @@ forecasting work), and an AI track that treats malicious prompts as
 threat intelligence. I did most of the building, with a small team, and some of
 it I've since open-sourced.
 
+I also do part of this in the open, mostly on attacks against AI systems. The
+[projects](/projects/) are the tools that came out of it, and the
+[writing](/writing/) is where I show the measurements, including the ones that
+argue against my own work.
+
 ## Where I came from
 
 I studied instrumentation and control engineering at NIT Trichy, which is
@@ -44,18 +68,16 @@ readings go stale. After Wipro came a master's in computer science at CU
 Boulder, a stint building LLM services, and then threat intelligence.
 
 **2024 — now · Security Engineer II, DISH Network (EchoStar), Denver**\
-Threat intelligence platform and threat research program, built from nothing.
+Threat intelligence platform and threat research program.
+
+**2022 — 2024 · MS Computer Science, University of Colorado Boulder**
 
 **2023 · AI Software Engineer Intern, Alliant National**\
 LLM-backed backend services for document summarisation and retrieval.
 
-**2022 — 2024 · MS Computer Science, University of Colorado Boulder**
-
 **2019 — 2022 · Senior Project Engineer, Wipro**\
-SIEM and SOC engineering. Owned the SIEM workstream of a global SOC transition,
-migrated a 120TB QRadar deployment from on-premises to AWS, built fifty-odd
-custom parsers, and modelled detection use cases against the log sources they
-fed.
+SIEM and SOC engineering, supporting a global SOC's transition and
+transformation.
 
 **2015 — 2019 · B.Tech Instrumentation and Control Engineering, NIT Trichy**
 
