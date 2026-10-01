@@ -1,6 +1,6 @@
 ---
 title: "Every Attack Here Is a Prompt Injection"
-date: 2026-09-28
+date: 2026-09-21
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "mitre-atlas", "owasp", "evaluation"]

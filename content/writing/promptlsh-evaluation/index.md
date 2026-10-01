@@ -1,6 +1,6 @@
 ---
 title: "Sizing a Fingerprint for Prompt Attacks"
-date: 2026-09-27
+date: 2026-09-07
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
