@@ -312,10 +312,10 @@ main .post-entry:last-of-type { border-bottom: 0.5px solid var(--border); }
   #menu li + li::before { margin: 0 0.45rem; }
 }
 
-/* About: "Off the clock" photo row. Four across, two on phones. */
+/* About: "Off the clock" photo grid. Three across, two on phones. */
 .photo-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin: 1.25rem 0 0.5rem;
 }

@@ -3,6 +3,12 @@
 - file: lake.jpg
   alt: "Ashwin at an alpine lake below granite peaks"
   caption: "An alpine lake, worth the climb"
+- file: clouds.jpg
+  alt: "Ashwin at a mountain viewpoint with clouds below the peaks"
+  caption: "Above the clouds"
+- file: frozen-lake.jpg
+  alt: "Ashwin standing on a frozen lake in the mountains"
+  caption: "Walking on a frozen lake"
 - file: balloons.jpg
   alt: "Ashwin at a hot air balloon festival"
   caption: "Balloon festival"
@@ -10,5 +16,5 @@
   alt: "Ashwin on a ski run under a clear blue sky"
   caption: "Bluebird day"
 - file: whiteout.jpg
-  alt: "Ashwin on skis in a whiteout"
-  caption: "The other kind of day"
+  alt: "Ashwin on skis in a snowstorm"
+  caption: "Pow day"
