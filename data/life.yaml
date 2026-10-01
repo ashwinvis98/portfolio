@@ -1,20 +1,20 @@
-# Photos for the "Off the clock" row on the About page, in display order.
+# Photos for the "Off the clock" row on the home page, in display order.
 # Files live in static/images/life/. Crop to 4:5 (e.g. 640x800) before adding.
 - file: lake.jpg
   alt: "Ashwin at an alpine lake below granite peaks"
   caption: "An alpine lake, worth the climb"
-- file: clouds.jpg
-  alt: "Ashwin at a mountain viewpoint with clouds below the peaks"
-  caption: "Above the clouds"
-- file: frozen-lake.jpg
-  alt: "Ashwin standing on a frozen lake in the mountains"
-  caption: "Walking on a frozen lake"
-- file: balloons.jpg
-  alt: "Ashwin at a hot air balloon festival"
-  caption: "Balloon festival"
 - file: bluebird.jpg
   alt: "Ashwin on a ski run under a clear blue sky"
   caption: "Bluebird day"
+- file: clouds.jpg
+  alt: "Ashwin at a mountain viewpoint with clouds below the peaks"
+  caption: "Above the clouds"
+- file: balloons.jpg
+  alt: "Ashwin at a hot air balloon festival"
+  caption: "Balloon festival"
+- file: frozen-lake.jpg
+  alt: "Ashwin standing on a frozen lake in the mountains"
+  caption: "Walking on a frozen lake"
 - file: whiteout.jpg
   alt: "Ashwin on skis in a snowstorm"
-  caption: "Champagne powder, Steamboat Springs"
+  caption: "Champagne pow"

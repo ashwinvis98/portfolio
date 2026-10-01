@@ -93,9 +93,8 @@ I studied instrumentation and control engineering at NIT Trichy, which is
 mostly the study of sensors, signals and feedback loops. I didn't expect that to
 follow me into security, but it did.
 
-I spent three years at Wipro, onboarding organisations onto a global security
-operations center and driving security transformation for a large enterprise
-client. That meant sitting with each team to work out what their systems could
+I spent three years at Wipro, onboarding organisations onto a global SOC and
+driving security transformation for enterprise clients. That meant sitting with each team to work out what their systems could
 log and what they should, building the parsers that turned raw logs into
 normalised fields a rule could read, and threat modelling each environment to
 decide which detections it needed first. A SIEM is a wall of sensors, and it is
