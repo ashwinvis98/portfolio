@@ -60,7 +60,7 @@ The tradeoff is real: this is slower to build and slower to trust than pointing 
 
 - Repository: https://github.com/ashwinvis98/opencti-ai-enrichment
 - What the model got right and wrong: [OBSERVATIONS.md](https://github.com/ashwinvis98/opencti-ai-enrichment/blob/main/OBSERVATIONS.md)
-- Reasoning and the six reversals: [DESIGN.md](https://github.com/ashwinvis98/opencti-ai-enrichment/blob/main/DESIGN.md)
+- Reasoning and the six reversals: [README](https://github.com/ashwinvis98/opencti-ai-enrichment#six-reversals)
 - The write-up: [It Reads Better Than It Decides](/writing/it-reads-better-than-it-decides/)
 - Related failure mode, in a chatbot rather than a graph: [Twelve Ways to Make a Threat-Intel Bot Lie](/writing/twelve-ways-to-make-a-threat-intel-bot-lie/)
 

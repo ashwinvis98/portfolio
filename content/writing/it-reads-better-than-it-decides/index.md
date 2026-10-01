@@ -166,4 +166,4 @@ The CVE identifiers that do not exist are not in anybody's graph. That is the en
 
 ---
 
-*The connector is on GitHub as [opencti-ai-enrichment](https://github.com/ashwinvis98/opencti-ai-enrichment) — Apache-2.0, with the reasoning in [DESIGN.md](https://github.com/ashwinvis98/opencti-ai-enrichment/blob/main/DESIGN.md) and the good-and-bad field notes in [OBSERVATIONS.md](https://github.com/ashwinvis98/opencti-ai-enrichment/blob/main/OBSERVATIONS.md). The project page is [here](/projects/opencti-ai-enrichment/).*
+*The connector is on GitHub as [opencti-ai-enrichment](https://github.com/ashwinvis98/opencti-ai-enrichment) — Apache-2.0, with the design and the six reversals in the [README](https://github.com/ashwinvis98/opencti-ai-enrichment#how-it-decides) and the good-and-bad field notes in [OBSERVATIONS.md](https://github.com/ashwinvis98/opencti-ai-enrichment/blob/main/OBSERVATIONS.md). The project page is [here](/projects/opencti-ai-enrichment/).*
