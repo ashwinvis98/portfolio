@@ -1,14 +1,14 @@
 ---
 title: "About"
-summary: "Security engineer in Denver, building the threat research program at a satellite, 5G and media company, and writing about what works."
+summary: "Security engineer in Denver, a founding engineer on the threat research team at a satellite, 5G and media company, and writing about what works."
 description: "About Ashwin Viswamithiran — security engineer building threat intelligence platforms, detection pipelines and the automation between them."
 hideMeta: true
 ---
 
 {{< portrait >}}
 
-I'm a security engineer in Denver. For the last two years I've been building
-the threat research program at DISH Network, now part of EchoStar.
+I'm a security engineer in Denver. I joined DISH Network, now part of
+EchoStar, in 2024 as a founding engineer on its threat research team.
 
 It's an unusual place to do threat intelligence. Most companies have one
 business to defend. This one runs satellite TV, Hughes satellite internet, a 5G
@@ -25,14 +25,14 @@ tomorrow.
 
 Most security work is reactive by design. An alert fires, a report lands, an
 indicator shows up in a feed, and someone responds. That work matters, but it
-means the adversary always moves first. The team I'm on is trying to change
-the order: to study how the groups that target us build their tools and shift
-their habits, so we can anticipate the next technique, the next piece of
+means the adversary always moves first. My team works the other way round. We
+study how the groups that target us build their tools and how their habits
+shift over time, so we can anticipate the next technique, the next piece of
 infrastructure or the next campaign before it reaches us.
 
-Two years of working that way has changed how I approach any problem. I look
-past the incident in front of me to the pattern behind it, and ask where that
-pattern is heading. I build things so they can be checked, because a system
+Two years of working that way has shaped how I take on any problem. I solve
+the one in front of me, and I design for the version of it that will show up
+next. I build things so they can be checked, because a system
 that measures itself gets better instead of just getting bigger. And I treat
 research and engineering as one job: the research says where to look, and the
 engineering makes looking cheap enough to do every day.
@@ -79,13 +79,13 @@ I studied instrumentation and control engineering at NIT Trichy, which is
 mostly the study of sensors, signals and feedback loops. I didn't expect that to
 follow me into security, but it did.
 
-I spent three years in SIEM and SOC engineering at Wipro, bringing
-organisations onto a shared SIEM. That meant sitting with each team to work out
-what their systems could log and what they should, building the parsers that
-turned raw logs into normalised fields a rule could read, and threat modelling
-each environment to decide which detections it needed first. A SIEM is a wall
-of sensors, and it is only as good as what it has been wired to read. A threat
-feed is a sensor too, one whose readings go stale.
+I spent three years in SOC engineering at Wipro, onboarding new client
+organisations onto a managed security service. That meant sitting with each
+team to work out what their systems could log and what they should, building
+the parsers that turned raw logs into normalised fields a rule could read, and
+threat modelling each environment to decide which detections it needed first.
+A SIEM is a wall of sensors, and it is only as good as what it has been wired
+to read. A threat feed is a sensor too, and its readings decay.
 
 After Wipro came a master's in computer science at CU Boulder, a stint building
 LLM services, and then the move into the threat intelligence landscape.
@@ -133,6 +133,12 @@ conversation, or to its absence.
 well not exist. Most of the value of a detection program sits in the
 unglamorous layer that maps every source into the same fields, so a rule
 written once works everywhere.
+
+**Coverage should be something you can count.** Once you know what you can
+see, threat model what you can't: what an attacker could do in this
+environment that nothing would record or flag. Map both the detections you
+have and the gaps you've found to a common framework like MITRE ATT&CK, and
+coverage stops being a feeling and becomes a list you can work through.
 
 ## What I work with
 
