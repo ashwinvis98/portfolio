@@ -1,0 +1,7 @@
+{{- /* Returns the project pages whose `related` front matter lists the given writing page. */ -}}
+{{- $slug := .File.ContentBaseName }}
+{{- $out := slice }}
+{{- range where site.RegularPages "Section" "projects" }}
+  {{- if in .Params.related $slug }}{{ $out = $out | append . }}{{ end }}
+{{- end }}
+{{- return $out }}

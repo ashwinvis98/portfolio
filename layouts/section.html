@@ -1,0 +1,43 @@
+{{- define "main" }}
+<header class="page-header section-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}
+  <p class="section-dek">{{ . | markdownify }}</p>
+  {{- end }}
+</header>
+
+<div class="home-body section-body">
+{{- if eq .Section "projects" }}
+  <ul class="record-list">
+    {{- range sort .RegularPages "Title" }}
+    <li class="record-item">
+      <a class="record-title record-title-mono" href="{{ .Permalink }}">{{ .Title }}</a>
+      <p class="record-summary">{{ .Summary }}</p>
+      {{- partial "receipts.html" . }}
+      {{- partial "project-writing-links.html" . }}
+    </li>
+    {{- end }}
+  </ul>
+{{- else }}
+  <ul class="record-list">
+    {{- range .RegularPages.ByDate.Reverse }}
+    <li class="record-item">
+      <div class="record-head">
+        <a class="record-title" href="{{ .Permalink }}">{{ .Title }}</a>
+        <span class="record-meta mono-meta">
+          {{- with .Params.categories }}{{ delimit . ", " }} &middot; {{ end }}{{ .Date.Format "Jan 2, 2006" }}
+        </span>
+      </div>
+      <p class="record-summary">{{ .Summary }}</p>
+      {{- with partial "projects-for.html" . }}
+      <p class="record-links"><span class="mono-meta">Project</span>
+        {{- range $i, $p := . }}{{ if $i }}<span class="sep">&middot;</span>{{ end }}<a class="mono-link" href="{{ $p.Permalink }}">{{ $p.Title }}</a>{{ end }}
+      </p>
+      {{- end }}
+    </li>
+    {{- end }}
+  </ul>
+{{- end }}
+</div>
+{{- end }}

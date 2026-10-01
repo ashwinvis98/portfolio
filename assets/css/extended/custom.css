@@ -222,17 +222,40 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
 .home-body { font-size: 17px; }
 .home-body > p { margin: 0 0 1.25em; }
 .home-body h2 {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--tertiary);
-  margin: 3.75rem 0 1.4rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 0.5px solid var(--border);
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--primary);
+  margin: 3.75rem 0 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
 }
 .home-body h2:first-child { margin-top: 2.5rem; }
+
+/* section pages (/writing/, /projects/) and related blocks on single pages */
+.section-header h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 40px;
+  letter-spacing: -0.015em;
+}
+.section-dek { color: var(--secondary); font-size: 17px; max-width: 58ch; margin: 0.6rem 0 0; }
+.section-body { margin-top: 2rem; }
+.record-links { margin: 0.55rem 0 0; font-size: 14.5px; color: var(--secondary); }
+.record-links .mono-meta { margin-right: 0.6rem; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+.record-links .sep { margin: 0 0.45rem; color: var(--tertiary); }
+.record-links a { color: var(--accent); }
+.record-links a.mono-link { font-family: var(--font-mono); font-size: 13.5px; }
+.related-block { margin: 3rem 0 0; }
+.related-block .related-label {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 0 0 0.75rem;
+}
 .home-body ul, .home-body ol { padding: 0; }
 .home-body li { margin: 0; }
 

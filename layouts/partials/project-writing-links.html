@@ -1,0 +1,9 @@
+{{- $posts := slice }}
+{{- range .Params.related }}
+  {{- with site.GetPage (printf "/writing/%s" .) }}{{ $posts = $posts | append . }}{{ end }}
+{{- end }}
+{{- with $posts }}
+<p class="record-links"><span class="mono-meta">Writing</span>
+  {{- range $i, $p := sort . "Date" "desc" }}{{ if $i }}<span class="sep">&middot;</span>{{ end }}<a href="{{ $p.Permalink }}">{{ $p.Title }}</a>{{ end }}
+</p>
+{{- end }}

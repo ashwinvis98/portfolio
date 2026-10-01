@@ -5,6 +5,7 @@
     <a class="record-title record-title-mono" href="{{ .Permalink }}">{{ .Title }}</a>
     <p class="record-summary">{{ .Summary }}</p>
     {{- partial "receipts.html" . }}
+    {{- partial "project-writing-links.html" . }}
   </li>
   {{- end }}
 </ul>

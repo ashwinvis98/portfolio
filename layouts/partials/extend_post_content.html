@@ -1,0 +1,38 @@
+{{- /* Links each project to the writing behind it, and each post back to its projects.
+       Relations live in the `related` front matter of project pages only. */ -}}
+{{- if eq .Section "projects" }}
+  {{- $posts := slice }}
+  {{- range .Params.related }}
+    {{- with site.GetPage (printf "/writing/%s" .) }}{{ $posts = $posts | append . }}{{ end }}
+  {{- end }}
+  {{- with $posts }}
+<aside class="related-block">
+  <h2 class="related-label">Writing on this project</h2>
+  <ul class="record-list">
+    {{- range sort . "Date" "desc" }}
+    <li class="record-item">
+      <div class="record-head">
+        <a class="record-title" href="{{ .Permalink }}">{{ .Title }}</a>
+        <span class="record-meta mono-meta">{{ .Date.Format "Jan 2006" }}</span>
+      </div>
+      <p class="record-summary">{{ .Summary }}</p>
+    </li>
+    {{- end }}
+  </ul>
+</aside>
+  {{- end }}
+{{- else if eq .Section "writing" }}
+  {{- with partial "projects-for.html" . }}
+<aside class="related-block">
+  <h2 class="related-label">Related {{ if gt (len .) 1 }}projects{{ else }}project{{ end }}</h2>
+  <ul class="record-list">
+    {{- range . }}
+    <li class="record-item">
+      <a class="record-title record-title-mono" href="{{ .Permalink }}">{{ .Title }}</a>
+      <p class="record-summary">{{ .Summary }}</p>
+    </li>
+    {{- end }}
+  </ul>
+</aside>
+  {{- end }}
+{{- end }}
