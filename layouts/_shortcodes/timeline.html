@@ -1,0 +1,14 @@
+{{- with hugo.Data.timeline }}
+<ol class="timeline">
+  {{- range . }}
+  <li class="timeline-item">
+    <span class="timeline-when mono-meta">{{ .when }}</span>
+    <div>
+      <strong class="timeline-role">{{ .role }}</strong>
+      <span class="timeline-org">{{ .org }}</span>
+      {{- with .note }}<p>{{ . }}</p>{{ end }}
+    </div>
+  </li>
+  {{- end }}
+</ol>
+{{- end -}}

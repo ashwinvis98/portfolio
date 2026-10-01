@@ -1,6 +1,11 @@
 # Dated lines of work genuinely underway. Rendered on the home page, newest first.
-# One sentence each, specific, present tense. Remove a line when the work ships.
+# Present tense, specific. Remove a line when the work ships.
 - date: "2026-09"
-  text: "Deploying OpenAEV alongside our OpenCTI platform."
+  title: "Closing the loop with attack simulation"
+  text: "Deploying OpenAEV, Filigran's open-source adversarial exposure validation platform, alongside our OpenCTI platform. The threats we prioritise in OpenCTI become attack simulations mapped to MITRE ATT&CK, and the results show whether our controls actually detect and block them. That turns detection coverage from an assumption into a measurement that feeds straight back into the intelligence."
 - date: "2026-09"
-  text: "Preparing an LLM enrichment connector for OpenCTI for public release, with a write-up of how it performed to follow."
+  title: "An LLM enrichment connector for OpenCTI"
+  text: "Preparing a connector for public release that uses a language model to enrich incoming intelligence inside OpenCTI, adding the context an analyst would otherwise add by hand. A write-up of how it performed, including where it fell short, will follow."
+- date: "2026-09"
+  title: "Engineering alongside AI"
+  text: "Using AI coding agents across my day-to-day engineering, from building connectors and automations to testing them adversarially. It lets a small team build more, and leaves more time for checking that what we built actually works."

@@ -1,0 +1,13 @@
+# "What being ahead of the curve means" on the home page, in display order.
+- title: "The clock starts before the report."
+  text: "Intelligence has a shelf life, and much of it is spent waiting: to be validated, written up, published and read. Every hour of that is an hour the adversary gets for free. Being ahead is often less about knowing more than about shortening the distance between knowing something and acting on it."
+- title: "Watch capability, not just activity."
+  text: "Activity tells you what an adversary did. Capability tells you what they could do next. New tools, new techniques and new services for sale on criminal markets appear well before the campaigns that use them, and that lead time is the whole advantage."
+- title: "AI raises the floor for attackers first."
+  text: "AI hasn't created a new kind of adversary so much as made the existing ones faster, cheaper and more fluent. An average operator with the right model writes better lures, runs reconnaissance at scale and reworks tooling in hours. The question isn't whether that shift reaches you, but whether you saw it before it did."
+- title: "You can't detect what you never logged."
+  text: "Onboarding organisations onto a SIEM taught me that the most important conversation happens before any rule is written: sitting with the people who run each system and agreeing what it should record. Nearly every detection gap I've seen traces back to that conversation, or to its absence."
+- title: "Detection is won in normalisation."
+  text: "A log the SIEM can't parse might as well not exist. Most of the value of a detection program sits in the unglamorous layer that maps every source into the same fields, so a rule written once works everywhere."
+- title: "Coverage should be something you can count."
+  text: "Once you know what you can see, threat model what you can't: what an attacker could do in this environment that nothing would record or flag. Map both the detections you have and the gaps you've found to a framework like MITRE ATT&CK, and coverage stops being a feeling and becomes a list you can work through."

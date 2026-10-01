@@ -4,6 +4,16 @@
       "source": "/resume.pdf",
       "destination": "/Ashwin-Viswamithiran-Resume.pdf",
       "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/about/",
+      "destination": "/#about",
+      "permanent": true
     }
   ],
   "headers": [

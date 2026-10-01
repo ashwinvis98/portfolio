@@ -1,0 +1,10 @@
+{{- $projects := where site.RegularPages "Section" "projects" }}
+<ul class="record-list">
+  {{- range sort $projects "Title" }}
+  <li class="record-item">
+    <a class="record-title record-title-mono" href="{{ .Permalink }}">{{ .Title }}</a>
+    <p class="record-summary">{{ .Summary }}</p>
+    {{- partial "receipts.html" . }}
+  </li>
+  {{- end }}
+</ul>

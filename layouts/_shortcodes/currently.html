@@ -1,0 +1,13 @@
+{{- with hugo.Data.currently }}
+<ul class="currently-list">
+  {{- range sort . "date" "desc" }}
+  <li>
+    <span class="mono-meta">{{ .date }}</span>
+    <div>
+      {{- with .title }}<strong class="currently-title">{{ . }}</strong>{{ end }}
+      <p>{{ .text }}</p>
+    </div>
+  </li>
+  {{- end }}
+</ul>
+{{- end -}}

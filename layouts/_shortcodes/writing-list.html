@@ -1,0 +1,19 @@
+{{- /* Latest posts from the writing section. Usage: {{< writing-list limit="3" >}} */ -}}
+{{- $limit := int (.Get "limit" | default 3) }}
+{{- $all := where site.RegularPages "Type" "in" site.Params.mainSections }}
+<ul class="record-list">
+  {{- range first $limit (sort $all "Date" "desc") }}
+  <li class="record-item">
+    <div class="record-head">
+      <a class="record-title" href="{{ .Permalink }}">{{ .Title }}</a>
+      <span class="record-meta mono-meta">
+        {{- with .Params.categories }}{{ delimit . ", " }} &middot; {{ end }}{{ .ReadingTime }} min
+      </span>
+    </div>
+    <p class="record-summary">{{ .Summary }}</p>
+  </li>
+  {{- end }}
+</ul>
+{{- if gt (len $all) $limit }}
+<p class="section-more"><a href="{{ "writing/" | relURL }}">All {{ len $all }} pieces &rarr;</a></p>
+{{- end }}

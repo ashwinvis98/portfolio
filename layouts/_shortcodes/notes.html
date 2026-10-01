@@ -1,0 +1,11 @@
+{{- with hugo.Data.notes }}
+<ol class="note-grid">
+  {{- range $i, $n := . }}
+  <li class="note">
+    <span class="note-num mono-meta">{{ printf "%02d" (add $i 1) }}</span>
+    <strong class="note-title">{{ $n.title }}</strong>
+    <p>{{ $n.text }}</p>
+  </li>
+  {{- end }}
+</ol>
+{{- end -}}

@@ -21,6 +21,9 @@ enableRobotsTXT = true
   github = "https://github.com/ashwinvis98"
   linkedin = "https://www.linkedin.com/in/ashwinviswamithiran/"
 
+[params.assets]
+  favicon = "favicon.svg"
+
 # Home masthead: positioning statement (Title) + caption (Content).
 # Rendered by the home_info.html override, called from layouts/index.html.
 [params.homeInfoParams]
@@ -37,7 +40,7 @@ enableRobotsTXT = true
   weight = 2
 [[menu.main]]
   name = "about"
-  url = "/about/"
+  url = "/#about"
   weight = 3
 [[menu.main]]
   name = "resume"

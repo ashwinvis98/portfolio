@@ -1,0 +1,15 @@
+# "What I work with" on the home page. One group per row, items in priority order.
+- group: "Threat intelligence and detection"
+  items: ["OpenCTI", "STIX/TAXII", "Sigma", "YARA", "OpenAEV", "OSINT", "Intsights"]
+- group: "Frameworks"
+  items: ["MITRE ATT&CK", "MITRE ATLAS", "D3FEND"]
+- group: "SIEM, SOAR and XDR"
+  items: ["Cortex XSIAM", "Palo Alto XDR", "IBM QRadar", "Splunk", "Azure Sentinel", "Elastic Stack", "IBM Resilient SOAR"]
+- group: "Cloud and infrastructure"
+  items: ["AWS (EC2, ALB, Bedrock, Redshift, S3)", "Microsoft Azure", "GCP", "Docker", "Kubernetes"]
+- group: "Languages and automation"
+  items: ["Python (pycti, GraphQL)", "Bash", "SQL", "REST APIs"]
+- group: "AI"
+  items: ["Amazon Bedrock Knowledge Bases", "Retrieval-augmented generation", "Model Context Protocol", "Prompt engineering"]
+- group: "Certification"
+  items: ["AWS Certified Solutions Architect – Associate"]

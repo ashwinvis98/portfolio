@@ -1,0 +1,8 @@
+{{- with hugo.Data.skills }}
+<dl class="skills">
+  {{- range . }}
+  <dt>{{ .group }}</dt>
+  <dd>{{ range .items }}<span class="chip">{{ . }}</span>{{ end }}</dd>
+  {{- end }}
+</dl>
+{{- end -}}

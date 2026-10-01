@@ -4,6 +4,7 @@
   This is the conversion path (post -> email / resume / GitHub / LinkedIn).
   Contact values come from [params] in hugo.toml.
 */}}
+{{- if not .IsHome }}
 <div class="closing-block">
   <p>
     I'm Ashwin. I build the engineering that lets threat research get ahead
@@ -16,6 +17,7 @@
     {{- with site.Params.linkedin }} &middot; <a href="{{ . }}" rel="me">LinkedIn</a>{{ end -}}
   </p>
 </div>
+{{- end }}
 
 <style>
   .closing-block {

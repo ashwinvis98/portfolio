@@ -2,15 +2,16 @@
 
 Hugo + PaperMod. Two jobs: canonical home for technical writing, and a place that presents projects. Deployed on Vercel.
 
-Positioning everything supports: **"I build systems that make security teams effective."**
+Positioning everything supports: **"I build the engineering that lets a threat research team get ahead of attacks."**
 
 ## Structure
 
 ```
-/                 home — positioning line, recent writing, recent projects
+/                 home and about in one page (content/_index.md): masthead, currently,
+                  about, latest writing, projects, notes, timeline, skills, photos, contact
 /writing/         all posts, categories Research and Notes only
 /projects/        one page per project (decision records, not product pages)
-/about/
+/about/           redirects to /#about (vercel.json)
 ```
 
 ## Categories (posts only)
@@ -35,11 +36,13 @@ with the section).
 - **`receipts`** front matter on project pages drives the traceability strip. Only list
   figures from audits actually performed — never invent a count. A receipts strip that
   overstates is worse than none.
-- **Employer names** are allowed **only in `content/about.md`** — nowhere else: not in any
-  post, project page, partial, config value, meta tag, or commit message. (The specific
-  names live in `about.md`; they are deliberately not repeated here so this file stays
+- **Employer names** are allowed **only in `content/_index.md` and `data/timeline.yaml`** —
+  nowhere else: not in any post, project page, partial, config value, meta tag, or commit
+  message. (The specific names are deliberately not repeated here so this file stays
   clean under the employer-name sweep.)
-- **Internal detail is forbidden everywhere, `about.md` included:** internal hostnames,
+- **Home page sections** are driven by data files: `data/currently.yaml`, `data/notes.yaml`,
+  `data/timeline.yaml`, `data/skills.yaml`, `data/life.yaml`. Edit those, not the templates.
+- **Internal detail is forbidden everywhere, the home page included:** internal hostnames,
   instance IDs, file paths, private IPs, internal metrics, team names, ticket references,
   and any architecture detail specific to a production deployment.
 
