@@ -1,6 +1,6 @@
 ---
 title: "Teaching a Chatbot to Read a Spider Web"
-date: 2026-08-31
+date: 2026-04-09
 draft: false
 categories: ["Notes"]
 tags: ["threat-intelligence", "cti", "opencti", "knowledge-graph", "stix", "rag", "graphrag", "vector-search", "aws-bedrock", "knowledge-base"]

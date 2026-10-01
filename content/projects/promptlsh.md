@@ -1,6 +1,6 @@
 ---
 title: "promptlsh"
-date: 2026-08-17
+date: 2026-06-11
 summary: "A portable similarity digest for prompt attacks, so reworded jailbreaks correlate instead of reading as unrelated items."
 description: "A portable similarity digest for prompt attacks, so reworded jailbreaks correlate instead of reading as unrelated items. A decision record."
 related:
