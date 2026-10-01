@@ -65,8 +65,8 @@ still deciding at the points that matter.
 The second is AI as a target. Two years ago there was almost no threat
 intelligence about attacks on AI systems. Now there are feeds, frameworks like
 MITRE ATLAS and the OWASP Top 10 for LLMs, and a small community working out how
-to describe a malicious prompt the way we already describe malware. I've been
-part of that from early on, and I expect it to become as ordinary a part of a
+to describe a malicious prompt the way we already describe malware. I lead
+our research on it, and I expect it to become as ordinary a part of a
 threat program as phishing is today.
 
 Some of this I work on in public. The [projects](/projects/) are tools I've

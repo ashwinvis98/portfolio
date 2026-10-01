@@ -1,4 +1,6 @@
 # Dated lines of work genuinely underway. Rendered on the home page, newest first.
 # One sentence each, specific, present tense. Remove a line when the work ships.
 - date: "2026-09"
+  text: "Deploying OpenAEV alongside our OpenCTI platform."
+- date: "2026-09"
   text: "Preparing an LLM enrichment connector for OpenCTI for public release, with a write-up of how it performed to follow."
