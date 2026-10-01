@@ -3,10 +3,6 @@ title: "opencti-ai-enrichment"
 date: 2026-09-30
 summary: "An OpenCTI enrichment connector where the language model proposes entities and relationships and deterministic code decides which ones reach the graph."
 description: "An OpenCTI enrichment connector where the language model proposes entities and relationships and deterministic code decides which ones reach the graph. A decision record."
-related:
-  - "it-reads-better-than-it-decides"
-  - "twelve-ways-to-make-a-threat-intel-bot-lie"
-  - "cozy-bear-the-dukes-and-apt29"
 receipts:
   - "Apache-2.0"
   - "374 tests, no credentials"
