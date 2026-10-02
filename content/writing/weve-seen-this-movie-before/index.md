@@ -184,9 +184,9 @@ The thing malware defence has and this doesn't is the boring peer-to-peer versio
 
 ## Where the comparison breaks
 
-I've been drawing a straight line between malware and prompts, and two of the rungs above are literal rather than figurative: MITRE rebuilt ATT&CK as ATLAS, and OWASP rebuilt its Top 10 for language models. So it is a good line. But it breaks in three places, and the breaks explain more than the similarities do.
+I've been drawing a straight line between malware and prompts, and two of the rungs above are literal rather than figurative: MITRE built ATLAS on the model of ATT&CK, and OWASP rebuilt its Top 10 for language models. So it is a good line. But it breaks in three places, and the breaks explain more than the similarities do.
 
-**An indicator of compromise is proof. A prompt is usually an attempt.** A malicious hash means something ran. A jailbreak in your logs usually means somebody tried. Different evidentiary weight, different response, different shelf life.
+**An indicator of compromise is strong evidence. A prompt is usually an attempt.** A malicious hash usually means something ran. A jailbreak in your logs usually means somebody tried. Different evidentiary weight, different response, different shelf life.
 
 
 **A malware sample is rarely personal data. A prompt often is.**

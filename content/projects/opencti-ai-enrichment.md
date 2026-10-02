@@ -44,7 +44,7 @@ The tradeoff is real: this is slower to build and slower to trust than pointing 
 ## Limitations
 
 - **The confidence score is the model's own self-report,** and it comes back high on nearly every document regardless of how thin or contradictory the source was. The connector writes it into the entity's score, which makes it provenance rather than quality; using it as a filter would be a mistake. The weakest part of the design as it stands.
-- **Only Gemini has been run.** The vendor SDK is isolated to a fifteen-line module, which would make another provider a contained change, but I have not done it — and there is deliberately no provider abstraction, because an interface with one implementation advertises portability it has not demonstrated.
+- **Only Gemini has been run.** The vendor SDK is isolated to a module under twenty lines, which would make another provider a contained change, but I have not done it — and there is deliberately no provider abstraction, because an interface with one implementation advertises portability it has not demonstrated.
 - **Victim extraction is the noisiest category by a wide margin,** and stays gated for that reason. A large share of the organisations named are not in the knowledge base: some real and merely unrecorded, some artefacts of a partially-read name.
 - **The vocabularies are a maintenance surface.** Every "this software is infrastructure, not malware" entry is hand-written and drifts as the software landscape does.
 - **Guards are code, and code is wrong.** The mitigations are cautious defaults, reversibility — everything created carries an `ai-suggested` label, so undoing it is one query — and a test suite concentrated on the guard layer. Not a belief that the layer is correct.

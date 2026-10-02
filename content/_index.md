@@ -45,8 +45,8 @@ find, even when it cuts against my own work.
 
 ## About {#about}
 
-I joined DISH Network, now part of EchoStar, in 2024 as a founding engineer on
-its threat research team.
+Since 2024 I've been a founding engineer on the threat research team at DISH
+Network, now part of EchoStar, where I own our threat intelligence platform.
 
 It's an unusual place to do threat intelligence. Most companies have one
 business to defend. This one runs satellite TV, Hughes satellite internet, a 5G

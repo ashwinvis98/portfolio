@@ -134,7 +134,7 @@ That is the actual leverage, and it is worth separating from the version people 
 
 **It is not a fix for attribution gaps, and I have a clean example.** [*Attackers Abuse ChatGPT Custom GPTs to Deliver RAT via ClickFix*](https://www.huntress.com/blog/chatgpt-custom-gpts-clickfix-rat) is a good report, well populated with indicators, with no actor attribution from the feed. Gemini named no actor and no malware family — only techniques. On the report where the missing attribution was the most interesting thing about it, the model was exactly as silent as the feed. Enrichment does not manufacture judgement that nobody exercised.
 
-**Only Gemini has been run.** The vendor SDK is isolated to a fifteen-line module, which would make swapping providers a contained change, but I have not done it and I did not build a provider abstraction to imply otherwise. An interface with one implementation advertises portability it has not demonstrated.
+**Only Gemini has been run.** The vendor SDK is isolated to a module under twenty lines, which would make swapping providers a contained change, but I have not done it and I did not build a provider abstraction to imply otherwise. An interface with one implementation advertises portability it has not demonstrated.
 
 **The vocabularies are a maintenance surface**, and they are the least elegant part of the codebase. Every hand-written "this software is infrastructure" entry will drift as the software landscape does.
 
@@ -146,11 +146,11 @@ That is the actual leverage, and it is worth separating from the version people 
 
 Two things changed while I was building this, and neither is about model capability.
 
-The industry has been repricing this kind of work, publicly and expensively. Google bought Mandiant for $5.4 billion in 2022 and [folded it into Google Cloud](https://cloud.google.com/blog/products/identity-security/google-completes-acquisition-of-mandiant), then [agreed to acquire Wiz for $32 billion](https://www.prnewswire.com/news-releases/google-announces-agreement-to-acquire-wiz-302404500.html) — its largest acquisition ever by a wide margin. You can read the strategy several ways, but the direction is not ambiguous: security expertise is being bought by the companies that own the compute and the models. The expertise is converging with the inference.
+The industry has been repricing this kind of work, publicly and expensively. Google bought Mandiant for $5.4 billion in 2022 and [folded it into Google Cloud](https://cloud.google.com/blog/products/identity-security/google-completes-acquisition-of-mandiant), then [acquired Wiz for $32 billion](https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/), a deal that closed in March 2026 — its largest acquisition ever by a wide margin. You can read the strategy several ways, but the direction is not ambiguous: security expertise is being bought by the companies that own the compute and the models. The expertise is converging with the inference.
 
 And the adversary is already there. I was not looking for this, but working through recent feed content for the examples in this piece, a striking share of it turned out to be reporting on attackers using AI: Talos's autonomous AI C2 implant, custom GPTs used for malware delivery, an Android banking trojan with [AI-built phishing overlays](https://cyberpress.org/remcontrol-trojan-steals-banking-pins/). Nobody on that side is waiting for a governance review.
 
-Which does not make defensive AI automatically correct. It makes the *absence* of it a choice with a cost. But if security expertise really is converging with inference, then the differentiated work is not prompting. It is knowing which decisions a model is allowed to make — and most of this project is a few thousand lines of saying no, with a fifteen-line module that talks to the model.
+Which does not make defensive AI automatically correct. It makes the *absence* of it a choice with a cost. But if security expertise really is converging with inference, then the differentiated work is not prompting. It is knowing which decisions a model is allowed to make — and most of this project is a few thousand lines of saying no, with a module under twenty lines that talks to the model.
 
 ## What I'd tell someone starting this
 

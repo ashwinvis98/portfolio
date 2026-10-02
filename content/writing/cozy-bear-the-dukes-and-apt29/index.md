@@ -128,7 +128,7 @@ That principle led me to reject changes that looked like clear upgrades on paper
 
 **Leet-speak folding.** "Cl0p" and "Clop" are the same ransomware crew. A rule normalising zeros into o's and ones into i's would catch it. It would also start "correcting" names where those characters are meaningful, quietly manufacturing false matches. I left it out.
 
-Each of these would have nudged recall up a point or two. Each also widened the crack a false merge could slip through. Given gaps-beat-traps, the decision made itself.
+Each of these would probably have nudged recall up a little; I never measured by how much. Each also widened the crack a false merge could slip through. Given gaps-beat-traps, the decision made itself.
 
 That's an uncomfortable thing to write in an engineering post: *I chose to catch fewer duplicates on purpose.* But it was the right call for a system whose job is to be trusted.
 
@@ -136,7 +136,7 @@ That's an uncomfortable thing to write in an engineering post: *I chose to catch
 
 Everything above is what I designed and what I believed when I first wrote this. Then I did the thing I should have done first: I re-ran the matcher over an export and read every pair it produced.
 
-The strict first pass held up. The fuzzy pass did not. **Ten of its fifty-six matches were wrong** — an 18% false positive rate in exactly the tier I'd described as cautious. Two of them were genuinely bad:
+The strict first pass held up. The fuzzy pass did not. **Ten of its fifty-six matches were wrong** — a precision of about 82% in exactly the tier I'd described as cautious. Two of them were genuinely bad:
 
 ```
 [peoples]   Democratic People's Republic of Korea  <->  People's Liberation Army
