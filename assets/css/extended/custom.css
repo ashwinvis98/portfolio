@@ -131,9 +131,9 @@ code, pre, kbd, tt { font-family: var(--font-mono); }
   font-family: var(--font-mono);
   font-size: 13px;
   text-transform: lowercase;
-  color: var(--secondary);
+  color: var(--accent);
 }
-#menu li a:hover { color: var(--primary); text-decoration: none; }
+#menu li a:hover { text-decoration: underline; }
 #menu li a .active { color: var(--primary); }
 #menu li + li::before {
   content: "\00b7";
@@ -403,7 +403,7 @@ main .post-entry:last-of-type { border-bottom: 0.5px solid var(--border); }
   font-size: 16px;
   font-weight: 600;
 }
-.statement-links a { color: var(--accent); }
+.statement-links a { color: var(--primary); }
 .statement-links a + a::before {
   content: "·";
   margin: 0 0.75rem;

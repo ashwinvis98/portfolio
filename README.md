@@ -7,8 +7,8 @@ Positioning everything supports: **"I build the engineering that lets a threat r
 ## Structure
 
 ```
-/                 home and about in one page (content/_index.md): masthead, about, what
-                  I've built, currently, projects, latest writing, background and timeline,
+/                 home and about in one page (content/_index.md): masthead, currently,
+                  projects, what I've built, latest writing, about, background and timeline,
                   skills, approach, notes, photos, contact. Header menu holds contact links.
 /writing/         all posts, categories Research and Notes only
 /projects/        one page per project (decision records, not product pages)

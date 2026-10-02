@@ -7,9 +7,9 @@
     <p class="statement">{{ .Title | markdownify }}</p>
     <div class="statement-caption">{{ .Content | markdownify }}</div>
     <nav class="statement-links" aria-label="On this site">
+      <a href="#projects">Projects</a>
+      <a href="#writing">Writing</a>
       <a href="#about">About</a>
-      <a href="{{ "projects/" | relURL }}">Projects</a>
-      <a href="{{ "writing/" | relURL }}">Writing</a>
     </nav>
   </div>
   {{- if os.FileExists "static/images/portrait.jpg" }}

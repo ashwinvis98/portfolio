@@ -1,6 +1,8 @@
+{{- /* Projects on the home page. Usage: {{< projects-list limit="3" >}} */ -}}
+{{- $limit := int (.Get "limit" | default 3) }}
 {{- $projects := where site.RegularPages "Section" "projects" }}
 <ul class="record-list">
-  {{- range sort $projects "Title" }}
+  {{- range first $limit (sort $projects "Title") }}
   <li class="record-item">
     <a class="record-title record-title-mono" href="{{ .Permalink }}">{{ .Title }}</a>
     <p class="record-summary">{{ .Summary }}</p>
@@ -9,3 +11,4 @@
   </li>
   {{- end }}
 </ul>
+<p class="section-more"><a href="{{ "projects/" | relURL }}">See all &rarr;</a></p>

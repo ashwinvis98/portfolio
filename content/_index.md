@@ -3,25 +3,17 @@ title: "Ashwin Viswamithiran"
 description: "Ashwin Viswamithiran — security engineer in Denver building the engineering that lets organizations get ahead of attacks."
 ---
 
-## About {#about}
+## Currently
 
-I joined DISH Network, now part of EchoStar, in 2024 as a founding engineer on
-its threat research team.
+{{< currently >}}
 
-It's an unusual place to do threat intelligence. Most companies have one
-business to defend. This one runs satellite TV, Hughes satellite internet, a 5G
-wireless network under Boost Mobile, in-home technology services, and a
-streaming and content business on top of it all. Every one of those has its own
-threat actors, its own vendors and its own ways of being attacked. That breadth
-is the best part of the job and the hardest part of it. There is always more
-threat than there is time, so the whole program comes down to one skill:
-deciding what matters to us. That means the actors and techniques aimed at our
-industries today, and the emerging capabilities that could be aimed at them
-tomorrow.
+## Projects {#projects}
+
+{{< projects-list limit="3" >}}
 
 ## What I've built
 
-When I joined in 2024, the program was a plan, a MISP server that kept falling
+When I started in 2024, our threat research program was a plan, a MISP server that kept falling
 over, and a handful of dark web keyword alerts. Today it runs on a production
 OpenCTI platform in AWS that pulls from a wide range of open-source, dark web
 and commercial sources, and pushes what it learns into our firewalls and
@@ -43,21 +35,29 @@ to describe a malicious prompt the way we already describe malware. I lead
 our research on it, and I expect it to become as ordinary a part of a
 threat program as phishing is today.
 
-Some of this I work on in public. The projects below are tools I've released,
-and the writing is where I test ideas against real data and report what I
+Some of this I work on in public. The projects above are tools I've released,
+and the writing below is where I test ideas against real data and report what I
 find, even when it cuts against my own work.
 
-## Currently
-
-{{< currently >}}
-
-## Projects
-
-{{< projects-list >}}
-
-## Writing
+## Writing {#writing}
 
 {{< writing-list limit="3" >}}
+
+## About {#about}
+
+I joined DISH Network, now part of EchoStar, in 2024 as a founding engineer on
+its threat research team.
+
+It's an unusual place to do threat intelligence. Most companies have one
+business to defend. This one runs satellite TV, Hughes satellite internet, a 5G
+wireless network under Boost Mobile, in-home technology services, and a
+streaming and content business on top of it all. Every one of those has its own
+threat actors, its own vendors and its own ways of being attacked. That breadth
+is the best part of the job and the hardest part of it. There is always more
+threat than there is time, so the whole program comes down to one skill:
+deciding what matters to us. That means the actors and techniques aimed at our
+industries today, and the emerging capabilities that could be aimed at them
+tomorrow.
 
 ## Where I came from
 
