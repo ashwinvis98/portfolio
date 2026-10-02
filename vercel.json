@@ -6,6 +6,11 @@
       "permanent": true
     },
     {
+      "source": "/ashwin-viswamithiran-resume.pdf",
+      "destination": "/Ashwin-Viswamithiran-Resume.pdf",
+      "permanent": true
+    },
+    {
       "source": "/about",
       "destination": "/#about",
       "permanent": true

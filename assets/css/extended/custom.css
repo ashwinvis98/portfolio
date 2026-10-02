@@ -398,19 +398,23 @@ main .post-entry:last-of-type { border-bottom: 0.5px solid var(--border); }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.25rem;
   margin: 1.4rem 0 0;
-  font-family: var(--font-mono);
-  font-size: 13px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
 }
 .statement-links a { color: var(--accent); }
-.statement-links a.button {
-  padding: 0.4rem 0.9rem;
-  color: var(--theme);
-  background: var(--accent);
-  border-radius: 3px;
+.statement-links a + a::before {
+  content: "·";
+  margin: 0 0.75rem;
+  color: var(--tertiary);
+  font-weight: 400;
 }
-.statement-links a.button:hover { text-decoration: none; opacity: 0.9; }
+
+/* External menu links: drop the theme's arrow icon and the &nbsp; it leaves behind. */
+#menu li a { font-size: 0; }
+#menu li a span { font-size: 13px; }
+#menu a svg { display: none; }
 
 @media (max-width: 700px) {
   .masthead-statement { grid-template-columns: 1fr; gap: 1.5rem; }
