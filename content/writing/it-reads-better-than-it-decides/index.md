@@ -1,6 +1,6 @@
 ---
 title: "It Reads Better Than It Decides"
-date: 2026-06-04
+date: 2026-09-30
 draft: false
 categories: ["Notes"]
 tags: ["threat-intelligence", "cti", "opencti", "stix", "llm-security", "grounding", "hallucination", "knowledge-graph", "data-quality", "gemini"]

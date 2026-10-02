@@ -1,6 +1,6 @@
 ---
 title: "opencti-ai-enrichment"
-date: 2026-06-11
+date: 2026-09-30
 summary: "An OpenCTI enrichment connector where the language model proposes entities and relationships and deterministic code decides which ones reach the graph."
 description: "An OpenCTI enrichment connector where the language model proposes entities and relationships and deterministic code decides which ones reach the graph. A decision record."
 receipts:
