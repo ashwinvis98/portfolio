@@ -47,6 +47,12 @@ find, even when it cuts against my own work.
 
 Since 2024 I've been a founding engineer on the threat research team at DISH
 Network, now part of EchoStar, where I own our threat intelligence platform.
+That means the engineering decisions behind it: what the platform ingests and
+how each source is normalized, how intelligence reaches the tools that act on it,
+what gets automated and what stays with a person, and how we check that it is
+working. A lot of the job is making it better, one decision at a time: finding
+the slowest or least trustworthy step, fixing it, and measuring whether the fix
+held.
 
 It's an unusual place to do threat intelligence. Most companies have one
 business to defend. This one runs satellite TV, Hughes satellite internet, a 5G
@@ -91,7 +97,7 @@ study how the groups that target us build their tools and how their habits
 shift over time, so we can anticipate the next technique, the next piece of
 infrastructure or the next campaign before it reaches us.
 
-Two years of working that way has shaped how I take on any problem. I solve
+Over the years, working that way has shaped how I take on any problem. I solve
 the one in front of me, and I design for the version of it that will show up
 next. I build things so they can be checked, because a system that measures
 itself gets better instead of just getting bigger. And I treat research and
