@@ -4,8 +4,8 @@ date: 2026-04-30
 draft: false
 categories: ["Notes"]
 tags: ["threat-intelligence", "cti", "opencti", "entity-resolution", "record-linkage", "threat-actor-naming", "knowledge-base", "rag", "data-quality"]
-summary: "One hacking group can carry a dozen names. Merging them is easy until you merge two different groups by accident — which I did, ten times, including two separate countries' intelligence services."
-description: "Teaching a threat-intelligence knowledge base that a dozen vendor names can mean one adversary, why I stopped short of catching every duplicate, and what I found when I finally audited my own matcher instead of trusting the design."
+summary: "One hacking group can carry half a dozen names. Merging them is easy until you merge two different groups by accident — which I did, ten times, including two pairs of state bodies from different countries."
+description: "Teaching a threat-intelligence knowledge base that half a dozen vendor names can mean one adversary, why I stopped short of catching every duplicate, and what I found when I finally audited my own matcher instead of trusting the design."
 ---
 
 ![A hooded figure at a keyboard seen from behind, covered in layered stick-on name badges, one peeled off on the floor beside the chair.](01-hero.png "One group, six names, and six chances to look like six threats.")

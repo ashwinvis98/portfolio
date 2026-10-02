@@ -157,7 +157,7 @@ Originates-from country
 
 Read it the way the AI does. Every line is a self-contained fact in plain English. "Uses malware: SUNBURST." A person can read it, the vibe-librarian can feel it, and the language model can quote it back with confidence. The invisible thread became a visible sentence.
 
-One honest limit on that. The lists are capped — each relationship type shows up to fifty entries, most recent first, and then says how many more there are. A heavily-documented group has more connections than any single readable document should carry, so the card is the well-attested core rather than the complete set. That's a deliberate ceiling, not an accident, but it does mean "what does this group use?" is answered from a generous sample rather than an exhaustive one.
+One honest limit on that. The lists are capped — each relationship type shows up to a fixed number of entries, most recent first, and then says how many more there are. A heavily-documented group has more connections than any single readable document should carry, so the card is the well-attested core rather than the complete set. That's a deliberate ceiling, not an accident, but it does mean "what does this group use?" is answered from a generous sample rather than an exhaustive one.
 
 ![A large index card mounted on a museum display board with leader lines running out to blank plaques, while a curator on a stepladder points at one line with an absurdly long pointer.](05-card-anatomy.png "Each section is a bundle of threads, flattened into prose.")
 

@@ -80,7 +80,7 @@ The interesting result was a failure that wasn't a fabrication.
 
 Asked which intrusion sets use Cobalt Strike, the assistant described the tool accurately, noted honestly that it couldn't give a comprehensive list, and named almost nobody. But the knowledge base *does* know this. Dozens of actor cards list Cobalt Strike in their relationships. The problem is that semantic search for "which actors use Cobalt Strike" retrieves the *Cobalt Strike card* — which is overwhelmingly the best match for that sentence — and the Cobalt Strike card doesn't list its users.
 
-This is the same lesson as the [first piece in this series](/writing/teaching-a-chatbot-to-read-a-spider-web/), arriving from the other direction. I'd written relationships onto the cards where they were worth reading, and for actor-to-tool I'd written them on the actor. For victim-side entities like countries and sectors I'd deliberately written the inbound direction too. Tools never got that treatment, so the question "who uses this?" has no document to land on.
+This is the same lesson as the [earlier piece on turning a graph into readable cards](/writing/teaching-a-chatbot-to-read-a-spider-web/), arriving from the other direction. I'd written relationships onto the cards where they were worth reading, and for actor-to-tool I'd written them on the actor. For victim-side entities like countries and sectors I'd deliberately written the inbound direction too. Tools never got that treatment, so the question "who uses this?" has no document to land on.
 
 The honest refusal is doing real work here — it stopped an incomplete answer from looking complete. But the fix isn't in the prompt or the model. It's upstream, in which direction the fact got written down. That one is still open.
 
@@ -106,7 +106,7 @@ None of this is the model being well-behaved by nature. Three things carry it.
 
 **The generation prompt is narrow and explicit.** Answer only from the retrieved passages. Cite entity names and identifiers. Distinguish "not found in this data" from "does not exist." Never invent indicators, hashes, attributions or technique IDs. Most of the good behaviour in the twelve traces back to that fourth instruction and to the third.
 
-**Temperature is low and retrieval is wide.** Twenty candidate passages, reranked down to ten, with a low sampling temperature. Grounded question answering is not a creative writing task and there's no reason to sample like it is. That configuration is recorded for the quality pass; I'm assuming it held for the adversarial one, which ran the same harness but didn't log its own settings.
+**Temperature is low and retrieval is wide.** Retrieval casts a wide net and reranks it, with a low sampling temperature. Grounded question answering is not a creative writing task and there's no reason to sample like it is. That configuration is recorded for the quality pass; I'm assuming it held for the adversarial one, which ran the same harness but didn't log its own settings.
 
 **The documents were built to be quotable.** This is the part that isn't about the LLM layer at all. Each card is one entity, written as self-contained factual lines. A model asked to answer only from retrieved text does far better when the retrieved text is a clean statement of fact than when it's a fragment of a report with the subject three paragraphs up.
 
@@ -132,6 +132,6 @@ The thing I'd carry to another project is that **grounding is a property of your
 
 Every mechanism that made this system honest was in place before the language model saw anything: cards written as standalone facts, a generation prompt that forbids going beyond them, retrieval wide enough that the right passage is usually present, and an explicit instruction to distinguish absence of data from absence of fact. The model is doing the easy part. It's reading.
 
-And the reason to run the adversarial suite isn't to collect a pass rate. It's that writing twelve prompts designed to make your own system lie forces you to articulate what a lie would even look like in your domain — which, in threat intelligence, turned out to be *confident attribution on thin evidence* far more often than *invented facts*. I'd expected to be hunting fabricated IOCs. What the tests mostly caught were premises I'd have accepted myself if I'd been reading quickly.
+And the reason to run the adversarial suite isn't to collect a pass rate. It's that writing twelve prompts designed to make your own system lie forces you to articulate what a lie would even look like in your domain — which, in threat intelligence, turned out to be *confident attribution on thin evidence* far more often than *invented facts*. I'd expected to be hunting fabricated IOCs. The prompts that took the most care to write were the ones built on a false premise, the kind I'd have accepted myself if I'd been reading quickly.
 
 The system is in better shape for having been attacked by the person who built it. It would be in better shape still for being attacked by someone who didn't.

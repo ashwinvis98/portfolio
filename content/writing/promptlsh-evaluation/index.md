@@ -4,7 +4,7 @@ date: 2026-08-20
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "similarity-hashing", "evaluation"]
-summary: "Thirty-two bytes is enough to ask a peer organisation whether they have seen the same prompt attack — without either of you sending the prompt. This is what each size on that curve buys, measured, and where the smallest option is the right call."
+summary: "Thirty-two bytes is enough to fingerprint a prompt attack so that reworded versions still match, and the fingerprint can be shared without sending the prompt. This is what each size on that curve buys, measured, and where the smallest option is the right call."
 description: "Two organisations cannot compare prompt attacks by sharing the prompts: those are things users wrote. A compact derived fingerprint solves that, and this measures what each size actually buys — full float, 384-byte quantised, 32-byte digest, dependency-free lexical — on recall, on evasion resistance, and on what survives across independently collected feeds."
 # Social card only; hidden in the page and the list. Left to itself the theme picked
 # ill3-recoverability, which is the least self-explanatory image in the post.
@@ -17,7 +17,7 @@ cover:
 
 A fingerprint has to fit somewhere. In a column beside every record, in an index that has to stay fast, in a payload two systems exchange all day. So the first question is not how clever the fingerprint is. It is how many bytes you are willing to spend on one, and what each size actually buys.
 
-I built one of these. `promptlsh` turns an adversarial prompt into a short **similarity digest** — a fingerprint built so that near-identical inputs produce near-identical output, which is the opposite of how a normal hash behaves. [`ssdeep`](https://ssdeep-project.github.io/ssdeep/) and [`TLSH`](https://tlsh.org/) have done this for malware files since 2006 and 2013 respectively. There was no equivalent for prompts, so I wrote one.
+I built one of these. `promptlsh` turns an adversarial prompt into a short **similarity digest** — a fingerprint built so that near-identical inputs produce near-identical output, which is the opposite of how a normal hash behaves. [`ssdeep`](https://ssdeep-project.github.io/ssdeep/) and [`TLSH`](https://tlsh.org/) have done this for malware files since 2006 and 2013 respectively. I built a version for prompts, on top of existing pieces (see Credits).
 
 Then I measured what each size on that curve actually buys, and the answer is sharper than I expected. **Take an ordinary sentence embedding, round each number down to 8 bits, and 384 bytes retains the full retrieval ceiling** — so if you can afford a few hundred bytes per prompt, that is the default and no hashing is required. Shrink to 32 bytes and you give up 11 to 21 points of recall, which buys a twelvefold reduction in storage and index cost, a derived value that is far harder to reconstruct than a quantised vector, and robustness to an evasion that destroys the lexical alternative outright. This is that measurement, and the three cases where 32 bytes is the right call.
 
@@ -186,13 +186,14 @@ If none of those describe you, you probably do not need a fingerprint yet.
 
 ## Reproduce it
 
-Every number above comes from `eval/` in the [`promptlsh`
+Every number above except the cross-feed overlaps comes from `eval/` in the [`promptlsh`
 repo](https://github.com/ashwinvis98/promptlsh), with the full tables in
 [`RESULTS.md`](https://github.com/ashwinvis98/promptlsh/blob/main/RESULTS.md):
 
 - `eval/wire_formats.py` — the recall@1 comparison across all five wire formats, and the
   reorder-robustness test. Fixed seeds, so it reproduces exactly.
 - `eval/cluster_corpus.py` — the corpus redundancy figures.
+- The cross-feed overlap numbers come from a script that is not published, because three of the five feeds are gated datasets that each need terms accepted individually. Those figures are not reproducible from the repo.
 
 Everything runs on public corpora — HackAPrompt, JailbreakBench, HarmBench, WildJailbreak —
 and no corpus is committed to the repo. WildJailbreak is gated, so you will need to accept
@@ -200,7 +201,7 @@ its terms on HuggingFace before the paraphrase-pair evaluation will run.
 
 ## Credits
 
-None of the pieces here are mine. The measurement is.
+The techniques here are other people's. The evaluation and the packaging are mine.
 
 **Prior art.** Similarity hashing for correlation is long-established in malware analysis —
 [ssdeep](https://ssdeep-project.github.io/ssdeep/) (Kornblum, 2006),

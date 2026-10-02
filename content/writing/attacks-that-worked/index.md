@@ -127,7 +127,7 @@ The volume behind translation is a competition artifact, as above. But the *abse
 
 **Check how a corpus was built before interpreting what's in it.** Everything in this piece that corrected an earlier reading came out of three columns — `expected_completion`, `prompt`, `score` — sitting in a file I already had. It took one script. It should have run before I wrote anything, not after.
 
-**Text-derived technique labels are weak evidence, and now there's a number for it.** 11.4% recall against known ground truth, on a corpus where the technique is uncontested. If your pipeline attributes technique from prompt text, that is the order of magnitude to expect, and the direction of the error is always the same: it under-reports.
+**Text-derived technique labels are weak evidence, and now there's a number for it.** 11.4% recall against known ground truth, on a corpus where the technique is uncontested. If your pipeline attributes technique from prompt text, expect it to under-report, possibly by a lot. This detector is a set of 16 patterns I wrote, and a better one would do better, though it would also have to avoid false positives like a prompt that merely discusses base64.
 
 **Report coverage, not just distribution.** A pie chart of technique shares is the natural output here and it is close to a lie, because the largest slice — no technique identified — gets dropped before the chart is drawn. Any distribution over prompt-attack techniques should carry its denominator and its miss rate on the same page.
 

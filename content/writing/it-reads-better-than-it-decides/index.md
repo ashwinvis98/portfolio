@@ -120,13 +120,13 @@ Six reversals, one direction. The guards did not get smarter — two categories 
 
 ## So the model proposes and the code decides
 
-Which lands on the design. Every entity or relationship the model produces goes through a funnel: shape guards, category vocabularies, controlled taxonomies, dedup, the groundedness check, OpenCTI's own relationship schema, and finally a per-category creation mode. **Every stage can only subtract.** There is no path where the model's confidence unlocks something the guards refused.
+Which lands on the design. Every entity or relationship the model produces goes through a funnel: shape guards, category vocabularies, controlled taxonomies, dedup, the groundedness check, OpenCTI's own relationship schema, and finally a per-category creation mode. **No stage can add anything the model did not propose.** Each can only drop or re-file. There is no path where the model's confidence unlocks something the guards refused.
 
 The practical consequence is that reasoning about what this connector can do to a graph means reading the guard layer, not predicting a model's behaviour. That is the property I actually wanted.
 
 It also means the unglamorous work is the work. Somebody has to write down that Microsoft Exchange is infrastructure rather than malware, so a report *about* exploiting Exchange does not file Exchange as the payload. Somebody has to write down that the defender's own EDR is a security product, so a report describing how it caught something does not record it as an adversary tool. There is no clever general rule for either. You write it once, and then it holds on every report, at 3am, on the ten-thousandth item, without attention.
 
-That is the actual leverage, and it is worth separating from the version people usually pitch. A person plus a chatbot applies judgement per item, by hand, and the operator is the bottleneck and gets bored. A person plus an engineered funnel applies judgement *once*, to the rules, and executes it identically forever. What scales is consistent application of settled judgement. What does not scale — and is now where the time goes — is deciding what the rules should be, reading what the connector says it would have done, and knowing that NVD owns CVE identifiers. That last part is the part worth a salary.
+That is the actual leverage, and it is worth separating from the version people usually pitch. A person plus a chatbot applies judgement per item, by hand, and the operator is the bottleneck and gets bored. A person plus an engineered funnel applies judgement *once*, to the rules, and executes it identically forever. What scales is consistent application of settled judgement. What does not scale — and is now where the time goes — is deciding what the rules should be, reading what the connector says it would have done, and knowing that NVD owns CVE identifiers.
 
 ## The part where I'm probably wrong
 
@@ -142,15 +142,11 @@ That is the actual leverage, and it is worth separating from the version people 
 
 **And guards are code, so guards are wrong sometimes.** The mitigations are cautious defaults, reversibility — everything the connector creates carries an `ai-suggested` label, so undoing the whole experiment is one query — and a test suite concentrated on the guard layer. Not a belief that the guard layer is correct.
 
-## Why this matters more than it did two years ago
+## The other side is already using AI
 
-Two things changed while I was building this, and neither is about model capability.
+I was not looking for this, but several of the recent feed items I picked as examples for this piece were reports about attackers using AI: Talos's autonomous AI C2 implant, custom GPTs used for malware delivery, an Android banking trojan with [AI-built phishing overlays](https://cyberpress.org/remcontrol-trojan-steals-banking-pins/). Nobody on that side is waiting for a governance review.
 
-The industry has been repricing this kind of work, publicly and expensively. Google bought Mandiant for $5.4 billion in 2022 and [folded it into Google Cloud](https://cloud.google.com/blog/products/identity-security/google-completes-acquisition-of-mandiant), then [acquired Wiz for $32 billion](https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/wiz-acquisition/), a deal that closed in March 2026 — its largest acquisition ever by a wide margin. You can read the strategy several ways, but the direction is not ambiguous: security expertise is being bought by the companies that own the compute and the models. The expertise is converging with the inference.
-
-And the adversary is already there. I was not looking for this, but working through recent feed content for the examples in this piece, a striking share of it turned out to be reporting on attackers using AI: Talos's autonomous AI C2 implant, custom GPTs used for malware delivery, an Android banking trojan with [AI-built phishing overlays](https://cyberpress.org/remcontrol-trojan-steals-banking-pins/). Nobody on that side is waiting for a governance review.
-
-Which does not make defensive AI automatically correct. It makes the *absence* of it a choice with a cost. But if security expertise really is converging with inference, then the differentiated work is not prompting. It is knowing which decisions a model is allowed to make — and most of this project is a few thousand lines of saying no, with a module under twenty lines that talks to the model.
+That does not make defensive AI automatically correct. It makes the *absence* of it a choice with a cost. But the differentiated work is not prompting. It is knowing which decisions a model is allowed to make, and most of this project is code that says no, around a module under twenty lines that talks to the model.
 
 ## What I'd tell someone starting this
 
