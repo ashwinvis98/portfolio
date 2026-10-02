@@ -44,7 +44,7 @@ So when is the 32-byte digest the right choice? The measurement narrows it to tw
 - **Lexical is order-sensitive.** Under word reordering the lexical similarity collapses to ~0.004 — reshuffling evades it completely.
 - **Recall degrades with scale.** Same-attack recall@1 drops as the candidate pool grows (0.708 at N=400 → 0.580 at N=1000, domain-tuned centered), as expected for nearest-neighbour retrieval.
 - **The cross-org number is not universal.** The ~2.9x correlation gain over exact matching (35.1% vs 12.2% overlap sharing digests only) comes from random splits of a single high-redundancy corpus. It shows the exact-vs-digest gap on shared source material, not a portable rate. A genuinely cross-corpus test is still outstanding.
-- **The strongest backend is mildly in-distribution.** The domain-tuned `0din` model was fine-tuned on WildJailbreak-derived data; the clean general-model reference (`bge-small`, ~0.61 recall@1 at N=400) is the honest number to lead with.
+- **The strongest backend is in-distribution.** The domain-tuned `0din` model was fine-tuned on WildJailbreak-derived data; the clean general-model reference (`bge-small`, ~0.61 recall@1 at N=400) is the honest number to lead with.
 
 ## Links
 

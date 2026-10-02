@@ -13,7 +13,10 @@ cover:
   relative: true
   hidden: true
   alt: "One word changes and most of the fuzzy digest survives; the same change to a cryptographic hash rewrites it entirely."
+lastmod: 2026-09-29
 ---
+
+*Updated September 29, 2026: the cross-feed results now include controls, and the wire-format comparison can be reproduced from the repo.*
 
 A fingerprint has to fit somewhere. In a column beside every record, in an index that has to stay fast, in a payload two systems exchange all day. So the first question is not how clever the fingerprint is. It is how many bytes you are willing to spend on one, and what each size actually buys.
 
@@ -160,7 +163,7 @@ only between feeds that collect the same kind of thing. Full tables in
 ## What this doesn't show
 
 - These are matching rates on one dataset's paraphrase pairs, not a detection benchmark. The digest answers "are these the same attack reworded," not "is this an attack."
-- The strongest model (`0din`) is heavily in-distribution: its model card reports pre-training on 161,396 WildJailbreak pairs, which is the evaluation set itself. `bge-small`, a general model without that exposure, is the honest reference, and it supplies every headline number here.
+- The strongest model (`0din`) is in-distribution: its model card reports pre-training on 161,396 WildJailbreak pairs, which is the evaluation set itself. `bge-small`, a general model without that exposure, is the honest reference, and it supplies every headline number here.
 - Recall@1 degrades as the candidate pool grows — the centered digest drops from 0.613 at 400 candidates to 0.534 at 1000 on the general model, as expected for nearest-neighbour retrieval.
 - I have not measured invertibility, only argued about it. The claim that a bit-signature exposes less than a quantised vector is structural reasoning, not a result.
 - **The candidate pools are small.** Everything here runs at 400 and 1,000 candidates, and recall already falls from 0.613 to 0.534 across that gap. A production feed indexes hundreds of thousands of observables, and nothing in this evaluation tells you where the curve lands there. I would expect it to keep falling. If you are sizing this for real, measure it at your own scale before trusting any number above.
