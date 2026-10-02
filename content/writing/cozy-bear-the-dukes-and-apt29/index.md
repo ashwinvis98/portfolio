@@ -30,7 +30,7 @@ It's tempting to assume this is sloppiness. It isn't. It's structural, and under
 
 Different security companies discover and track threats independently. Each has its own telescope pointed at the internet: its own sensors, its own victims calling for help, its own analysts. When a company identifies what looks like a distinct group, it names that group in its own house style. CrowdStrike uses animals tied to a suspected country — Bear for Russia, Panda for China. Microsoft uses weather: Blizzard for Russia, Typhoon for China. Mandiant uses sober codes like UNC####. Others use numbers, mythology, or something catchy for a report cover.
 
-The industry openly acknowledges the mess. Trade press has described the tangle of overlapping names as [confusing but essential](https://www.techtarget.com/searchSecurity/feature/Vendors-Threat-actor-taxonomies-are-confusing-but-essential/), and in 2025 CrowdStrike and Microsoft announced a joint effort to [harmonise their threat-actor names](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-microsoft-collaborate-deconflict-cyber-threat-attribution/) precisely because the fragmentation slows defenders down. When the two biggest names in the industry launch a project just to agree on what to *call* things, the problem is real.
+The industry openly acknowledges the mess. Trade press has described the tangle of overlapping names as [confusing but essential](https://www.techtarget.com/cybersecurity/feature/Vendors-Threat-actor-taxonomies-are-confusing-but-essential), and in 2025 CrowdStrike and Microsoft announced a joint effort to [harmonise their threat-actor names](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-microsoft-collaborate-deconflict-cyber-threat-attribution/) precisely because the fragmentation slows defenders down. When the two biggest names in the industry launch a project just to agree on what to *call* things, the problem is real.
 
 ![A life-drawing class where four artists at easels paint the same seated subject, and every canvas shows something completely different.](02-naming-factories.png "Every vendor names what it sees through its own lens.")
 
@@ -189,6 +189,6 @@ Keeping all of those cards current as new reporting lands is a separate problem,
 - CISA advisory AA24-057A — <https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-057a>
 - Microsoft Security Insider, Midnight Blizzard profile — <https://www.microsoft.com/en-us/security/security-insider/midnight-blizzard>
 - CrowdStrike and Microsoft on threat-actor naming harmonisation, 2025 — <https://www.crowdstrike.com/en-us/press-releases/crowdstrike-microsoft-collaborate-deconflict-cyber-threat-attribution/>
-- TechTarget, "Threat actor taxonomies are confusing but essential" — <https://www.techtarget.com/searchSecurity/feature/Vendors-Threat-actor-taxonomies-are-confusing-but-essential/>
+- TechTarget, "Threat actor taxonomies are confusing but essential" — <https://www.techtarget.com/cybersecurity/feature/Vendors-Threat-actor-taxonomies-are-confusing-but-essential>
 
 *External sources were paraphrased and summarised rather than quoted.*

@@ -51,7 +51,7 @@ The tradeoff is real: this is slower to build and slower to trust than pointing 
 
 ## Prior art
 
-- **[OpenCTI](https://github.com/OpenCTI-Platform/opencti) / Filigran** — the platform, its STIX data model, and the connector framework this plugs into.
+- **[OpenCTI](https://github.com/OpenCTI-Platform/opencti)** — the platform, its STIX data model, and the connector framework this plugs into.
 - **[MITRE ATT&CK](https://attack.mitre.org/)** — the authoritative technique catalogue. Attack-Patterns here are lookup-only against it, permanently.
 - **[NVD](https://nvd.nist.gov/) and [CVE.org](https://www.cve.org/)** — the authoritative source of vulnerability identifiers, and the reason CVE creation was removed.
 - **AlienVault OTX** (now LevelBlue-operated) — the OSINT feed the worked examples are drawn from.
