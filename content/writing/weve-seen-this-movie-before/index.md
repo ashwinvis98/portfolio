@@ -1,6 +1,6 @@
 ---
 title: "We've Seen This Movie Before"
-date: 2026-06-18
+date: 2026-08-24
 draft: false
 categories: ["Notes"]
 tags: ["threat-intelligence", "prompt-injection", "llm-security", "stix", "mitre-atlas"]
@@ -13,10 +13,7 @@ cover:
   relative: true
   hidden: true
   alt: "An empty cinema seen from the back row, one figure watching a screen filled with scattered text fragments."
-lastmod: 2026-08-20
 ---
-
-*Updated August 20, 2026: added links to the two projects below, which were released after this was first written.*
 
 
 ![An empty cinema seen from the back row, one silhouetted figure watching a screen filled with scattered text fragments and speech-bubble outlines.](01-hero.png "We have seen this film before.")

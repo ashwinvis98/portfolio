@@ -1,6 +1,6 @@
 ---
 title: "Every Attack Here Is a Prompt Injection"
-date: 2026-09-17
+date: 2026-09-28
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "adversarial-ai", "prompt-injection", "mitre-atlas", "owasp", "evaluation"]
@@ -14,10 +14,7 @@ cover:
   relative: true
   hidden: true
   alt: "A cabinet of mostly blank label plates, with far more unlabelled prompts spilling across the floor than there are drawers to hold them."
-lastmod: 2026-09-28
 ---
-
-*Updated September 28, 2026: the survey script and the corpus-construction check are now in the repository.*
 
 ![](01-hero.png)
 

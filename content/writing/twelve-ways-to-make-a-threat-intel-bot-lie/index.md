@@ -1,6 +1,6 @@
 ---
 title: "Twelve Ways to Make a Threat-Intel Bot Lie"
-date: 2026-05-21
+date: 2026-06-11
 draft: false
 categories: ["Research"]
 tags: ["threat-intelligence", "cti", "rag", "evaluation", "hallucination", "grounding", "llm-security", "aws-bedrock", "knowledge-base", "red-teaming"]
