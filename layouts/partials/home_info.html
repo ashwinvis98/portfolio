@@ -1,19 +1,16 @@
-{{/* Home masthead: name, positioning statement, caption, link row, portrait.
-     Values come from homeInfoParams and [params] in hugo.toml. */}}
+{{/* Home masthead: name, positioning statement, caption, site links, portrait.
+     Values come from homeInfoParams in hugo.toml; contact links live in the header menu. */}}
 {{- with site.Params.homeInfoParams }}
 <section class="masthead-statement">
   <div class="masthead-text">
     <h1 class="masthead-name">{{ site.Title }}</h1>
     <p class="statement">{{ .Title | markdownify }}</p>
     <div class="statement-caption">{{ .Content | markdownify }}</div>
-    {{- with site.Params }}
-    <p class="statement-links">
-      {{- with .resume }}<a class="button" href="{{ . | relURL }}">Résumé (PDF)</a>{{ end -}}
-      {{- with .email }}<a href="mailto:{{ . }}">Email</a>{{ end -}}
-      {{- with .linkedin }}<a href="{{ . }}" rel="me">LinkedIn</a>{{ end -}}
-      {{- with .github }}<a href="{{ . }}" rel="me">GitHub</a>{{ end -}}
-    </p>
-    {{- end }}
+    <nav class="statement-links" aria-label="On this site">
+      <a href="#about">About</a>
+      <a href="{{ "projects/" | relURL }}">Projects</a>
+      <a href="{{ "writing/" | relURL }}">Writing</a>
+    </nav>
   </div>
   {{- if os.FileExists "static/images/portrait.jpg" }}
   <img class="masthead-portrait" src="{{ "images/portrait.jpg" | relURL }}" alt="Ashwin Viswamithiran" width="240" height="240" loading="eager">

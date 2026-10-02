@@ -1,11 +1,7 @@
 ---
 title: "Ashwin Viswamithiran"
-description: "Ashwin Viswamithiran — security engineer in Denver building the engineering that lets a threat research team get ahead of attacks."
+description: "Ashwin Viswamithiran — security engineer in Denver building the engineering that lets organizations get ahead of attacks."
 ---
-
-## Currently
-
-{{< currently >}}
 
 ## About {#about}
 
@@ -22,30 +18,6 @@ threat than there is time, so the whole program comes down to one skill:
 deciding what matters to us. That means the actors and techniques aimed at our
 industries today, and the emerging capabilities that could be aimed at them
 tomorrow.
-
-## How I approach the work
-
-Most security work is reactive by design. An alert fires, a report lands, an
-indicator shows up in a feed, and someone responds. That work matters, but it
-means the adversary always moves first. My team works the other way round. We
-study how the groups that target us build their tools and how their habits
-shift over time, so we can anticipate the next technique, the next piece of
-infrastructure or the next campaign before it reaches us.
-
-Two years of working that way has shaped how I take on any problem. I solve
-the one in front of me, and I design for the version of it that will show up
-next. I build things so they can be checked, because a system that measures
-itself gets better instead of just getting bigger. And I treat research and
-engineering as one job: the research says where to look, and the engineering
-makes looking cheap enough to do every day.
-
-AI has changed the engineering half of that. With coding assistants and agents
-alongside me, the distance between an idea and a working system has shrunk from
-months to days. I spend the time that frees up on testing more ideas, and on
-checking that the ones I keep actually work.
-
-That's what I bring to a team. Not a particular tool, but the habit of getting
-ahead of the problem, and building the feedback loop that shows whether I did.
 
 ## What I've built
 
@@ -75,17 +47,17 @@ Some of this I work on in public. The projects below are tools I've released,
 and the writing is where I test ideas against real data and report what I
 find, even when it cuts against my own work.
 
-## Writing
+## Currently
 
-{{< writing-list limit="3" >}}
+{{< currently >}}
 
 ## Projects
 
 {{< projects-list >}}
 
-## What being ahead of the curve means
+## Writing
 
-{{< notes >}}
+{{< writing-list limit="3" >}}
 
 ## Where I came from
 
@@ -109,6 +81,34 @@ LLM services, and then the move into the threat intelligence landscape.
 ## What I work with
 
 {{< skills >}}
+
+## How I approach the work
+
+Most security work is reactive by design. An alert fires, a report lands, an
+indicator shows up in a feed, and someone responds. That work matters, but it
+means the adversary always moves first. My team works the other way round. We
+study how the groups that target us build their tools and how their habits
+shift over time, so we can anticipate the next technique, the next piece of
+infrastructure or the next campaign before it reaches us.
+
+Two years of working that way has shaped how I take on any problem. I solve
+the one in front of me, and I design for the version of it that will show up
+next. I build things so they can be checked, because a system that measures
+itself gets better instead of just getting bigger. And I treat research and
+engineering as one job: the research says where to look, and the engineering
+makes looking cheap enough to do every day.
+
+AI has changed the engineering half of that. With coding assistants and agents
+alongside me, the distance between an idea and a working system has shrunk from
+months to days. I spend the time that frees up on testing more ideas, and on
+checking that the ones I keep actually work.
+
+That's what I bring to a team. Not a particular tool, but the habit of getting
+ahead of the problem, and building the feedback loop that shows whether I did.
+
+## What being ahead of the curve means
+
+{{< notes >}}
 
 ## Off the clock
 
