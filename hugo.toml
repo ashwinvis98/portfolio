@@ -28,7 +28,7 @@ enableRobotsTXT = true
 # Rendered by the home_info.html override, called from layouts/index.html.
 [params.homeInfoParams]
   Title = "I build the engineering that lets organizations get ahead of attacks."
-  Content = "I'm Ashwin, a security engineer in Denver. My work sits where research meets engineering: turning what we learn about adversaries into defences that act on their own, and asking a little earlier each time what is coming next. I write here about the decisions behind that work, including the ones I got wrong."
+  Content = "I'm Ashwin, a security engineer in Denver. I build the platforms, data pipelines and automation behind a threat research team, so that what it learns about adversaries reaches our defenses without anyone carrying it over by hand. I also look for where AI can make that work faster and more dependable. I write here about the decisions behind that work, including the ones I got wrong."
 
 [[menu.main]]
   name = "linkedin"

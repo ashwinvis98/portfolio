@@ -5,4 +5,4 @@
   text: "Deploying OpenAEV, an open-source adversarial exposure validation platform, alongside our OpenCTI platform. The threats we prioritise in OpenCTI become attack simulations mapped to MITRE ATT&CK, and the results show whether our controls actually detect and block them. That turns detection coverage from an assumption into a measurement that feeds straight back into the intelligence."
 - date: "2026-09"
   title: "Engineering alongside AI"
-  text: "Using AI coding agents across my day-to-day engineering, from building connectors and automations to testing them adversarially. It lets a small team build more, and leaves more time for checking that what we built actually works."
+  text: "Using AI coding assistants across my day-to-day engineering, from building integrations and automation pipelines to trying to break them on purpose before they ship. It lets a small team build more, and leaves more time for checking that what we built actually works."
