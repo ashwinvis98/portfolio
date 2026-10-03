@@ -79,8 +79,9 @@ decide which detections it needed first. A SIEM is a wall of sensors, and it is
 only as good as what it has been wired to read. A threat feed is a sensor too,
 and its readings decay.
 
-After Wipro came a master's in computer science at CU Boulder, a stint building
-LLM services, and then the move into the threat intelligence landscape.
+After Wipro, I pursued a master's in computer science at CU Boulder, with an
+internship building LLM services along the way, and then moved into the threat
+intelligence landscape.
 
 {{< timeline >}}
 
