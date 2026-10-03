@@ -1,0 +1,19 @@
+---
+description: Rules for anything written on this site in Ashwin's name. Always apply.
+alwaysApply: true
+---
+
+# Writing on ashwinviswamithiran.com
+
+This repo is public. Keep it to what is already public.
+
+1. Never invent a fact, number, tool, title or date. If a claim can't be traced to the repo, a public source or Ashwin, ask him.
+2. First person, plain, engineering framing. No hype words, no "passionate", no "excited to".
+3. Never publish internal identifiers: hostnames, account or resource names, secret names, colleague or vendor-contact names, or contract values.
+4. The employer is named only in the About section.
+5. No novelty claims for promptlsh or adversarial-ai-cti. Related prior work is complementary and credited.
+6. Don't describe the mechanism of any technique that isn't already published here. Ask first.
+7. Titles exactly as on the resume. Don't claim to lead a team.
+8. Upstream contributions are "filed" until they are merged.
+9. Never commit private career notes, job-search material or internal documents to this repo.
+10. If a claim is unsure, flag it to Ashwin rather than softening or inflating it.
