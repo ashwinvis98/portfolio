@@ -12,9 +12,9 @@
   </p>
   <p>
     {{- with site.Params.email }}<a href="mailto:{{ . }}">Email</a>{{ end -}}
-    {{- with site.Params.resume }} &middot; <a href="{{ . | relURL }}">Resume</a>{{ end -}}
-    {{- with site.Params.github }} &middot; <a href="{{ . }}" rel="me">GitHub</a>{{ end -}}
-    {{- with site.Params.linkedin }} &middot; <a href="{{ . }}" rel="me">LinkedIn</a>{{ end -}}
+    {{- with site.Params.resume }} &middot; <a href="{{ . | relURL }}" target="_blank" rel="noopener">Resume</a>{{ end -}}
+    {{- with site.Params.github }} &middot; <a href="{{ . }}" target="_blank" rel="me noopener">GitHub</a>{{ end -}}
+    {{- with site.Params.linkedin }} &middot; <a href="{{ . }}" target="_blank" rel="me noopener">LinkedIn</a>{{ end -}}
   </p>
 </div>
 {{- end }}

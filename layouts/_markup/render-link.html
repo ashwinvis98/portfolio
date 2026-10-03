@@ -1,0 +1,4 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $external := or (and $u.IsAbs (ne $u.Scheme "mailto")) (strings.HasSuffix $u.Path ".pdf") -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $external }} target="_blank" rel="noopener"{{ end }}>{{ .Text }}</a>
+{{- /**/ -}}
